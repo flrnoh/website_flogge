@@ -1,0 +1,453 @@
+---
+// Signal & Stille — Florian Obermeier Author Website
+---
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Florian Obermeier — Autor</title>
+  <meta name="description" content="Zwei Bücher, zwei Pole. Florian Obermeier schreibt über Technologie und das, was unter dem Lärm liegt." />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --teal: #2dd4bf;
+      --teal-dark: #0d9488;
+      --gold: #f59e0b;
+      --gold-dark: #d97706;
+      --bg: #0a0a0a;
+      --bg-card: #111111;
+      --text: #e5e5e5;
+      --text-muted: #737373;
+      --text-heading: #fafafa;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Custom Cursor */
+    .cursor-dot {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--teal);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 32px; height: 32px;
+      border: 1.5px solid rgba(45, 212, 191, 0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    @media (max-width: 768px) {
+      .cursor-dot, .cursor-ring { display: none; }
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .nav-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--text-heading);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--text-heading); }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.75rem; }
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 3rem;
+      max-width: 900px;
+    }
+    .hero-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--teal);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 400;
+      color: var(--text-heading);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 0 1.5rem; }
+    }
+
+    /* Books Section */
+    .books {
+      padding: 6rem 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+    }
+    .books-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .books { padding: 4rem 1.5rem; }
+      .books-grid { grid-template-columns: 1fr; }
+    }
+
+    .book-card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: transform 0.4s ease, border-color 0.4s ease;
+      cursor: pointer;
+    }
+    .book-card:hover {
+      transform: translateY(-4px);
+    }
+    .book-card--teal:hover { border-color: rgba(45, 212, 191, 0.3); }
+    .book-card--gold:hover { border-color: rgba(245, 158, 11, 0.3); }
+
+    .book-cover {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+    }
+    .book-cover-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--text-muted);
+    }
+    .book-cover-placeholder--teal {
+      background: linear-gradient(135deg, #0d3d38, #0a2a27);
+    }
+    .book-cover-placeholder--gold {
+      background: linear-gradient(135deg, #3d2e0d, #2a1f0a);
+    }
+    .book-info {
+      padding: 1.5rem;
+    }
+    .book-tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+    .book-tag--teal { color: var(--teal); }
+    .book-tag--gold { color: var(--gold); }
+
+    .book-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--text-heading);
+      margin-bottom: 0.5rem;
+      font-weight: 400;
+    }
+    .book-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* About Section */
+    .about {
+      padding: 6rem 3rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .about-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+    }
+    .about-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .about-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--text-heading);
+      font-weight: 400;
+    }
+    .about-bio {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+    .about-facts {
+      display: flex;
+      gap: 3rem;
+      margin-top: 1rem;
+    }
+    .fact-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--text-heading);
+    }
+    .fact-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    @media (max-width: 768px) {
+      .about { padding: 4rem 1.5rem; }
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--text-heading);
+    }
+    .footer-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--text-heading); }
+
+    @media (max-width: 768px) {
+      footer {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+        padding: 3rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor-dot" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Navigation -->
+<nav>
+  <a href="#" class="nav-name">Florian Obermeier</a>
+  <ul class="nav-links">
+    <li><a href="#buecher">Bücher</a></li>
+    <li><a href="#ueber">Über</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <p class="hero-label">Autor</p>
+  <h1>Signal &amp; <em>Stille</em></h1>
+  <p>Zwei Bücher, zwei Pole: das eine erklärt eine Technologie, die die Welt verändert. Das andere sucht nach dem, was unter dem Lärm liegt.</p>
+</section>
+
+<!-- Books -->
+<section class="books" id="buecher">
+  <p class="section-label">Bücher</p>
+  <div class="books-grid">
+
+    <div class="book-card book-card--teal">
+      <div class="book-cover-placeholder book-cover-placeholder--teal">
+        <!-- Replace with: <img src="/cover1.jpg" alt="KI-Buch Cover" class="book-cover" /> -->
+        Cover 1
+      </div>
+      <div class="book-info">
+        <p class="book-tag book-tag--teal">Technologie</p>
+        <h3 class="book-title">Buch 1 — KI &amp; Digitale Transformation</h3>
+        <p class="book-desc">Eine Technologie, die die Welt verändert — erklärt für alle, die sie verstehen und nutzen wollen.</p>
+      </div>
+    </div>
+
+    <div class="book-card book-card--gold">
+      <div class="book-cover-placeholder book-cover-placeholder--gold">
+        <!-- Replace with: <img src="/cover2.jpg" alt="Buch 2 Cover" class="book-cover" /> -->
+        Cover 2
+      </div>
+      <div class="book-info">
+        <p class="book-tag book-tag--gold">Reflexion</p>
+        <h3 class="book-title">Buch 2 — Was unter dem Lärm liegt</h3>
+        <p class="book-desc">Das zweite Buch sucht nach dem, was bleibt, wenn man den Lärm abstellt.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- About -->
+<section class="about" id="ueber">
+  <p class="about-label">Über</p>
+  <div class="about-content">
+    <h2 class="about-name">Florian Obermeier</h2>
+    <p class="about-bio">Als Head of Sales &amp; Marketing begleitet er Unternehmen bei der digitalen Transformation — und schreibt dabei über die Dinge, die ihn nicht loslassen.</p>
+    <p class="about-bio">Zwei Bücher, zwei Pole: das eine erklärt eine Technologie, die die Welt verändert. Das andere sucht nach dem, was unter dem Lärm liegt.</p>
+    <div class="about-facts">
+      <div class="fact">
+        <div class="fact-num">2</div>
+        <div class="fact-label">Bücher</div>
+      </div>
+      <div class="fact">
+        <div class="fact-num">∞</div>
+        <div class="fact-label">Fragen</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer id="kontakt">
+  <div>
+    <p class="footer-name">Florian Obermeier</p>
+    <p class="footer-sub">Autor — LinkedIn — Kontakt</p>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#">Impressum</a></li>
+    <li><a href="#">Datenschutz</a></li>
+    <li><a href="https://linkedin.com">LinkedIn</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.transform = `translate(${rx - 16}px, ${ry - 16}px)`;
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  // Hover effect on book cards
+  document.querySelectorAll('.book-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      cursor.style.transform += ' scale(2)';
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.book-card, .about-content, .about-label').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

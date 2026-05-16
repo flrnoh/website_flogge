@@ -190,6 +190,40 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
   .book-card:hover .cover img { transform: scale(1.03); }
 
+  .release-badge {
+    position: absolute;
+    top: 1.4rem;
+    right: 1.4rem;
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: #0a0a0b;
+    font-family: var(--sans);
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.25;
+    transform: rotate(8deg);
+    z-index: 3;
+    box-shadow: 0 6px 28px rgba(232, 169, 72, 0.5);
+    pointer-events: none;
+    user-select: none;
+  }
+  .badge-pre {
+    font-size: 0.55rem;
+    letter-spacing: 0.14em;
+    opacity: 0.75;
+  }
+  .badge-date {
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+  }
+
   .book-info {
     padding: 1.75rem 1.75rem 2rem;
     position: relative;
@@ -369,6 +403,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <article class="book-card book-card--stille reveal" data-tilt>
       <div class="cover">
         <img src="/cover-stille.jpg" alt="Cover: Du hörst es erst, wenn es still wird" width="1071" height="1700" loading="lazy" />
+        <div class="release-badge" aria-label="Erscheint 30. Mai">
+          <span class="badge-pre">AB</span>
+          <span class="badge-date">30. MAI</span>
+        </div>
       </div>
       <div class="book-info">
         <p class="book-tag book-tag--stille">Stille — Memoir mit Soundtrack</p>
@@ -377,7 +415,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="book-desc">
           Alles lief. Der Job, der Kalender, die Rolle, in der niemand auf die Idee käme zu fragen. Bis der Körper anfängt, Dinge zu tun, die sich nicht mehr erklären lassen. Ein Protokoll des Wegs durch die Stille — und ein Soundtrack, der dort weitermacht, wo Worte an ihre Grenze kommen. Zu jedem der 13 Kapitel ein eigener Song. QR‑Code, Klick, direkt zum Track.
         </p>
-        <p class="book-meta">2026 · 13 Kapitel · 13 Songs · BoD</p>
+        <p class="book-meta">Erscheint 30. Mai 2026 · 13 Kapitel · 13 Songs · BoD</p>
         <div class="book-actions">
           <a href="mailto:kontakt@florian-obermeier.com?subject=Du%20h%C3%B6rst%20es%20erst%2C%20wenn%20es%20still%20wird" class="btn">Anfragen <span class="arrow">→</span></a>
           <a href="https://suno.com/playlist/bf894a62-55e4-4b09-8c5e-211793d0614d" class="btn btn--ghost" target="_blank" rel="noopener">Zum Soundtrack ↗</a>

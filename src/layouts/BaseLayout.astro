@@ -1,0 +1,418 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  pageType?: 'home' | 'legal';
+}
+
+const {
+  title,
+  description = 'Florian Obermeier — Autor. Zwei Bücher, zwei Pole. Das eine erklärt eine Technologie, die die Welt verändert. Das andere sucht nach dem, was darunter liegt.',
+  pageType = 'home',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://website-flogge.vercel.app').toString();
+const ogImage = new URL('/og-image.png', Astro.site ?? 'https://website-flogge.vercel.app').toString();
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:locale" content="de_DE" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+
+  <style is:global>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --teal: #2dd4bf;
+      --teal-soft: rgba(45, 212, 191, 0.18);
+      --teal-glow: rgba(45, 212, 191, 0.08);
+      --gold: #e8a948;
+      --gold-soft: rgba(232, 169, 72, 0.16);
+      --gold-glow: rgba(232, 169, 72, 0.06);
+      --bg: #0a0a0b;
+      --bg-elev: #111114;
+      --bg-card: #131318;
+      --line: rgba(255, 255, 255, 0.06);
+      --line-strong: rgba(255, 255, 255, 0.12);
+      --text: #d4d4d8;
+      --text-muted: #71717a;
+      --text-dim: #52525b;
+      --text-heading: #fafafa;
+      --serif: 'Playfair Display', serif;
+      --sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Film grain overlay — adds tactile mood */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.035;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/></svg>");
+    }
+
+    /* Ambient gradient orbs in the background */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(800px 600px at 15% 20%, var(--teal-glow), transparent 60%),
+        radial-gradient(700px 500px at 85% 80%, var(--gold-glow), transparent 60%);
+    }
+
+    main, nav, footer { position: relative; z-index: 2; }
+
+    a { color: inherit; }
+
+    ::selection { background: var(--teal); color: var(--bg); }
+
+    /* Reading progress */
+    .progress {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: transparent;
+      z-index: 200;
+      pointer-events: none;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--teal), var(--gold));
+      transition: width 80ms linear;
+    }
+
+    /* Custom cursor */
+    .cursor-dot, .cursor-ring {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      will-change: transform;
+    }
+    .cursor-dot {
+      width: 6px; height: 6px;
+      background: var(--teal);
+      border-radius: 50%;
+      transition: transform 0.2s cubic-bezier(.2,.8,.2,1), background 0.3s;
+    }
+    .cursor-ring {
+      width: 32px; height: 32px;
+      border: 1.5px solid rgba(45, 212, 191, 0.45);
+      border-radius: 50%;
+      transition: width 0.25s, height 0.25s, border-color 0.3s, transform 0.05s linear;
+    }
+    .cursor-ring.is-hot {
+      width: 56px; height: 56px;
+      border-color: var(--gold);
+    }
+    .cursor-dot.is-hot { background: var(--gold); transform: translate(-50%, -50%) scale(0.5); }
+
+    @media (hover: none), (max-width: 768px) {
+      .cursor-dot, .cursor-ring { display: none; }
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2.5rem;
+      z-index: 100;
+      background: rgba(10, 10, 11, 0.65);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, padding 0.3s;
+    }
+    nav.is-scrolled {
+      border-bottom-color: var(--line);
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+    .nav-name {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      color: var(--text-heading);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      font-weight: 500;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2.25rem;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a:hover { color: var(--text-heading); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: -6px;
+      height: 1px;
+      background: var(--teal);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s cubic-bezier(.2,.8,.2,1);
+    }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1.1rem; }
+      .nav-links a { font-size: 0.7rem; letter-spacing: 0.12em; }
+    }
+
+    /* Footer */
+    footer {
+      padding: 5rem 2.5rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-top: 1px solid var(--line);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: flex-start;
+    }
+    .footer-mark {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      color: var(--text-heading);
+      margin-bottom: 0.4rem;
+    }
+    .footer-tagline {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      max-width: 360px;
+    }
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+    }
+    .footer-contact a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-contact a:hover { color: var(--teal); }
+    .footer-meta {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-legal {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+    .footer-legal a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      transition: color 0.3s;
+    }
+    .footer-legal a:hover { color: var(--text-heading); }
+    .footer-copy {
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.02em;
+    }
+
+    @media (max-width: 720px) {
+      footer { padding: 4rem 1.25rem 2rem; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-meta { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s cubic-bezier(.2,.8,.2,1), transform 0.9s cubic-bezier(.2,.8,.2,1);
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
+      body::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+<div class="cursor-dot" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="nav">
+  <a href="/" class="nav-name">Florian Obermeier</a>
+  <ul class="nav-links">
+    {pageType === 'home' ? (
+      <>
+        <li><a href="#buecher">Bücher</a></li>
+        <li><a href="#ueber">Über</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </>
+    ) : (
+      <>
+        <li><a href="/#buecher">Bücher</a></li>
+        <li><a href="/#ueber">Über</a></li>
+        <li><a href="/#kontakt">Kontakt</a></li>
+      </>
+    )}
+  </ul>
+</nav>
+
+<main>
+  <slot />
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <p class="footer-mark">Florian Obermeier</p>
+      <p class="footer-tagline">Zwei Bücher, zwei Pole. Signal und Stille.</p>
+    </div>
+    <div class="footer-contact">
+      <a href="mailto:kontakt@florian-obermeier.com">kontakt@florian-obermeier.com</a>
+      <a href="https://www.linkedin.com/in/florian-obermeier/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    <p class="footer-copy">© {year} Florian Obermeier</p>
+    <ul class="footer-legal">
+      <li><a href="/impressum">Impressum</a></li>
+      <li><a href="/datenschutz">Datenschutz</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script is:inline>
+  // Reading progress
+  const fill = document.getElementById('progressFill');
+  const nav = document.getElementById('nav');
+  function updateProgress() {
+    const doc = document.documentElement;
+    const total = doc.scrollHeight - window.innerHeight;
+    const pct = total > 0 ? (window.scrollY / total) * 100 : 0;
+    if (fill) fill.style.width = pct + '%';
+    if (nav) nav.classList.toggle('is-scrolled', window.scrollY > 16);
+  }
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  const supportsHover = matchMedia('(hover: hover)').matches;
+  if (supportsHover && cursor && ring) {
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+    });
+    function loop() {
+      rx += (mx - rx) * 0.14;
+      ry += (my - ry) * 0.14;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    // Hot state on interactive elements
+    document.querySelectorAll('a, button, .book-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('is-hot');
+        ring.classList.add('is-hot');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('is-hot');
+        ring.classList.remove('is-hot');
+      });
+    });
+  }
+
+  // Reveal observer
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>

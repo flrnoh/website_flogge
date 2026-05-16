@@ -176,92 +176,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .cover {
     width: 100%;
-    aspect-ratio: 1071 / 1700;
     display: block;
     overflow: hidden;
     position: relative;
     background: #000;
+    line-height: 0;
   }
   .cover img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
     display: block;
     transition: transform 0.8s cubic-bezier(.2,.8,.2,1);
   }
   .book-card:hover .cover img { transform: scale(1.03); }
-
-  /* Typographic cover for book 1 */
-  .cover-typo {
-    width: 100%;
-    aspect-ratio: 1071 / 1700;
-    background:
-      radial-gradient(ellipse at 50% 0%, rgba(45, 212, 191, 0.22), transparent 55%),
-      radial-gradient(ellipse at 50% 100%, rgba(13, 148, 136, 0.18), transparent 60%),
-      linear-gradient(180deg, #0c1e1c 0%, #061412 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 1.6rem 1.4rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .cover-typo::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(45, 212, 191, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(45, 212, 191, 0.04) 1px, transparent 1px);
-    background-size: 32px 32px;
-    pointer-events: none;
-    mask-image: linear-gradient(180deg, transparent 0%, black 30%, black 70%, transparent 100%);
-  }
-  .cover-typo-meta {
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--teal);
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-    z-index: 1;
-  }
-  .cover-typo-title {
-    font-family: var(--serif);
-    font-size: clamp(1.3rem, 3.2vw, 2.2rem);
-    line-height: 1.05;
-    color: var(--text-heading);
-    font-weight: 500;
-    position: relative;
-    z-index: 1;
-    letter-spacing: -0.01em;
-  }
-  .cover-typo-title em {
-    font-style: italic;
-    color: var(--teal);
-  }
-  .cover-typo-sub {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: clamp(0.78rem, 1.2vw, 0.95rem);
-    color: var(--text);
-    line-height: 1.4;
-    position: relative;
-    z-index: 1;
-  }
-  .cover-typo-foot {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    position: relative;
-    z-index: 1;
-    display: flex;
-    justify-content: space-between;
-  }
 
   .book-info {
     padding: 1.75rem 1.75rem 2rem;
@@ -420,21 +347,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <!-- BOOK 1: Signal -->
     <article class="book-card book-card--signal reveal" data-tilt>
-      <div class="cover">
-        <div class="cover-typo">
-          <div class="cover-typo-meta">
-            <span>Buch 01</span>
-            <span>Sachbuch</span>
-          </div>
-          <div>
-            <div class="cover-typo-title">Warum KI <em>kein Hype</em> ist</div>
-          </div>
-          <div class="cover-typo-sub">und wie sie unseren Alltag grundlegend verändert</div>
-          <div class="cover-typo-foot">
-            <span>Florian Obermeier</span>
-            <span>2025</span>
-          </div>
-        </div>
+      <div class="cover cover--ki">
+        <img src="/cover-ki.jpg" alt="Cover: Warum KI kein Hype ist" width="1200" height="1703" loading="lazy" />
       </div>
       <div class="book-info">
         <p class="book-tag book-tag--signal">Signal — Sachbuch</p>
@@ -500,6 +414,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <a href="mailto:kontakt@florian-obermeier.com" class="contact-mail reveal">kontakt@florian-obermeier.com</a>
   <div class="contact-socials reveal">
     <a href="https://www.linkedin.com/in/florian-obermeier/" class="btn btn--ghost" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <a href="https://www.instagram.com/flrn.oh" class="btn btn--ghost" target="_blank" rel="noopener">Instagram ↗</a>
   </div>
 </section>
 

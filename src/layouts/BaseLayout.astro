@@ -15,21 +15,47 @@ interface Props {
   title: string;
   description?: string;
   pageType?: 'home' | 'legal';
+  lang?: 'de' | 'en';
+  alternateUrl?: string;
 }
 
 const {
   title,
   description = 'Florian Obermeier — Autor. Zwei Bücher, zwei Pole. Das eine erklärt eine Technologie, die die Welt verändert. Das andere sucht nach dem, was darunter liegt.',
   pageType = 'home',
+  lang = 'de',
+  alternateUrl,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://florian-obermeier.com').toString();
 const ogImage = new URL('/og-image.png', Astro.site ?? 'https://florian-obermeier.com').toString();
+const ogLocale = lang === 'en' ? 'en_US' : 'de_DE';
 const year = new Date().getFullYear();
+
+const t = lang === 'en'
+  ? {
+      navBooks: 'Books',
+      navAbout: 'About',
+      navContact: 'Contact',
+      footerTagline: 'Two books, two poles. Signal and Stille.',
+      footerImpressum: 'Imprint',
+      footerDatenschutz: 'Privacy',
+    }
+  : {
+      navBooks: 'Bücher',
+      navAbout: 'Über',
+      navContact: 'Kontakt',
+      footerTagline: 'Zwei Bücher, zwei Pole. Signal und Stille.',
+      footerImpressum: 'Impressum',
+      footerDatenschutz: 'Datenschutz',
+    };
+
+const homeUrl = lang === 'en' ? '/en/' : '/';
+const navPrefix = pageType === 'home' ? '' : homeUrl;
 ---
 
 <!doctype html>
-<html lang="de">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,12 +64,27 @@ const year = new Date().getFullYear();
   <link rel="canonical" href={canonical} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+  {alternateUrl && lang === 'de' && (
+    <>
+      <link rel="alternate" hreflang="de" href={new URL('/', Astro.site ?? 'https://florian-obermeier.com').toString()} />
+      <link rel="alternate" hreflang="en" href={new URL(alternateUrl, Astro.site ?? 'https://florian-obermeier.com').toString()} />
+      <link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site ?? 'https://florian-obermeier.com').toString()} />
+    </>
+  )}
+  {alternateUrl && lang === 'en' && (
+    <>
+      <link rel="alternate" hreflang="de" href={new URL(alternateUrl, Astro.site ?? 'https://florian-obermeier.com').toString()} />
+      <link rel="alternate" hreflang="en" href={new URL('/en/', Astro.site ?? 'https://florian-obermeier.com').toString()} />
+      <link rel="alternate" hreflang="x-default" href={new URL(alternateUrl, Astro.site ?? 'https://florian-obermeier.com').toString()} />
+    </>
+  )}
+
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={canonical} />
   <meta property="og:image" content={ogImage} />
-  <meta property="og:locale" content="de_DE" />
+  <meta property="og:locale" content={ogLocale} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
@@ -163,6 +204,11 @@ const year = new Date().getFullYear();
       letter-spacing: 0.01em;
       font-weight: 500;
     }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
     .nav-links {
       list-style: none;
       display: flex;
@@ -191,10 +237,34 @@ const year = new Date().getFullYear();
     }
     .nav-links a:hover::after { transform: scaleX(1); }
 
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      border-left: 1px solid var(--line-strong);
+      padding-left: 1.5rem;
+    }
+    .lang-btn {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .lang-btn:hover { color: var(--text-heading); }
+    .lang-btn--active {
+      color: var(--text-heading);
+      pointer-events: none;
+    }
+    .lang-sep { color: var(--text-dim); }
+
     @media (max-width: 768px) {
       nav { padding: 1rem 1.25rem; }
+      .nav-right { gap: 1rem; }
       .nav-links { gap: 1.1rem; }
       .nav-links a { font-size: 0.7rem; letter-spacing: 0.12em; }
+      .lang-switch { padding-left: 1rem; }
     }
 
     /* Footer */
@@ -291,22 +361,29 @@ const year = new Date().getFullYear();
 <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
 
 <nav id="nav">
-  <a href="/" class="nav-name">Florian Obermeier</a>
-  <ul class="nav-links">
-    {pageType === 'home' ? (
-      <>
-        <li><a href="#buecher">Bücher</a></li>
-        <li><a href="#ueber">Über</a></li>
-        <li><a href="#kontakt">Kontakt</a></li>
-      </>
-    ) : (
-      <>
-        <li><a href="/#buecher">Bücher</a></li>
-        <li><a href="/#ueber">Über</a></li>
-        <li><a href="/#kontakt">Kontakt</a></li>
-      </>
-    )}
-  </ul>
+  <a href={homeUrl} class="nav-name">Florian Obermeier</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      {pageType === 'home' ? (
+        <>
+          <li><a href="#buecher">{t.navBooks}</a></li>
+          <li><a href="#ueber">{t.navAbout}</a></li>
+          <li><a href="#kontakt">{t.navContact}</a></li>
+        </>
+      ) : (
+        <>
+          <li><a href={`${homeUrl}#buecher`}>{t.navBooks}</a></li>
+          <li><a href={`${homeUrl}#ueber`}>{t.navAbout}</a></li>
+          <li><a href={`${homeUrl}#kontakt`}>{t.navContact}</a></li>
+        </>
+      )}
+    </ul>
+    <div class="lang-switch" aria-label="Language">
+      <a href="/" class:list={['lang-btn', { 'lang-btn--active': lang === 'de' }]}>DE</a>
+      <span class="lang-sep" aria-hidden="true">/</span>
+      <a href="/en/" class:list={['lang-btn', { 'lang-btn--active': lang === 'en' }]}>EN</a>
+    </div>
+  </div>
 </nav>
 
 <main>
@@ -317,7 +394,7 @@ const year = new Date().getFullYear();
   <div class="footer-grid">
     <div>
       <p class="footer-mark">Florian Obermeier</p>
-      <p class="footer-tagline">Zwei Bücher, zwei Pole. Signal und Stille.</p>
+      <p class="footer-tagline">{t.footerTagline}</p>
     </div>
     <div class="footer-contact">
       <a href="mailto:kontakt@florian-obermeier.com">kontakt@florian-obermeier.com</a>
@@ -328,8 +405,8 @@ const year = new Date().getFullYear();
   <div class="footer-meta">
     <p class="footer-copy">© {year} Florian Obermeier</p>
     <ul class="footer-legal">
-      <li><a href="/impressum">Impressum</a></li>
-      <li><a href="/datenschutz">Datenschutz</a></li>
+      <li><a href="/impressum">{t.footerImpressum}</a></li>
+      <li><a href="/datenschutz">{t.footerDatenschutz}</a></li>
     </ul>
   </div>
 </footer>
@@ -359,7 +436,6 @@ const year = new Date().getFullYear();
   }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 </script>
-
 
 <Analytics />
 <SpeedInsights />

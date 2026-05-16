@@ -1,12 +1,12 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="Florian Obermeier — Autor"
-  description="Zwei Bücher, zwei Pole. Florian Obermeier schreibt über Technologie, die die Welt verändert — und über das, was unter dem Lärm liegt."
-  lang="de"
-  alternateUrl="/en/"
+  title="Florian Obermeier — Author"
+  description="Two books, two poles. Florian Obermeier writes about technology that is changing the world — and about what lies beneath the noise."
+  lang="en"
+  alternateUrl="/"
 >
 
 <style>
@@ -95,9 +95,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     background: rgba(45, 212, 191, 0.08);
     transform: translateY(-1px);
   }
-  .btn .arrow {
-    transition: transform 0.3s;
-  }
+  .btn .arrow { transition: transform 0.3s; }
   .btn:hover .arrow { transform: translateX(3px); }
   .btn--ghost {
     border-color: transparent;
@@ -319,7 +317,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-weight: 500;
   }
 
-  /* CONTACT / CTA */
+  /* CONTACT */
   .contact {
     text-align: center;
     padding-bottom: 7rem;
@@ -367,35 +365,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <!-- HERO -->
 <section class="hero">
-  <p class="hero-eyebrow">Florian Obermeier — Autor</p>
+  <p class="hero-eyebrow">Florian Obermeier — Author</p>
   <h1>Signal<span class="amp"> &amp; </span><span class="stille">Stille</span></h1>
-  <p class="hero-sub">Zwei Bücher, zwei Pole. Das eine erklärt eine Technologie, die die Welt verändert. Das andere sucht nach <em>dem, was darunter liegt</em>, wenn der Lärm verstummt.</p>
+  <p class="hero-sub">Two books, two poles. One explains a technology that is changing the world. The other searches for <em>what lies beneath</em> — when the noise finally falls silent.</p>
   <div class="hero-cta">
-    <a href="#buecher" class="btn">Bücher entdecken <span class="arrow">→</span></a>
-    <a href="#ueber" class="btn btn--ghost">Über mich</a>
+    <a href="#buecher" class="btn">Discover books <span class="arrow">→</span></a>
+    <a href="#ueber" class="btn btn--ghost">About me</a>
   </div>
 </section>
 
 <!-- BOOKS -->
 <section id="buecher" class="block">
-  <p class="section-label reveal">Zwei Bücher</p>
+  <p class="section-label reveal">Two Books</p>
   <div class="books-grid">
 
     <!-- BOOK 1: Signal -->
     <article class="book-card book-card--signal reveal" data-tilt>
       <div class="cover cover--ki">
-        <img src="/cover-ki.jpg" alt="Cover: Warum KI kein Hype ist" width="1200" height="1905" loading="lazy" />
+        <img src="/cover-ki.jpg" alt="Cover: Why AI Is Not Just Hype" width="1200" height="1905" loading="lazy" />
       </div>
       <div class="book-info">
-        <p class="book-tag book-tag--signal">Signal — Sachbuch</p>
-        <h2 class="book-title">Warum KI kein Hype ist</h2>
-        <p class="book-subtitle">und wie sie unseren Alltag grundlegend verändert</p>
+        <p class="book-tag book-tag--signal">Signal — Non-Fiction</p>
+        <h2 class="book-title">Why AI Is Not Just Hype</h2>
+        <p class="book-subtitle">and how it is fundamentally changing our everyday lives</p>
         <p class="book-desc">
-          Vom Heizungsbauer zum KI-Buch. Florian Obermeier erklärt Künstliche Intelligenz so, wie er sie selbst entdeckt hat — ohne Mathematik, ohne Magie, aber mit klarem Blick. Eine Landkarte für alle, die verstehen wollen, was gerade passiert, und für jene, die nicht zuschauen, sondern mitgestalten wollen.
+          From heating engineer to AI author. Florian Obermeier explains artificial intelligence the way he discovered it himself — without mathematics, without magic, but with clarity. A map for everyone who wants to understand what is happening right now, and for those who don't just want to watch, but actively shape it.
         </p>
-        <p class="book-meta">2025 · 586 Seiten · BoD · ISBN 978-3-6951-7324-2</p>
+        <p class="book-meta">2025 · 586 pages · BoD · ISBN 978-3-6951-7324-2 · Available in German</p>
         <div class="book-actions">
-          <a href="https://www.amazon.de/Warum-kein-Hype-ist-grundlegend/dp/3695173246" class="btn" target="_blank" rel="noopener">Bei Amazon <span class="arrow">↗</span></a>
+          <a href="https://www.amazon.de/Warum-kein-Hype-ist-grundlegend/dp/3695173246" class="btn" target="_blank" rel="noopener">On Amazon <span class="arrow">↗</span></a>
           <a href="https://buchshop.bod.de/warum-ki-kein-hype-ist-florian-obermeier-9783695173242" class="btn btn--ghost" target="_blank" rel="noopener">BoD ↗</a>
         </div>
       </div>
@@ -404,23 +402,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <!-- BOOK 2: Stille -->
     <article class="book-card book-card--stille reveal" data-tilt>
       <div class="cover">
-        <img src="/cover-stille.jpg" alt="Cover: Du hörst es erst, wenn es still wird" width="1071" height="1700" loading="lazy" />
-        <div class="release-badge" aria-label="Erscheint 30. Mai">
-          <span class="badge-pre">AB</span>
-          <span class="badge-date">30. MAI</span>
+        <img src="/cover-stille.jpg" alt="Cover: You Only Hear It When It Falls Silent" width="1071" height="1700" loading="lazy" />
+        <div class="release-badge" aria-label="Out 30 May">
+          <span class="badge-pre">OUT</span>
+          <span class="badge-date">30 MAY</span>
         </div>
       </div>
       <div class="book-info">
-        <p class="book-tag book-tag--stille">Stille — Memoir mit Soundtrack</p>
-        <h2 class="book-title">Du hörst es erst, wenn es still wird</h2>
-        <p class="book-subtitle">Ein Buch mit Soundtrack</p>
+        <p class="book-tag book-tag--stille">Stille — Memoir with Soundtrack</p>
+        <h2 class="book-title">You Only Hear It When It Falls Silent</h2>
+        <p class="book-subtitle">A Book with Soundtrack</p>
         <p class="book-desc">
-          Alles lief. Der Job, der Kalender, die Rolle, in der niemand auf die Idee käme zu fragen. Bis der Körper anfängt, Dinge zu tun, die sich nicht mehr erklären lassen. Ein Protokoll des Wegs durch die Stille — und ein Soundtrack, der dort weitermacht, wo Worte an ihre Grenze kommen. Zu jedem der 13 Kapitel ein eigener Song. QR‑Code, Klick, direkt zum Track.
+          Everything was running. The job, the calendar, the role nobody would think to question. Until the body starts doing things that can no longer be explained. A record of the journey through silence — and a soundtrack that picks up where words reach their limits. One song for each of the 13 chapters. QR code, click, straight to the track.
         </p>
-        <p class="book-meta">Erscheint 30. Mai 2026 · 13 Kapitel · 13 Songs · BoD</p>
+        <p class="book-meta">Out 30 May 2026 · 13 Chapters · 13 Songs · BoD · Available in German</p>
         <div class="book-actions">
-          <a href="mailto:kontakt@florian-obermeier.com?subject=Du%20h%C3%B6rst%20es%20erst%2C%20wenn%20es%20still%20wird" class="btn">Anfragen <span class="arrow">→</span></a>
-          <a href="https://suno.com/playlist/bf894a62-55e4-4b09-8c5e-211793d0614d" class="btn btn--ghost" target="_blank" rel="noopener">Zum Soundtrack ↗</a>
+          <a href="mailto:kontakt@florian-obermeier.com?subject=You%20Only%20Hear%20It%20When%20It%20Falls%20Silent" class="btn">Enquire <span class="arrow">→</span></a>
+          <a href="https://suno.com/playlist/bf894a62-55e4-4b09-8c5e-211793d0614d" class="btn btn--ghost" target="_blank" rel="noopener">Soundtrack ↗</a>
         </div>
       </div>
     </article>
@@ -430,27 +428,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <!-- ABOUT -->
 <section id="ueber" class="block">
-  <p class="section-label reveal">Über</p>
+  <p class="section-label reveal">About</p>
   <div class="about">
     <p class="about-lead reveal">
-      Florian Obermeier lebt im Bayerischen Wald — dort, wo die Hügel den Blick beruhigen und Funklöcher schneller über Telefonate entscheiden als man selbst. Ein guter Ort zum <em>Nachdenken</em>.
+      Florian Obermeier lives in the Bavarian Forest — where the hills calm the gaze and dead zones decide on phone calls faster than you do. A good place to <em>think</em>.
     </p>
     <p class="reveal">
-      Seine Reise begann nicht in einem Tech‑Studium, sondern auf Baustellen und in Werkstätten — als <strong>Heizungsbauer und Fliesenleger</strong>. Über den Bachelor Professional of Technical Management ging es weiter in Beratung und Strategiearbeit. Als zertifizierter LEGO® SERIOUS PLAY®‑Facilitator macht er heute Denkweisen sichtbar, die sich nicht in Folien zeigen lassen.
+      His journey didn't begin in a tech degree, but on construction sites and in workshops — as a <strong>heating engineer and tile layer</strong>. Via a Bachelor Professional of Technical Management, his path led into consulting and strategy work. As a certified LEGO® SERIOUS PLAY® facilitator, he makes ways of thinking visible that can't be shown in slides.
     </p>
     <p class="reveal">
-      Ende 2022 öffnete er ChatGPT mit geringen Erwartungen — und wusste nach wenigen Minuten, dass sich etwas Fundamentales verändert hat. Ein Besuch im <strong>Silicon Valley 2024</strong> machte aus der Ahnung Gewissheit. Daraus entstand sein erstes Buch.
+      In late 2022, he opened ChatGPT with low expectations — and knew within minutes that something fundamental had changed. A visit to <strong>Silicon Valley in 2024</strong> turned that feeling into certainty. His first book grew from that.
     </p>
     <p class="reveal">
-      Zwischen den beiden Polen — laut und leise, Code und Körper, Signal und Stille — bewegen sich seine Texte. Das zweite Buch ist die andere Seite davon: ein Protokoll dessen, was unter dem Lärm liegt, wenn er endlich verstummt.
+      Between the two poles — loud and quiet, code and body, Signal and Stille — his writing moves. The second book is the other side of it: a record of what lies beneath the noise, when it finally falls silent.
     </p>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section id="kontakt" class="block contact">
-  <h2 class="contact-headline reveal">Sag <em>Hallo</em>.</h2>
-  <p class="contact-sub reveal">Lesungen, Interviews, Kooperationen — oder einfach ein paar Zeilen.</p>
+  <h2 class="contact-headline reveal">Say <em>Hello</em>.</h2>
+  <p class="contact-sub reveal">Readings, interviews, collaborations — or just a few lines.</p>
   <a href="mailto:kontakt@florian-obermeier.com" class="contact-mail reveal">kontakt@florian-obermeier.com</a>
   <div class="contact-socials reveal">
     <a href="https://www.linkedin.com/in/florian-obermeier/" class="btn btn--ghost" target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -459,7 +457,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </section>
 
 <script is:inline>
-  // Shimmer + lift on book cards — no rotation so buttons stay stable
+  // Shimmer + lift on book cards
   const cards = document.querySelectorAll('[data-tilt]');
   cards.forEach(card => {
     card.addEventListener('mouseenter', () => {

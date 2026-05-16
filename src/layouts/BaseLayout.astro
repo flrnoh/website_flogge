@@ -1,4 +1,6 @@
 ---
+import Analytics from '@vercel/analytics/astro';
+
 interface Props {
   title: string;
   description?: string;
@@ -352,5 +354,7 @@ const year = new Date().getFullYear();
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 </script>
 
+
+<Analytics />
 </body>
 </html>

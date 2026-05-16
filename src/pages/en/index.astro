@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Picture } from 'astro:assets';
+import portraitImg from '../../assets/florian-portrait.jpg';
 ---
 
 <BaseLayout
@@ -130,6 +132,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 16%, rgba(0,0,0,0.32) 36%, rgba(0,0,0,0.78) 58%, #000 76%);
             mask-image: linear-gradient(90deg, transparent 0%, transparent 16%, rgba(0,0,0,0.32) 36%, rgba(0,0,0,0.78) 58%, #000 76%);
   }
+  .hero-portrait picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
   .hero-portrait img {
     width: 100%;
     height: 100%;
@@ -177,6 +184,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     .hero-portrait img {
       animation: none;
       transform: scale(1.06);
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1023px) {
+    .hero-portrait {
+      width: min(440px, 48vw);
+      opacity: 0.78;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 26%, rgba(0,0,0,0.28) 48%, rgba(0,0,0,0.72) 70%, #000 86%);
+              mask-image: linear-gradient(90deg, transparent 0%, transparent 26%, rgba(0,0,0,0.28) 48%, rgba(0,0,0,0.72) 70%, #000 86%);
     }
   }
 
@@ -455,7 +471,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <a href="#ueber" class="btn btn--ghost">About me</a>
   </div>
   <div class="hero-portrait" aria-hidden="true">
-    <img src="/florian-portrait.jpg" alt="" width="1067" height="1127" loading="eager" fetchpriority="high" />
+    <Picture
+      src={portraitImg}
+      formats={['avif', 'webp']}
+      widths={[400, 600, 800, 1100, 1440]}
+      sizes="(max-width: 768px) 100vw, (max-width: 1023px) 48vw, min(720px, 60vw)"
+      alt=""
+      loading="eager"
+      fetchpriority="high"
+    />
     <svg class="hero-portrait-grain" viewBox="0 0 200 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <filter id="hp-noise">
         <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" />

@@ -155,8 +155,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     overflow: hidden;
     border: 1px solid var(--line);
     transition: border-color 0.5s, transform 0.4s cubic-bezier(.2,.8,.2,1), box-shadow 0.5s;
-    transform-style: preserve-3d;
-    will-change: transform;
     position: relative;
   }
   .book-card::before {
@@ -381,8 +379,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </p>
         <p class="book-meta">2026 · 13 Kapitel · 13 Songs · BoD</p>
         <div class="book-actions">
-          <a href="https://suno.com/playlist/bf894a62-55e4-4b09-8c5e-211793d0614d" class="btn" target="_blank" rel="noopener">Soundtrack hören <span class="arrow">↗</span></a>
-          <a href="mailto:kontakt@florian-obermeier.com?subject=Du%20h%C3%B6rst%20es%20erst%2C%20wenn%20es%20still%20wird" class="btn btn--ghost">Anfragen</a>
+          <a href="mailto:kontakt@florian-obermeier.com?subject=Du%20h%C3%B6rst%20es%20erst%2C%20wenn%20es%20still%20wird" class="btn">Anfragen <span class="arrow">→</span></a>
+          <a href="https://suno.com/playlist/bf894a62-55e4-4b09-8c5e-211793d0614d" class="btn btn--ghost" target="_blank" rel="noopener">Zum Soundtrack ↗</a>
         </div>
       </div>
     </article>
@@ -421,22 +419,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </section>
 
 <script is:inline>
-  // 3D tilt on book cards
+  // Shimmer + lift on book cards — no rotation so buttons stay stable
   const cards = document.querySelectorAll('[data-tilt]');
   cards.forEach(card => {
-    let raf = 0;
+    card.addEventListener('mouseenter', () => {
+      card.style.transform = 'translateY(-4px)';
+    });
     card.addEventListener('mousemove', e => {
       const rect = card.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width;
       const y = (e.clientY - rect.top) / rect.height;
-      const rx = (0.5 - y) * 6;
-      const ry = (x - 0.5) * 6;
       card.style.setProperty('--mx', (x * 100) + '%');
       card.style.setProperty('--my', (y * 100) + '%');
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        card.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
-      });
     });
     card.addEventListener('mouseleave', () => {
       card.style.transform = '';

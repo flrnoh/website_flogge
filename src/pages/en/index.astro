@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Picture } from 'astro:assets';
+import portraitImg from '../../assets/florian-portrait.jpg';
 ---
 
 <BaseLayout
@@ -20,6 +22,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     max-width: 1100px;
     margin: 0 auto;
     position: relative;
+    overflow: hidden;
   }
   .hero-eyebrow {
     font-size: 0.72rem;
@@ -108,8 +111,103 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     background: transparent;
   }
 
+  .hero-eyebrow,
+  .hero h1,
+  .hero-sub,
+  .hero-cta {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Portrait — right-side bleed, feathered mask, duotone tint, grain */
+  .hero-portrait {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: calc(50% - 50vw);
+    width: min(720px, 60vw);
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 16%, rgba(0,0,0,0.32) 36%, rgba(0,0,0,0.78) 58%, #000 76%);
+            mask-image: linear-gradient(90deg, transparent 0%, transparent 16%, rgba(0,0,0,0.32) 36%, rgba(0,0,0,0.78) 58%, #000 76%);
+  }
+  .hero-portrait picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .hero-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 32%;
+    filter: saturate(0.72) contrast(1.06) brightness(0.86);
+    transform: scale(1.06);
+    transform-origin: 50% 25%;
+    display: block;
+  }
+  .hero-portrait::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(72% 55% at 65% 22%, rgba(232, 169, 72, 0.32), transparent 65%),
+      radial-gradient(60% 65% at 32% 80%, rgba(45, 212, 191, 0.18), transparent 70%),
+      linear-gradient(180deg, transparent 30%, rgba(10,10,11,0.45) 100%);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+  .hero-portrait-grain {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.22;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .hero-portrait img {
+      animation: hero-portrait-drift linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 90vh;
+    }
+    @keyframes hero-portrait-drift {
+      from { transform: translateY(-1.5%) scale(1.06); }
+      to   { transform: translateY(5%) scale(1.09); }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-portrait img {
+      animation: none;
+      transform: scale(1.06);
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1023px) {
+    .hero-portrait {
+      width: min(440px, 48vw);
+      opacity: 0.78;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 26%, rgba(0,0,0,0.28) 48%, rgba(0,0,0,0.72) 70%, #000 86%);
+              mask-image: linear-gradient(90deg, transparent 0%, transparent 26%, rgba(0,0,0,0.28) 48%, rgba(0,0,0,0.72) 70%, #000 86%);
+    }
+  }
+
   @media (max-width: 768px) {
     .hero { padding: 7rem 1.25rem 3rem; }
+    .hero-portrait {
+      top: 0; bottom: 0; right: 0;
+      width: 100%;
+      opacity: 0.32;
+      -webkit-mask-image: radial-gradient(82% 65% at 75% 25%, #000 0%, transparent 62%);
+              mask-image: radial-gradient(82% 65% at 75% 25%, #000 0%, transparent 62%);
+    }
+    .hero-portrait img {
+      filter: saturate(0.55) contrast(1.05) brightness(0.55) blur(2px);
+    }
   }
 
   /* SECTION SHELL */
@@ -371,6 +469,25 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="hero-cta">
     <a href="#buecher" class="btn">Discover books <span class="arrow">→</span></a>
     <a href="#ueber" class="btn btn--ghost">About me</a>
+  </div>
+  <div class="hero-portrait" aria-hidden="true">
+    <Picture
+      src={portraitImg}
+      formats={['avif', 'webp']}
+      widths={[400, 600, 800, 1100, 1440]}
+      sizes="(max-width: 768px) 100vw, (max-width: 1023px) 48vw, min(720px, 60vw)"
+      alt=""
+      loading="eager"
+      fetchpriority="high"
+    />
+    <svg class="hero-portrait-grain" viewBox="0 0 200 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <filter id="hp-noise">
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" />
+        <feColorMatrix type="saturate" values="0" />
+        <feComponentTransfer><feFuncA type="linear" slope="1" intercept="-0.5" /></feComponentTransfer>
+      </filter>
+      <rect width="100%" height="100%" filter="url(#hp-noise)" />
+    </svg>
   </div>
 </section>
 

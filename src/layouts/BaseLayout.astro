@@ -11,8 +11,8 @@ const {
   pageType = 'home',
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://website-flogge.vercel.app').toString();
-const ogImage = new URL('/og-image.png', Astro.site ?? 'https://website-flogge.vercel.app').toString();
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://florian-obermeier.com').toString();
+const ogImage = new URL('/og-image.png', Astro.site ?? 'https://florian-obermeier.com').toString();
 const year = new Date().getFullYear();
 ---
 

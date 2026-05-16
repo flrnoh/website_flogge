@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://website-flogge.vercel.app',
+  site: 'https://florian-obermeier.com',
   compressHTML: true,
 });

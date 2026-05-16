@@ -176,15 +176,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .cover {
     width: 100%;
+    aspect-ratio: 1071 / 1700;
     display: block;
     overflow: hidden;
     position: relative;
-    background: #000;
+    background: #060308;
     line-height: 0;
   }
   .cover img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     display: block;
     transition: transform 0.8s cubic-bezier(.2,.8,.2,1);
   }
@@ -348,7 +350,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <!-- BOOK 1: Signal -->
     <article class="book-card book-card--signal reveal" data-tilt>
       <div class="cover cover--ki">
-        <img src="/cover-ki.jpg" alt="Cover: Warum KI kein Hype ist" width="1200" height="1703" loading="lazy" />
+        <img src="/cover-ki.jpg" alt="Cover: Warum KI kein Hype ist" width="1200" height="1905" loading="lazy" />
       </div>
       <div class="book-info">
         <p class="book-tag book-tag--signal">Signal — Sachbuch</p>

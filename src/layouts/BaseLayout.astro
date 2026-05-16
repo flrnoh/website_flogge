@@ -127,36 +127,6 @@ const year = new Date().getFullYear();
       transition: width 80ms linear;
     }
 
-    /* Custom cursor */
-    .cursor-dot, .cursor-ring {
-      position: fixed;
-      top: 0; left: 0;
-      pointer-events: none;
-      z-index: 9999;
-      will-change: transform;
-    }
-    .cursor-dot {
-      width: 6px; height: 6px;
-      background: var(--teal);
-      border-radius: 50%;
-      transition: transform 0.2s cubic-bezier(.2,.8,.2,1), background 0.3s;
-    }
-    .cursor-ring {
-      width: 32px; height: 32px;
-      border: 1.5px solid rgba(45, 212, 191, 0.45);
-      border-radius: 50%;
-      transition: width 0.25s, height 0.25s, border-color 0.3s, transform 0.05s linear;
-    }
-    .cursor-ring.is-hot {
-      width: 56px; height: 56px;
-      border-color: var(--gold);
-    }
-    .cursor-dot.is-hot { background: var(--gold); transform: translate(-50%, -50%) scale(0.5); }
-
-    @media (hover: none), (max-width: 768px) {
-      .cursor-dot, .cursor-ring { display: none; }
-    }
-
     /* Navigation */
     nav {
       position: fixed;
@@ -311,8 +281,6 @@ const year = new Date().getFullYear();
 <body>
 
 <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
-<div class="cursor-dot" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
 
 <nav id="nav">
   <a href="/" class="nav-name">Florian Obermeier</a>
@@ -371,37 +339,6 @@ const year = new Date().getFullYear();
   }
   document.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
-
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  const supportsHover = matchMedia('(hover: hover)').matches;
-  if (supportsHover && cursor && ring) {
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
-    });
-    function loop() {
-      rx += (mx - rx) * 0.14;
-      ry += (my - ry) * 0.14;
-      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
-      requestAnimationFrame(loop);
-    }
-    loop();
-
-    // Hot state on interactive elements
-    document.querySelectorAll('a, button, .book-card').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursor.classList.add('is-hot');
-        ring.classList.add('is-hot');
-      });
-      el.addEventListener('mouseleave', () => {
-        cursor.classList.remove('is-hot');
-        ring.classList.remove('is-hot');
-      });
-    });
-  }
 
   // Reveal observer
   const io = new IntersectionObserver(entries => {

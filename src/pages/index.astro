@@ -464,12 +464,20 @@ import portraitImg from '../assets/florian-portrait.jpg';
     letter-spacing: -0.01em;
     margin-bottom: 0.75rem;
   }
+  .newsletter-headline em {
+    font-style: italic;
+    color: var(--gold);
+  }
   .newsletter-sub {
     font-size: 0.95rem;
     color: var(--text-muted);
     line-height: 1.7;
     margin-bottom: 1.75rem;
     max-width: 480px;
+  }
+  .newsletter-sub em {
+    font-style: italic;
+    color: var(--text);
   }
   .nl-field {
     display: flex;
@@ -644,6 +652,25 @@ import portraitImg from '../assets/florian-portrait.jpg';
   </div>
 </section>
 
+<!-- RELEASE REMINDER -->
+<section id="erinnerung" class="block">
+  <p class="section-label reveal">Erscheint bald</p>
+  <div class="newsletter-inner">
+    <h2 class="newsletter-headline reveal">Sei dabei, wenn es <em>still</em> wird.</h2>
+    <p class="newsletter-sub reveal">Am 30. Mai 2026 erscheint mein zweites Buch, <em>Du hörst es erst, wenn es still wird</em>. Trag deine E-Mail ein — ich erinnere dich, sobald es da ist. Kein Newsletter, keine Weitergabe.</p>
+    <form class="reveal" id="nl-form" novalidate>
+      <div class="nl-field">
+        <input class="nl-input" type="email" id="nl-email" placeholder="deine@email.com" autocomplete="email" required />
+        <button class="btn" type="submit">
+          <span id="nl-btn-label">Erinner mich</span>
+          <span class="arrow">→</span>
+        </button>
+      </div>
+      <p class="nl-status" id="nl-status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section id="ueber" class="block">
   <p class="section-label reveal">Über</p>
@@ -663,25 +690,6 @@ import portraitImg from '../assets/florian-portrait.jpg';
     <p class="reveal">
       Ich glaube nicht, dass man immer stark sein muss. Aber daran, dass man nicht allein damit bleiben sollte.
     </p>
-  </div>
-</section>
-
-<!-- NEWSLETTER -->
-<section id="newsletter" class="block">
-  <p class="section-label reveal">Newsletter</p>
-  <div class="newsletter-inner">
-    <h2 class="newsletter-headline reveal">Auf dem Laufenden bleiben.</h2>
-    <p class="newsletter-sub reveal">Neue Bücher, Lesungen, Gedanken — direkt ins Postfach. Kein Spam, keine Weitergabe. Abmeldung jederzeit.</p>
-    <form class="reveal" id="nl-form" novalidate>
-      <div class="nl-field">
-        <input class="nl-input" type="email" id="nl-email" placeholder="deine@email.com" autocomplete="email" required />
-        <button class="btn" type="submit">
-          <span id="nl-btn-label">Anmelden</span>
-          <span class="arrow">→</span>
-        </button>
-      </div>
-      <p class="nl-status" id="nl-status" aria-live="polite"></p>
-    </form>
   </div>
 </section>
 
@@ -738,19 +746,19 @@ import portraitImg from '../assets/florian-portrait.jpg';
         var data = await res.json();
         if (data.ok) {
           form.querySelector('.nl-field').style.display = 'none';
-          status.textContent = 'Danke — wir haben dir eine Bestätigungs-E-Mail geschickt.';
+          status.textContent = 'Danke — ich melde mich, sobald das Buch erschienen ist.';
           status.className = 'nl-status nl-status--ok';
         } else {
           status.textContent = data.error || 'Etwas ist schiefgelaufen.';
           status.className = 'nl-status nl-status--err';
           btn.disabled = false;
-          btnLabel.textContent = 'Anmelden';
+          btnLabel.textContent = 'Erinner mich';
         }
       } catch (_) {
         status.textContent = 'Netzwerkfehler — bitte später versuchen.';
         status.className = 'nl-status nl-status--err';
         btn.disabled = false;
-        btnLabel.textContent = 'Anmelden';
+        btnLabel.textContent = 'Erinner mich';
       }
     });
   })();

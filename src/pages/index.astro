@@ -388,6 +388,43 @@ import portraitImg from '../assets/florian-portrait.jpg';
     flex-wrap: wrap;
   }
 
+  /* COUNTDOWN */
+  .countdown {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.75rem;
+  }
+  .countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .countdown-num {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1;
+    min-width: 2ch;
+    text-align: center;
+  }
+  .countdown-label {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-dim);
+  }
+  .countdown-done {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+  }
+
   /* ABOUT */
   .about {
     max-width: 800px;
@@ -508,7 +545,7 @@ import portraitImg from '../assets/florian-portrait.jpg';
         <h2 class="book-title">Warum KI kein Hype ist</h2>
         <p class="book-subtitle">und wie sie unseren Alltag grundlegend verändert</p>
         <p class="book-desc">
-          Florian Obermeier kommt nicht aus der Tech-Szene. Ende 2022 hat er ChatGPT geöffnet und gemerkt: das ist nicht der nächste Trend. 2024 hat er sich im Silicon Valley angeschaut, wer das eigentlich baut und warum. Daraus sind 586 Seiten geworden: was KI heute kann, und wohin das in den nächsten Jahren führt. Geschrieben für alle, die nicht in der Tech-Bubble sitzen und trotzdem mitreden wollen.
+          Kein KI-Forscher, kein Startup-Gründer — aber jemand, der IT von innen kennt: über zehn Jahre als Teamleiter und Manager in der IT-Branche. Ende 2022 hat er ChatGPT geöffnet und gemerkt: das ist nicht der nächste Trend. 2024 hat er sich im Silicon Valley angeschaut, wer das eigentlich baut und warum. Daraus sind 586 Seiten geworden: was KI heute kann, und wohin das in den nächsten Jahren führt. Für alle, die den Hype kennen — und endlich wissen wollen, was wirklich dahintersteckt.
         </p>
         <p class="book-meta">2025 · 586 Seiten · BoD · ISBN 978-3-6951-7324-2</p>
         <div class="book-actions">
@@ -535,6 +572,24 @@ import portraitImg from '../assets/florian-portrait.jpg';
           Alles lief. Der Job, der Kalender, die Rolle, in der niemand auf die Idee käme zu fragen. Bis der Körper anfängt, Dinge zu tun, die sich nicht mehr erklären lassen. Ein Protokoll des Wegs durch die Stille. Dazu 16 Songs: einer für jedes der 13 Kapitel, drei weitere, die dazugehören. Selbst geschrieben und mit Suno produziert, weil manche Dinge sich nicht schreiben, sondern nur hören lassen.
         </p>
         <p class="book-meta">Erscheint 30. Mai 2026 · 13 Kapitel · 16 Songs · BoD</p>
+        <div class="countdown" id="countdown-stille" aria-live="polite">
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-days">--</span>
+            <span class="countdown-label">Tage</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-hours">--</span>
+            <span class="countdown-label">Std</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-mins">--</span>
+            <span class="countdown-label">Min</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-secs">--</span>
+            <span class="countdown-label">Sek</span>
+          </div>
+        </div>
         <div class="book-actions">
           <a href="mailto:kontakt@florian-obermeier.com?subject=Du%20h%C3%B6rst%20es%20erst%2C%20wenn%20es%20still%20wird" class="btn">Anfragen <span class="arrow">→</span></a>
         </div>
@@ -552,7 +607,7 @@ import portraitImg from '../assets/florian-portrait.jpg';
       Ich lebe im Bayerischen Wald. Dort, wo die Landkarte grün ist, wo Hügel den Blick beruhigen und Funklöcher oft schneller über Telefonate entscheiden als man selbst. Ein guter Ort zum <em>Nachdenken</em>.
     </p>
     <p class="reveal">
-      Lange war das nicht meine Welt. Job, Projekte nebenher, beinahe jedes Wochenende unterwegs. Veranstaltungen, Konzerte. Immer laut, immer Trubel. Ich war der, den man anruft, wenn was laufen muss, und habe das nächste Ja meistens gesagt, bevor ich es überlegt hatte. Eine Weile hat sich das wie Leistung angefühlt. Bis mein Körper anderer Meinung war.
+      Lange war das nicht meine Welt. Job in IT und Sales, Projekte nebenher, beinahe jedes Wochenende unterwegs. Veranstaltungen, Konzerte. Immer laut, immer Trubel. Ich war der, den man anruft, wenn was laufen muss, und habe das nächste Ja meistens gesagt, bevor ich es überlegt hatte. Eine Weile hat sich das wie Leistung angefühlt. Bis mein Körper anderer Meinung war.
     </p>
     <p class="reveal">
       Heute lebe ich bewusster. Ich höre öfter zu, bevor ich antworte. Auch mir selbst, was eigentlich das schwierigere von beidem ist.
@@ -595,6 +650,28 @@ import portraitImg from '../assets/florian-portrait.jpg';
       card.style.transform = '';
     });
   });
+
+  // Countdown zum Release von "Du hörst es erst, wenn es still wird"
+  (function() {
+    var release = new Date('2026-05-30T00:00:00+02:00');
+    var el = document.getElementById('countdown-stille');
+    if (!el) return;
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function tick() {
+      var diff = release - Date.now();
+      if (diff <= 0) {
+        el.className = 'countdown-done';
+        el.innerHTML = 'Jetzt erhältlich';
+        return;
+      }
+      document.getElementById('cd-days').textContent  = pad(Math.floor(diff / 86400000));
+      document.getElementById('cd-hours').textContent = pad(Math.floor(diff % 86400000 / 3600000));
+      document.getElementById('cd-mins').textContent  = pad(Math.floor(diff % 3600000 / 60000));
+      document.getElementById('cd-secs').textContent  = pad(Math.floor(diff % 60000 / 1000));
+      setTimeout(tick, 1000);
+    }
+    tick();
+  })();
 </script>
 
 </BaseLayout>

@@ -386,6 +386,43 @@ import portraitImg from '../../assets/florian-portrait.jpg';
     flex-wrap: wrap;
   }
 
+  /* COUNTDOWN */
+  .countdown {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.75rem;
+  }
+  .countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .countdown-num {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1;
+    min-width: 2ch;
+    text-align: center;
+  }
+  .countdown-label {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-dim);
+  }
+  .countdown-done {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+  }
+
   /* ABOUT */
   .about {
     max-width: 800px;
@@ -506,7 +543,7 @@ import portraitImg from '../../assets/florian-portrait.jpg';
         <h2 class="book-title">Why AI Is Not Just Hype</h2>
         <p class="book-subtitle">and how it is fundamentally changing our everyday lives</p>
         <p class="book-desc">
-          Florian Obermeier doesn't come from tech. In late 2022 he opened ChatGPT and realized this wasn't the next trend. In 2024 he went to Silicon Valley to see for himself who's actually building this, and why. The result is 586 pages: what AI can do today, and where it's heading next. Written for people who aren't in the tech bubble but still want to follow the conversation.
+          Not an AI researcher, not a startup founder — but someone who knows IT from the inside: over ten years as a team lead and manager in the IT industry. In late 2022 he opened ChatGPT and realized this wasn't the next trend. In 2024 he went to Silicon Valley to see for himself who's actually building this, and why. The result is 586 pages: what AI can do today, and where it's heading next. For everyone who's tired of the hype — and finally wants to understand what's actually going on.
         </p>
         <p class="book-meta">2025 · 586 pages · BoD · ISBN 978-3-6951-7324-2 · Available in German</p>
         <div class="book-actions">
@@ -533,6 +570,24 @@ import portraitImg from '../../assets/florian-portrait.jpg';
           Everything was running. The job, the calendar, the role nobody would think to question. Until the body starts doing things that can no longer be explained. A record of the journey through silence. Plus 16 songs: one for each of the 13 chapters, three more that belong to the story. All written by him and produced with Suno, because some things can't be written, only heard.
         </p>
         <p class="book-meta">Out 30 May 2026 · 13 Chapters · 16 Songs · BoD · Available in German</p>
+        <div class="countdown" id="countdown-stille" aria-live="polite">
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-days">--</span>
+            <span class="countdown-label">Days</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-hours">--</span>
+            <span class="countdown-label">Hrs</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-mins">--</span>
+            <span class="countdown-label">Min</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-secs">--</span>
+            <span class="countdown-label">Sec</span>
+          </div>
+        </div>
         <div class="book-actions">
           <a href="mailto:kontakt@florian-obermeier.com?subject=You%20Only%20Hear%20It%20When%20It%20Falls%20Silent" class="btn">Enquire <span class="arrow">→</span></a>
         </div>
@@ -550,7 +605,7 @@ import portraitImg from '../../assets/florian-portrait.jpg';
       I live in the Bavarian Forest. Where the map is green, where hills calm the gaze and dead zones often decide on phone calls faster than you do. A good place to <em>think</em>.
     </p>
     <p class="reveal">
-      For a long time, that wasn't my world. Job, side projects, on the road almost every weekend. Events, concerts. Always loud, always busy. I was the one people called when something had to run, and I usually said the next yes before I'd thought about it. For a while it felt like achievement. Until my body disagreed.
+      For a long time, that wasn't my world. IT and Sales by day, side projects on top, on the road almost every weekend. Events, concerts. Always loud, always busy. I was the one people called when something had to run, and I usually said the next yes before I'd thought about it. For a while it felt like achievement. Until my body disagreed.
     </p>
     <p class="reveal">
       These days I live more deliberately. I listen more often before I answer. To myself too, which is actually the harder of the two.
@@ -593,6 +648,28 @@ import portraitImg from '../../assets/florian-portrait.jpg';
       card.style.transform = '';
     });
   });
+
+  // Countdown to release of "Du hörst es erst, wenn es still wird"
+  (function() {
+    var release = new Date('2026-05-30T00:00:00+02:00');
+    var el = document.getElementById('countdown-stille');
+    if (!el) return;
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function tick() {
+      var diff = release - Date.now();
+      if (diff <= 0) {
+        el.className = 'countdown-done';
+        el.innerHTML = 'Available now';
+        return;
+      }
+      document.getElementById('cd-days').textContent  = pad(Math.floor(diff / 86400000));
+      document.getElementById('cd-hours').textContent = pad(Math.floor(diff % 86400000 / 3600000));
+      document.getElementById('cd-mins').textContent  = pad(Math.floor(diff % 3600000 / 60000));
+      document.getElementById('cd-secs').textContent  = pad(Math.floor(diff % 60000 / 1000));
+      setTimeout(tick, 1000);
+    }
+    tick();
+  })();
 </script>
 
 </BaseLayout>

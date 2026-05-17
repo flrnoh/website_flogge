@@ -452,6 +452,51 @@ import portraitImg from '../../assets/florian-portrait.jpg';
     font-weight: 500;
   }
 
+  /* NEWSLETTER */
+  .newsletter-inner { max-width: 560px; }
+  .newsletter-headline {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    color: var(--text-heading);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+  }
+  .newsletter-sub {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+    max-width: 480px;
+  }
+  .nl-field {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .nl-input {
+    flex: 1;
+    min-width: 180px;
+    background: var(--bg-card);
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 0.85rem 1.25rem;
+    color: var(--text-heading);
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .nl-input::placeholder { color: var(--text-dim); }
+  .nl-input:focus { border-color: var(--teal); }
+  .nl-status {
+    margin-top: 0.75rem;
+    font-size: 0.88rem;
+    min-height: 1.4em;
+  }
+  .nl-status--ok { color: var(--teal); }
+  .nl-status--err { color: #f87171; }
+
   /* CONTACT */
   .contact {
     text-align: center;
@@ -619,6 +664,25 @@ import portraitImg from '../../assets/florian-portrait.jpg';
   </div>
 </section>
 
+<!-- NEWSLETTER -->
+<section id="newsletter" class="block">
+  <p class="section-label reveal">Newsletter</p>
+  <div class="newsletter-inner">
+    <h2 class="newsletter-headline reveal">Stay in the loop.</h2>
+    <p class="newsletter-sub reveal">New books, readings, thoughts — straight to your inbox. No spam, never shared. Unsubscribe any time.</p>
+    <form class="reveal" id="nl-form" novalidate>
+      <div class="nl-field">
+        <input class="nl-input" type="email" id="nl-email" placeholder="your@email.com" autocomplete="email" required />
+        <button class="btn" type="submit">
+          <span id="nl-btn-label">Subscribe</span>
+          <span class="arrow">→</span>
+        </button>
+      </div>
+      <p class="nl-status" id="nl-status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="kontakt" class="block contact">
   <h2 class="contact-headline reveal">Say <em>Hello</em>.</h2>
@@ -648,6 +712,46 @@ import portraitImg from '../../assets/florian-portrait.jpg';
       card.style.transform = '';
     });
   });
+
+  // Newsletter form
+  (function() {
+    var form = document.getElementById('nl-form');
+    if (!form) return;
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var email = document.getElementById('nl-email').value.trim();
+      var status = document.getElementById('nl-status');
+      var btnLabel = document.getElementById('nl-btn-label');
+      var btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btnLabel.textContent = '…';
+      status.textContent = '';
+      status.className = 'nl-status';
+      try {
+        var res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        });
+        var data = await res.json();
+        if (data.ok) {
+          form.querySelector('.nl-field').style.display = 'none';
+          status.textContent = 'Thanks — check your inbox to confirm your subscription.';
+          status.className = 'nl-status nl-status--ok';
+        } else {
+          status.textContent = data.error || 'Something went wrong.';
+          status.className = 'nl-status nl-status--err';
+          btn.disabled = false;
+          btnLabel.textContent = 'Subscribe';
+        }
+      } catch (_) {
+        status.textContent = 'Network error — please try again later.';
+        status.className = 'nl-status nl-status--err';
+        btn.disabled = false;
+        btnLabel.textContent = 'Subscribe';
+      }
+    });
+  })();
 
   // Countdown to release of "Du hörst es erst, wenn es still wird"
   (function() {

@@ -479,6 +479,13 @@ import portraitImg from '../assets/florian-portrait.jpg';
     font-style: italic;
     color: var(--text);
   }
+  .nl-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
   .nl-field {
     display: flex;
     gap: 0.5rem;
@@ -658,14 +665,17 @@ import portraitImg from '../assets/florian-portrait.jpg';
   <div class="newsletter-inner">
     <h2 class="newsletter-headline reveal">Sei dabei, wenn es <em>still</em> wird.</h2>
     <p class="newsletter-sub reveal">Am 30. Mai 2026 erscheint mein zweites Buch, <em>Du hörst es erst, wenn es still wird</em>. Trag deine E-Mail ein — ich erinnere dich, sobald es da ist. Kein Newsletter, keine Weitergabe.</p>
-    <form class="reveal" id="nl-form" novalidate>
+    <form class="reveal" id="nl-form" method="POST" action="https://186cb071.sibforms.com/serve/MUIFAG1iot05r7jorLeQ74gO8n2RWTFVeVL9P4N01beUzrgXFBtS02Jma-lXEk5Qg_Bv9mQyQJoAKR_fXIXr0YwtkCML6bYYxX6Lhyi-iSONLriTEdk8gpHvbMXzHd74q4FCWJQYvFGapcwSDGgyLgD-QhMMdf3nyiusG0Rk-Z3OGUszo3xMRjaxt_Oi3UcuDKUI64gok8QdYT7y9A==">
       <div class="nl-field">
-        <input class="nl-input" type="email" id="nl-email" placeholder="deine@email.com" autocomplete="email" required />
+        <input class="nl-input" type="email" id="nl-email" name="EMAIL" placeholder="deine@email.com" autocomplete="email" required />
         <button class="btn" type="submit">
           <span id="nl-btn-label">Erinner mich</span>
           <span class="arrow">→</span>
         </button>
       </div>
+      <input class="nl-hp" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <input type="hidden" name="locale" value="de" />
+      <input type="hidden" name="html_type" value="simple" />
       <p class="nl-status" id="nl-status" aria-live="polite"></p>
     </form>
   </div>
@@ -723,43 +733,27 @@ import portraitImg from '../assets/florian-portrait.jpg';
     });
   });
 
-  // Newsletter-Formular
+  // Anmeldung — Submit direkt an Brevo (no-cors), Inline-Bestätigung.
+  // Ohne JS greift der normale Form-POST auf die Brevo-Bestätigungsseite.
   (function() {
     var form = document.getElementById('nl-form');
     if (!form) return;
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
-      var email = document.getElementById('nl-email').value.trim();
       var status = document.getElementById('nl-status');
       var btnLabel = document.getElementById('nl-btn-label');
       var btn = form.querySelector('button[type="submit"]');
       btn.disabled = true;
       btnLabel.textContent = '…';
-      status.textContent = '';
-      status.className = 'nl-status';
-      try {
-        var res = await fetch('/api/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email })
-        });
-        var data = await res.json();
-        if (data.ok) {
-          form.querySelector('.nl-field').style.display = 'none';
-          status.textContent = 'Danke — ich melde mich, sobald das Buch erschienen ist.';
-          status.className = 'nl-status nl-status--ok';
-        } else {
-          status.textContent = data.error || 'Etwas ist schiefgelaufen.';
-          status.className = 'nl-status nl-status--err';
-          btn.disabled = false;
-          btnLabel.textContent = 'Erinner mich';
-        }
-      } catch (_) {
-        status.textContent = 'Netzwerkfehler — bitte später versuchen.';
-        status.className = 'nl-status nl-status--err';
-        btn.disabled = false;
-        btnLabel.textContent = 'Erinner mich';
-      }
+      fetch(form.action, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: new URLSearchParams(new FormData(form))
+      }).finally(function() {
+        form.querySelector('.nl-field').style.display = 'none';
+        status.textContent = 'Danke — ich melde mich, sobald das Buch erschienen ist.';
+        status.className = 'nl-status nl-status--ok';
+      });
     });
   })();
 

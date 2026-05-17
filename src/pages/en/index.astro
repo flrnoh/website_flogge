@@ -477,6 +477,13 @@ import portraitImg from '../../assets/florian-portrait.jpg';
     font-style: italic;
     color: var(--text);
   }
+  .nl-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
   .nl-field {
     display: flex;
     gap: 0.5rem;
@@ -656,14 +663,17 @@ import portraitImg from '../../assets/florian-portrait.jpg';
   <div class="newsletter-inner">
     <h2 class="newsletter-headline reveal">Be there when it <em>falls silent</em>.</h2>
     <p class="newsletter-sub reveal">My second book, <em>You Only Hear It When It Falls Silent</em>, is out on 30 May 2026. Leave your email and I'll remind you the moment it's here. No newsletter, never shared.</p>
-    <form class="reveal" id="nl-form" novalidate>
+    <form class="reveal" id="nl-form" method="POST" action="https://186cb071.sibforms.com/serve/MUIFAG1iot05r7jorLeQ74gO8n2RWTFVeVL9P4N01beUzrgXFBtS02Jma-lXEk5Qg_Bv9mQyQJoAKR_fXIXr0YwtkCML6bYYxX6Lhyi-iSONLriTEdk8gpHvbMXzHd74q4FCWJQYvFGapcwSDGgyLgD-QhMMdf3nyiusG0Rk-Z3OGUszo3xMRjaxt_Oi3UcuDKUI64gok8QdYT7y9A==">
       <div class="nl-field">
-        <input class="nl-input" type="email" id="nl-email" placeholder="your@email.com" autocomplete="email" required />
+        <input class="nl-input" type="email" id="nl-email" name="EMAIL" placeholder="your@email.com" autocomplete="email" required />
         <button class="btn" type="submit">
           <span id="nl-btn-label">Remind me</span>
           <span class="arrow">→</span>
         </button>
       </div>
+      <input class="nl-hp" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <input type="hidden" name="locale" value="de" />
+      <input type="hidden" name="html_type" value="simple" />
       <p class="nl-status" id="nl-status" aria-live="polite"></p>
     </form>
   </div>
@@ -721,43 +731,27 @@ import portraitImg from '../../assets/florian-portrait.jpg';
     });
   });
 
-  // Newsletter form
+  // Signup — submit straight to Brevo (no-cors), inline confirmation.
+  // Without JS the plain form POST falls back to Brevo's confirmation page.
   (function() {
     var form = document.getElementById('nl-form');
     if (!form) return;
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
-      var email = document.getElementById('nl-email').value.trim();
       var status = document.getElementById('nl-status');
       var btnLabel = document.getElementById('nl-btn-label');
       var btn = form.querySelector('button[type="submit"]');
       btn.disabled = true;
       btnLabel.textContent = '…';
-      status.textContent = '';
-      status.className = 'nl-status';
-      try {
-        var res = await fetch('/api/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email })
-        });
-        var data = await res.json();
-        if (data.ok) {
-          form.querySelector('.nl-field').style.display = 'none';
-          status.textContent = 'Thanks — I\'ll let you know the moment the book is out.';
-          status.className = 'nl-status nl-status--ok';
-        } else {
-          status.textContent = data.error || 'Something went wrong.';
-          status.className = 'nl-status nl-status--err';
-          btn.disabled = false;
-          btnLabel.textContent = 'Remind me';
-        }
-      } catch (_) {
-        status.textContent = 'Network error — please try again later.';
-        status.className = 'nl-status nl-status--err';
-        btn.disabled = false;
-        btnLabel.textContent = 'Remind me';
-      }
+      fetch(form.action, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: new URLSearchParams(new FormData(form))
+      }).finally(function() {
+        form.querySelector('.nl-field').style.display = 'none';
+        status.textContent = 'Thanks — I\'ll let you know the moment the book is out.';
+        status.className = 'nl-status nl-status--ok';
+      });
     });
   })();
 

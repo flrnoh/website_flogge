@@ -386,6 +386,43 @@ import portraitImg from '../../assets/florian-portrait.jpg';
     flex-wrap: wrap;
   }
 
+  /* COUNTDOWN */
+  .countdown {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.75rem;
+  }
+  .countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .countdown-num {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1;
+    min-width: 2ch;
+    text-align: center;
+  }
+  .countdown-label {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-dim);
+  }
+  .countdown-done {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+  }
+
   /* ABOUT */
   .about {
     max-width: 800px;
@@ -414,6 +451,51 @@ import portraitImg from '../../assets/florian-portrait.jpg';
     color: var(--text-heading);
     font-weight: 500;
   }
+
+  /* NEWSLETTER */
+  .newsletter-inner { max-width: 560px; }
+  .newsletter-headline {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    color: var(--text-heading);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+  }
+  .newsletter-sub {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+    max-width: 480px;
+  }
+  .nl-field {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .nl-input {
+    flex: 1;
+    min-width: 180px;
+    background: var(--bg-card);
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 0.85rem 1.25rem;
+    color: var(--text-heading);
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .nl-input::placeholder { color: var(--text-dim); }
+  .nl-input:focus { border-color: var(--teal); }
+  .nl-status {
+    margin-top: 0.75rem;
+    font-size: 0.88rem;
+    min-height: 1.4em;
+  }
+  .nl-status--ok { color: var(--teal); }
+  .nl-status--err { color: #f87171; }
 
   /* CONTACT */
   .contact {
@@ -506,7 +588,7 @@ import portraitImg from '../../assets/florian-portrait.jpg';
         <h2 class="book-title">Why AI Is Not Just Hype</h2>
         <p class="book-subtitle">and how it is fundamentally changing our everyday lives</p>
         <p class="book-desc">
-          Florian Obermeier doesn't come from tech. In late 2022 he opened ChatGPT and realized this wasn't the next trend. In 2024 he went to Silicon Valley to see for himself who's actually building this, and why. The result is 586 pages: what AI can do today, and where it's heading next. Written for people who aren't in the tech bubble but still want to follow the conversation.
+          Not a researcher, not a developer — but someone who knows IT from the inside: over ten years as a team lead and manager in the industry. In late 2022 he opened ChatGPT and realized this wasn't the next trend. In 2024 he went to Silicon Valley to see for himself who's actually building this, and why. The result is 586 pages: what AI can do today, and where it's heading next. For everyone who's tired of the hype — and finally wants to understand what's actually going on.
         </p>
         <p class="book-meta">2025 · 586 pages · BoD · ISBN 978-3-6951-7324-2 · Available in German</p>
         <div class="book-actions">
@@ -533,6 +615,24 @@ import portraitImg from '../../assets/florian-portrait.jpg';
           Everything was running. The job, the calendar, the role nobody would think to question. Until the body starts doing things that can no longer be explained. A record of the journey through silence. Plus 16 songs: one for each of the 13 chapters, three more that belong to the story. All written by him and produced with Suno, because some things can't be written, only heard.
         </p>
         <p class="book-meta">Out 30 May 2026 · 13 Chapters · 16 Songs · BoD · Available in German</p>
+        <div class="countdown" id="countdown-stille" aria-live="polite">
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-days">--</span>
+            <span class="countdown-label">Days</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-hours">--</span>
+            <span class="countdown-label">Hrs</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-mins">--</span>
+            <span class="countdown-label">Min</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-secs">--</span>
+            <span class="countdown-label">Sec</span>
+          </div>
+        </div>
         <div class="book-actions">
           <a href="mailto:kontakt@florian-obermeier.com?subject=You%20Only%20Hear%20It%20When%20It%20Falls%20Silent" class="btn">Enquire <span class="arrow">→</span></a>
         </div>
@@ -550,7 +650,7 @@ import portraitImg from '../../assets/florian-portrait.jpg';
       I live in the Bavarian Forest. Where the map is green, where hills calm the gaze and dead zones often decide on phone calls faster than you do. A good place to <em>think</em>.
     </p>
     <p class="reveal">
-      For a long time, that wasn't my world. Job, side projects, on the road almost every weekend. Events, concerts. Always loud, always busy. I was the one people called when something had to run, and I usually said the next yes before I'd thought about it. For a while it felt like achievement. Until my body disagreed.
+      For a long time, that wasn't my world. IT and Sales by day, side projects on top, on the road almost every weekend. Events, concerts. Always loud, always busy. I was the one people called when something had to run, and I usually said the next yes before I'd thought about it. For a while it felt like achievement. Until my body disagreed.
     </p>
     <p class="reveal">
       These days I live more deliberately. I listen more often before I answer. To myself too, which is actually the harder of the two.
@@ -561,6 +661,25 @@ import portraitImg from '../../assets/florian-portrait.jpg';
     <p class="reveal">
       I don't believe you always have to be strong. But I do believe you shouldn't stay alone with it.
     </p>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="newsletter" class="block">
+  <p class="section-label reveal">Newsletter</p>
+  <div class="newsletter-inner">
+    <h2 class="newsletter-headline reveal">Stay in the loop.</h2>
+    <p class="newsletter-sub reveal">New books, readings, thoughts — straight to your inbox. No spam, never shared. Unsubscribe any time.</p>
+    <form class="reveal" id="nl-form" novalidate>
+      <div class="nl-field">
+        <input class="nl-input" type="email" id="nl-email" placeholder="your@email.com" autocomplete="email" required />
+        <button class="btn" type="submit">
+          <span id="nl-btn-label">Subscribe</span>
+          <span class="arrow">→</span>
+        </button>
+      </div>
+      <p class="nl-status" id="nl-status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
@@ -593,6 +712,68 @@ import portraitImg from '../../assets/florian-portrait.jpg';
       card.style.transform = '';
     });
   });
+
+  // Newsletter form
+  (function() {
+    var form = document.getElementById('nl-form');
+    if (!form) return;
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var email = document.getElementById('nl-email').value.trim();
+      var status = document.getElementById('nl-status');
+      var btnLabel = document.getElementById('nl-btn-label');
+      var btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btnLabel.textContent = '…';
+      status.textContent = '';
+      status.className = 'nl-status';
+      try {
+        var res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        });
+        var data = await res.json();
+        if (data.ok) {
+          form.querySelector('.nl-field').style.display = 'none';
+          status.textContent = 'Thanks — check your inbox to confirm your subscription.';
+          status.className = 'nl-status nl-status--ok';
+        } else {
+          status.textContent = data.error || 'Something went wrong.';
+          status.className = 'nl-status nl-status--err';
+          btn.disabled = false;
+          btnLabel.textContent = 'Subscribe';
+        }
+      } catch (_) {
+        status.textContent = 'Network error — please try again later.';
+        status.className = 'nl-status nl-status--err';
+        btn.disabled = false;
+        btnLabel.textContent = 'Subscribe';
+      }
+    });
+  })();
+
+  // Countdown to release of "Du hörst es erst, wenn es still wird"
+  (function() {
+    var release = new Date('2026-05-30T00:00:00+02:00');
+    var el = document.getElementById('countdown-stille');
+    if (!el) return;
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function tick() {
+      var diff = release - Date.now();
+      if (diff <= 0) {
+        el.className = 'countdown-done';
+        el.innerHTML = 'Available now';
+        return;
+      }
+      document.getElementById('cd-days').textContent  = pad(Math.floor(diff / 86400000));
+      document.getElementById('cd-hours').textContent = pad(Math.floor(diff % 86400000 / 3600000));
+      document.getElementById('cd-mins').textContent  = pad(Math.floor(diff % 3600000 / 60000));
+      document.getElementById('cd-secs').textContent  = pad(Math.floor(diff % 60000 / 1000));
+      setTimeout(tick, 1000);
+    }
+    tick();
+  })();
 </script>
 
 </BaseLayout>

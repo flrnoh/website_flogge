@@ -388,6 +388,43 @@ import portraitImg from '../assets/florian-portrait.jpg';
     flex-wrap: wrap;
   }
 
+  /* COUNTDOWN */
+  .countdown {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.75rem;
+  }
+  .countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .countdown-num {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1;
+    min-width: 2ch;
+    text-align: center;
+  }
+  .countdown-label {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-dim);
+  }
+  .countdown-done {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+  }
+
   /* ABOUT */
   .about {
     max-width: 800px;
@@ -416,6 +453,51 @@ import portraitImg from '../assets/florian-portrait.jpg';
     color: var(--text-heading);
     font-weight: 500;
   }
+
+  /* NEWSLETTER */
+  .newsletter-inner { max-width: 560px; }
+  .newsletter-headline {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    color: var(--text-heading);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+  }
+  .newsletter-sub {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+    max-width: 480px;
+  }
+  .nl-field {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .nl-input {
+    flex: 1;
+    min-width: 180px;
+    background: var(--bg-card);
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    padding: 0.85rem 1.25rem;
+    color: var(--text-heading);
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .nl-input::placeholder { color: var(--text-dim); }
+  .nl-input:focus { border-color: var(--teal); }
+  .nl-status {
+    margin-top: 0.75rem;
+    font-size: 0.88rem;
+    min-height: 1.4em;
+  }
+  .nl-status--ok { color: var(--teal); }
+  .nl-status--err { color: #f87171; }
 
   /* CONTACT / CTA */
   .contact {
@@ -508,7 +590,7 @@ import portraitImg from '../assets/florian-portrait.jpg';
         <h2 class="book-title">Warum KI kein Hype ist</h2>
         <p class="book-subtitle">und wie sie unseren Alltag grundlegend verändert</p>
         <p class="book-desc">
-          Florian Obermeier kommt nicht aus der Tech-Szene. Ende 2022 hat er ChatGPT geöffnet und gemerkt: das ist nicht der nächste Trend. 2024 hat er sich im Silicon Valley angeschaut, wer das eigentlich baut und warum. Daraus sind 586 Seiten geworden: was KI heute kann, und wohin das in den nächsten Jahren führt. Geschrieben für alle, die nicht in der Tech-Bubble sitzen und trotzdem mitreden wollen.
+          Kein Forscher, kein Entwickler — aber jemand, der IT von innen kennt: über zehn Jahre als Teamleiter und Manager in der Branche. Ende 2022 hat er ChatGPT geöffnet und gemerkt: das ist nicht der nächste Trend. 2024 hat er sich im Silicon Valley angeschaut, wer das eigentlich baut und warum. Daraus sind 586 Seiten geworden: was KI heute kann, und wohin das in den nächsten Jahren führt. Für alle, die den Hype kennen — und endlich wissen wollen, was wirklich dahintersteckt.
         </p>
         <p class="book-meta">2025 · 586 Seiten · BoD · ISBN 978-3-6951-7324-2</p>
         <div class="book-actions">
@@ -535,6 +617,24 @@ import portraitImg from '../assets/florian-portrait.jpg';
           Alles lief. Der Job, der Kalender, die Rolle, in der niemand auf die Idee käme zu fragen. Bis der Körper anfängt, Dinge zu tun, die sich nicht mehr erklären lassen. Ein Protokoll des Wegs durch die Stille. Dazu 16 Songs: einer für jedes der 13 Kapitel, drei weitere, die dazugehören. Selbst geschrieben und mit Suno produziert, weil manche Dinge sich nicht schreiben, sondern nur hören lassen.
         </p>
         <p class="book-meta">Erscheint 30. Mai 2026 · 13 Kapitel · 16 Songs · BoD</p>
+        <div class="countdown" id="countdown-stille" aria-live="polite">
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-days">--</span>
+            <span class="countdown-label">Tage</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-hours">--</span>
+            <span class="countdown-label">Std</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-mins">--</span>
+            <span class="countdown-label">Min</span>
+          </div>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-secs">--</span>
+            <span class="countdown-label">Sek</span>
+          </div>
+        </div>
         <div class="book-actions">
           <a href="mailto:kontakt@florian-obermeier.com?subject=Du%20h%C3%B6rst%20es%20erst%2C%20wenn%20es%20still%20wird" class="btn">Anfragen <span class="arrow">→</span></a>
         </div>
@@ -552,7 +652,7 @@ import portraitImg from '../assets/florian-portrait.jpg';
       Ich lebe im Bayerischen Wald. Dort, wo die Landkarte grün ist, wo Hügel den Blick beruhigen und Funklöcher oft schneller über Telefonate entscheiden als man selbst. Ein guter Ort zum <em>Nachdenken</em>.
     </p>
     <p class="reveal">
-      Lange war das nicht meine Welt. Job, Projekte nebenher, beinahe jedes Wochenende unterwegs. Veranstaltungen, Konzerte. Immer laut, immer Trubel. Ich war der, den man anruft, wenn was laufen muss, und habe das nächste Ja meistens gesagt, bevor ich es überlegt hatte. Eine Weile hat sich das wie Leistung angefühlt. Bis mein Körper anderer Meinung war.
+      Lange war das nicht meine Welt. Job in IT und Sales, Projekte nebenher, beinahe jedes Wochenende unterwegs. Veranstaltungen, Konzerte. Immer laut, immer Trubel. Ich war der, den man anruft, wenn was laufen muss, und habe das nächste Ja meistens gesagt, bevor ich es überlegt hatte. Eine Weile hat sich das wie Leistung angefühlt. Bis mein Körper anderer Meinung war.
     </p>
     <p class="reveal">
       Heute lebe ich bewusster. Ich höre öfter zu, bevor ich antworte. Auch mir selbst, was eigentlich das schwierigere von beidem ist.
@@ -563,6 +663,25 @@ import portraitImg from '../assets/florian-portrait.jpg';
     <p class="reveal">
       Ich glaube nicht, dass man immer stark sein muss. Aber daran, dass man nicht allein damit bleiben sollte.
     </p>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="newsletter" class="block">
+  <p class="section-label reveal">Newsletter</p>
+  <div class="newsletter-inner">
+    <h2 class="newsletter-headline reveal">Auf dem Laufenden bleiben.</h2>
+    <p class="newsletter-sub reveal">Neue Bücher, Lesungen, Gedanken — direkt ins Postfach. Kein Spam, keine Weitergabe. Abmeldung jederzeit.</p>
+    <form class="reveal" id="nl-form" novalidate>
+      <div class="nl-field">
+        <input class="nl-input" type="email" id="nl-email" placeholder="deine@email.com" autocomplete="email" required />
+        <button class="btn" type="submit">
+          <span id="nl-btn-label">Anmelden</span>
+          <span class="arrow">→</span>
+        </button>
+      </div>
+      <p class="nl-status" id="nl-status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
@@ -595,6 +714,68 @@ import portraitImg from '../assets/florian-portrait.jpg';
       card.style.transform = '';
     });
   });
+
+  // Newsletter-Formular
+  (function() {
+    var form = document.getElementById('nl-form');
+    if (!form) return;
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var email = document.getElementById('nl-email').value.trim();
+      var status = document.getElementById('nl-status');
+      var btnLabel = document.getElementById('nl-btn-label');
+      var btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btnLabel.textContent = '…';
+      status.textContent = '';
+      status.className = 'nl-status';
+      try {
+        var res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        });
+        var data = await res.json();
+        if (data.ok) {
+          form.querySelector('.nl-field').style.display = 'none';
+          status.textContent = 'Danke — wir haben dir eine Bestätigungs-E-Mail geschickt.';
+          status.className = 'nl-status nl-status--ok';
+        } else {
+          status.textContent = data.error || 'Etwas ist schiefgelaufen.';
+          status.className = 'nl-status nl-status--err';
+          btn.disabled = false;
+          btnLabel.textContent = 'Anmelden';
+        }
+      } catch (_) {
+        status.textContent = 'Netzwerkfehler — bitte später versuchen.';
+        status.className = 'nl-status nl-status--err';
+        btn.disabled = false;
+        btnLabel.textContent = 'Anmelden';
+      }
+    });
+  })();
+
+  // Countdown zum Release von "Du hörst es erst, wenn es still wird"
+  (function() {
+    var release = new Date('2026-05-30T00:00:00+02:00');
+    var el = document.getElementById('countdown-stille');
+    if (!el) return;
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function tick() {
+      var diff = release - Date.now();
+      if (diff <= 0) {
+        el.className = 'countdown-done';
+        el.innerHTML = 'Jetzt erhältlich';
+        return;
+      }
+      document.getElementById('cd-days').textContent  = pad(Math.floor(diff / 86400000));
+      document.getElementById('cd-hours').textContent = pad(Math.floor(diff % 86400000 / 3600000));
+      document.getElementById('cd-mins').textContent  = pad(Math.floor(diff % 3600000 / 60000));
+      document.getElementById('cd-secs').textContent  = pad(Math.floor(diff % 60000 / 1000));
+      setTimeout(tick, 1000);
+    }
+    tick();
+  })();
 </script>
 
 </BaseLayout>

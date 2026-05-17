@@ -10,11 +10,17 @@ export const POST: APIRoute = async ({ request }) => {
     return respond({ error: 'Ungültige E-Mail-Adresse.' }, 400);
   }
 
+  const apiKey = process.env.BREVO_API_KEY;
+  if (!apiKey) {
+    console.error('BREVO_API_KEY ist nicht gesetzt.');
+    return respond({ error: 'Fehler beim Speichern. Bitte später versuchen.' }, 500);
+  }
+
   const res = await fetch('https://api.brevo.com/v3/contacts', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'api-key': import.meta.env.BREVO_API_KEY,
+      'api-key': apiKey,
     },
     body: JSON.stringify({
       email,

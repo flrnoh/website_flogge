@@ -239,6 +239,292 @@ import portraitImg from '../assets/florian-portrait.jpg';
     .section-label { margin-bottom: 2rem; }
   }
 
+  /* BOOK SCROLL SCENE */
+  .bss-wrap {
+    height: 280vh;
+    position: relative;
+  }
+  .bss-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    gap: 2.5rem;
+  }
+  .bss-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 50% at 50% 40%, rgba(232,169,72,0.07), transparent 70%),
+      radial-gradient(40% 30% at 50% 60%, rgba(45,212,191,0.05), transparent 70%);
+  }
+  .bss-stage {
+    perspective: 1600px;
+    perspective-origin: 50% 48%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* book container — preserve-3d so children stack correctly */
+  .bss-book {
+    position: relative;
+    width: 210px;
+    height: 330px;
+    transform-style: preserve-3d;
+    /* JS drives rotateX/Y and translateY */
+  }
+
+  /* left page: sits to the LEFT of the book body */
+  .bss-left-page {
+    position: absolute;
+    right: 100%;
+    top: 0;
+    width: 210px;
+    height: 330px;
+    background: #faf8f2;
+    border-radius: 6px 0 0 6px;
+    border-right: 1px solid #e0dbd0;
+    box-shadow: inset -10px 0 20px rgba(0,0,0,0.06), -8px 4px 30px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    padding: 1.6rem 1.4rem 1.2rem;
+    opacity: 0;
+    /* JS drives opacity */
+    pointer-events: none;
+  }
+  .bss-left-page .bss-chapter-tag {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .bss-left-page .bss-chapter-title {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: #1a1510;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+  .bss-left-page .bss-text {
+    font-family: var(--serif);
+    font-size: 0.74rem;
+    line-height: 1.85;
+    color: #2a2218;
+    margin-bottom: 0.75rem;
+  }
+  .bss-page-num {
+    margin-top: auto;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: #8a8070;
+    text-align: center;
+    letter-spacing: 0.1em;
+  }
+
+  /* back cover — lowest z, the book body */
+  .bss-back {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(145deg, #120820 0%, #0a0514 100%);
+    border-radius: 6px 2px 2px 6px;
+    box-shadow: -6px 4px 40px rgba(0,0,0,0.85);
+    z-index: 0;
+  }
+
+  /* page stack — visible on right edge (thickness) */
+  .bss-page-stack {
+    position: absolute;
+    top: 3px;
+    right: -11px;
+    bottom: 3px;
+    width: 11px;
+    background: linear-gradient(to right, #b8b3a8, #f0ede6 40%, #e5e0d6 70%, #ccc);
+    border-radius: 0 2px 2px 0;
+    z-index: 1;
+  }
+
+  /* right page — revealed when cover opens */
+  .bss-right-page {
+    position: absolute;
+    inset: 0;
+    background: #faf8f2;
+    border-radius: 2px 6px 6px 2px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.6rem 1.4rem 1.2rem;
+    overflow: hidden;
+    box-shadow: inset 10px 0 20px rgba(0,0,0,0.05);
+  }
+  .bss-right-page .bss-text {
+    font-family: var(--serif);
+    font-size: 0.74rem;
+    line-height: 1.85;
+    color: #2a2218;
+    margin-bottom: 0.75rem;
+  }
+  .bss-song-note {
+    margin-top: 1rem;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: #8a7060;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .bss-song-note em { font-style: italic; }
+
+  /* cover — transform-origin left edge = spine, hinges open */
+  .bss-cover {
+    position: absolute;
+    inset: 0;
+    transform-origin: 0 50%;
+    transform-style: preserve-3d;
+    z-index: 3;
+    /* JS drives rotateY(0) -> rotateY(-178deg) */
+  }
+  .bss-cover-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 2px 6px 6px 2px;
+    overflow: hidden;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.6);
+  }
+  .bss-cover-face img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .bss-cover-inner {
+    position: absolute;
+    inset: 0;
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    background: #faf8f2;
+    border-radius: 2px 6px 6px 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+  .bss-inner-title {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #1a1510;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+  .bss-inner-rule {
+    width: 32px; height: 1px;
+    background: #c8a86a;
+    margin: 0 auto 1rem;
+  }
+  .bss-inner-author {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #8a7a60;
+  }
+
+  /* bottom meta block */
+  .bss-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    text-align: center;
+    pointer-events: none;
+  }
+  .bss-meta.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .bss-book-title {
+    font-family: var(--serif);
+    font-size: clamp(1rem, 2.2vw, 1.4rem);
+    color: var(--text-heading);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.01em;
+  }
+  .bss-release-tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+  }
+  .btn--gold {
+    border-color: rgba(232,169,72,0.4);
+    color: var(--gold);
+  }
+  .btn--gold:hover {
+    border-color: var(--gold);
+    background: rgba(232,169,72,0.08);
+  }
+
+  /* scroll hint */
+  .bss-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-dim);
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .bss-hint-arrow {
+    width: 1px;
+    height: 32px;
+    background: linear-gradient(to bottom, var(--text-dim), transparent);
+    animation: bss-bounce 1.6s ease-in-out infinite;
+  }
+  @keyframes bss-bounce {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(5px); opacity: 0.4; }
+  }
+
+  @media (max-width: 768px) {
+    .bss-book { width: 160px; height: 252px; }
+    .bss-left-page { width: 160px; height: 252px; padding: 1.2rem 1rem 1rem; }
+    .bss-left-page .bss-text,
+    .bss-right-page .bss-text { font-size: 0.68rem; }
+    .bss-right-page { padding: 1.2rem 1rem 1rem; }
+    .bss-page-stack { right: -8px; width: 8px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bss-hint-arrow { animation: none; }
+  }
+
   /* BOOKS */
   .books-grid {
     display: grid;
@@ -590,6 +876,69 @@ import portraitImg from '../assets/florian-portrait.jpg';
   </div>
 </section>
 
+<!-- BOOK SCROLL SCENE -->
+<div class="bss-wrap" id="bssWrap" aria-hidden="true">
+  <div class="bss-sticky">
+    <div class="bss-glow"></div>
+
+    <div class="bss-stage">
+      <div class="bss-book" id="bssBook">
+
+        <!-- Left page (appears as cover swings open) -->
+        <div class="bss-left-page" id="bssLeftPage">
+          <span class="bss-chapter-tag">Kapitel 1</span>
+          <h3 class="bss-chapter-title">Der Lärm</h3>
+          <p class="bss-text">Es gibt einen Moment, bevor man versteht, dass etwas schon lange zu Ende war. Bei mir war das ein Dienstag.</p>
+          <p class="bss-text">Der Körper hat früher aufgehört als der Kopf. Ich stand im Büro, der Kalender voll, und irgendwo zwischen einem Meeting hat mich etwas verlassen.</p>
+          <span class="bss-page-num">9</span>
+        </div>
+
+        <!-- Back cover -->
+        <div class="bss-back"></div>
+
+        <!-- Page thickness -->
+        <div class="bss-page-stack"></div>
+
+        <!-- Right page (first visible page) -->
+        <div class="bss-right-page">
+          <p class="bss-text">Nicht dramatisch. Keine großen Worte, kein Knall. Nur dieses leise Verschwinden, das man erst bemerkt, wenn man aufhört, nach dem Lärm zu suchen.</p>
+          <p class="bss-text">Das hier ist das Protokoll des Wegs danach. Und der Musik, die ihn begleitet hat.</p>
+          <div class="bss-song-note">
+            <span>♪</span>&nbsp;Track 01 — <em>Stille</em>
+          </div>
+          <span class="bss-page-num" style="margin-top:auto">10</span>
+        </div>
+
+        <!-- Cover (hinges from left = spine) -->
+        <div class="bss-cover" id="bssCover">
+          <div class="bss-cover-face">
+            <img src="/cover-stille.jpg" alt="Du hörst es erst, wenn es still wird" width="630" height="1000" loading="lazy" />
+          </div>
+          <div class="bss-cover-inner">
+            <p class="bss-inner-title">Du hörst es erst,<br>wenn es still wird</p>
+            <div class="bss-inner-rule"></div>
+            <p class="bss-inner-author">Florian Obermeier</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Meta / CTA -->
+    <div class="bss-meta" id="bssMeta">
+      <p class="bss-release-tag">Erscheint 30. Mai 2026</p>
+      <h2 class="bss-book-title">Du hörst es erst, wenn es still wird</h2>
+      <a href="#buecher" class="btn btn--gold">Zum Buch <span class="arrow">↓</span></a>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="bss-hint" id="bssHint">
+      <span>Scroll</span>
+      <div class="bss-hint-arrow"></div>
+    </div>
+  </div>
+</div>
+
 <!-- BOOKS -->
 <section id="buecher" class="block">
   <p class="section-label reveal">Zwei Bücher</p>
@@ -778,6 +1127,75 @@ import portraitImg from '../assets/florian-portrait.jpg';
     }
     tick();
   })();
+</script>
+
+<script is:inline>
+(function () {
+  var wrap = document.getElementById('bssWrap');
+  var book = document.getElementById('bssBook');
+  var cover = document.getElementById('bssCover');
+  var leftPage = document.getElementById('bssLeftPage');
+  var meta = document.getElementById('bssMeta');
+  var hint = document.getElementById('bssHint');
+  if (!wrap || !book || !cover) return;
+
+  function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function ease(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
+  function easeSlow(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function getProgress() {
+    var rect = wrap.getBoundingClientRect();
+    var scrollable = wrap.offsetHeight - window.innerHeight;
+    return clamp(-rect.top / scrollable, 0, 1);
+  }
+
+  var lastP = -1;
+  function update() {
+    var p = getProgress();
+    if (Math.abs(p - lastP) < 0.0005) return;
+    lastP = p;
+
+    /* Phase 1: entrance  0 → 0.18 */
+    var entT = ease(clamp(p / 0.18, 0, 1));
+    var entY = lerp(55, 0, entT);
+    var entScale = lerp(0.88, 1, entT);
+    var entOpacity = entT;
+
+    /* Phase 2: cover opens  0.18 → 0.68 */
+    var openT = easeSlow(clamp((p - 0.18) / 0.5, 0, 1));
+    var coverAngle = lerp(0, -178, openT);
+
+    /* slight book tilt: angled when closed, flatter when open */
+    var tiltY = lerp(-26, -6, openT);
+    var tiltX = lerp(5, 2, openT);
+
+    book.style.opacity = entOpacity;
+    book.style.transform =
+      'translateY(' + entY + 'px) scale(' + entScale + ') ' +
+      'rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg)';
+
+    cover.style.transform = 'rotateY(' + coverAngle + 'deg)';
+
+    /* left page fades in as cover swings past ~60 % */
+    var leftOpacity = ease(clamp((openT - 0.55) / 0.45, 0, 1));
+    leftPage.style.opacity = leftOpacity;
+
+    /* Phase 3: meta / CTA  0.65 → 0.82 */
+    var metaT = ease(clamp((p - 0.65) / 0.17, 0, 1));
+    if (metaT > 0.05) {
+      meta.classList.add('is-visible');
+    } else {
+      meta.classList.remove('is-visible');
+    }
+
+    /* Scroll hint fades out early */
+    if (hint) hint.style.opacity = clamp(1 - p / 0.12, 0, 1);
+  }
+
+  document.addEventListener('scroll', update, { passive: true });
+  update();
+})();
 </script>
 
 </BaseLayout>

@@ -319,7 +319,7 @@ import portraitImg from '../assets/florian-portrait.jpg';
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    padding: clamp(1.1rem, 2.8vw, 1.6rem) clamp(0.9rem, 2.2vw, 1.35rem);
+    padding: clamp(0.85rem, 2vw, 1.1rem) clamp(0.7rem, 1.6vw, 0.95rem);
   }
   .bss-page-face {
     background: #faf8f2;
@@ -329,48 +329,39 @@ import portraitImg from '../assets/florian-portrait.jpg';
   .bss-page-back {
     transform: rotateY(180deg);
     background: #f7f4ee;
-    border-radius: 2px 6px 6px 2px; /* mirrored → outer-left curve when viewed */
+    border-radius: 2px 6px 6px 2px;
     box-shadow: inset -10px 0 20px rgba(0,0,0,0.05);
   }
 
-  /* book typography */
+  /* book typography — scaled to match a small page mock-up */
   .bss-chapter-tag {
     font-family: var(--mono);
-    font-size: clamp(0.58rem, 1vw, 0.68rem);
+    font-size: 0.52rem;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
     color: var(--gold);
-    margin-bottom: 0.45rem;
-  }
-  .bss-chapter-title {
-    font-family: var(--serif);
-    font-size: clamp(1rem, 1.8vw, 1.2rem);
-    color: #1a1510;
-    font-weight: 500;
-    margin-bottom: 0.85rem;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
+    margin-bottom: 0.35rem;
   }
   .bss-text {
     font-family: var(--serif);
-    font-size: clamp(0.82rem, 1.3vw, 0.95rem);
-    line-height: 1.85;
+    font-size: 0.66rem;
+    line-height: 1.75;
     color: #2a2218;
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.5rem;
   }
   .bss-text em { font-style: italic; color: #7a6a50; }
   .bss-page-num {
     margin-top: auto;
     font-family: var(--mono);
-    font-size: 0.6rem;
+    font-size: 0.5rem;
     color: #8a8070;
     text-align: center;
     letter-spacing: 0.1em;
   }
   .bss-song-note {
-    margin-top: 0.75rem;
+    margin-top: 0.6rem;
     font-family: var(--mono);
-    font-size: 0.6rem;
+    font-size: 0.5rem;
     letter-spacing: 0.1em;
     color: #8a7060;
   }
@@ -413,20 +404,20 @@ import portraitImg from '../assets/florian-portrait.jpg';
   }
   .bss-inner-title {
     font-family: var(--serif);
-    font-size: clamp(0.8rem, 1.3vw, 0.95rem);
+    font-size: 0.72rem;
     line-height: 1.5;
     color: #1a1510;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.6rem;
     font-style: italic;
   }
   .bss-inner-rule {
-    width: 28px; height: 1px;
+    width: 24px; height: 1px;
     background: #c8a86a;
-    margin: 0 auto 0.75rem;
+    margin: 0 auto 0.6rem;
   }
   .bss-inner-author {
     font-family: var(--mono);
-    font-size: 0.58rem;
+    font-size: 0.48rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: #8a7a60;

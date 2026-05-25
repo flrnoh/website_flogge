@@ -117,6 +117,7 @@ const navPrefix = pageType === 'home' ? '' : homeUrl;
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 96px; /* keep anchor targets clear of fixed nav */
       background: var(--bg);
     }
 
@@ -425,6 +426,21 @@ const navPrefix = pageType === 'home' ? '' : homeUrl;
   }
   document.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
+
+  // If page loaded with a hash pointing at a section, reveal that
+  // section's contents immediately so deep-links (e.g. Insta story
+  // sharing #soundtrack) don't show empty space before observer fires.
+  if (location.hash && location.hash.length > 1) {
+    try {
+      const hashTarget = document.querySelector(location.hash);
+      if (hashTarget) {
+        hashTarget.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+        if (hashTarget.classList && hashTarget.classList.contains('reveal')) {
+          hashTarget.classList.add('is-visible');
+        }
+      }
+    } catch (e) { /* invalid selector — ignore */ }
+  }
 
   // Reveal observer
   const io = new IntersectionObserver(entries => {

@@ -575,6 +575,28 @@ import portraitImg from '../../assets/florian-portrait.jpg';
     text-align: center;
     position: relative;
   }
+  .audio-block {
+    /* container for one player + its meta + note + (optional translation) */
+  }
+  .audio-divider {
+    width: 80px;
+    height: 1px;
+    background: var(--line-strong);
+    margin: 3.5rem auto;
+    position: relative;
+  }
+  .audio-divider::after {
+    content: '· · ·';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg);
+    padding: 0 0.9rem;
+    color: var(--text-dim);
+    letter-spacing: 0.5em;
+    font-size: 0.85rem;
+  }
   .soundtrack-meta {
     font-size: 0.72rem;
     text-transform: uppercase;
@@ -597,7 +619,59 @@ import portraitImg from '../../assets/florian-portrait.jpg';
     line-height: 1.1;
     letter-spacing: -0.01em;
     color: var(--text-heading);
-    margin-bottom: 2.75rem;
+    margin-bottom: 2.25rem;
+  }
+
+  /* Foreword translation (collapsible, open by default) */
+  .foreword-translation {
+    margin: 2.5rem auto 0;
+    max-width: 580px;
+    text-align: left;
+    border-top: 1px solid var(--line);
+  }
+  .foreword-translation > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1.25rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    transition: color 0.3s;
+    color: var(--text-muted);
+  }
+  .foreword-translation > summary::-webkit-details-marker { display: none; }
+  .foreword-translation > summary:hover { color: var(--text); }
+  .foreword-translation > summary::before {
+    content: '+';
+    color: var(--gold);
+    font-size: 1.1rem;
+    line-height: 1;
+    transition: transform 0.3s;
+    display: inline-block;
+    width: 1ch;
+    text-align: center;
+  }
+  .foreword-translation[open] > summary::before { content: '−'; }
+  .ft-summary-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+  }
+  .foreword-translation-text {
+    font-family: var(--serif);
+    font-size: 1.02rem;
+    line-height: 1.85;
+    color: var(--text);
+    max-width: 58ch;
+    margin: 1.5rem auto 1rem;
+    padding: 0 0.25rem;
+  }
+  .foreword-translation-text p { margin-bottom: 1.25em; }
+  .foreword-translation-text p:last-child { margin-bottom: 0; }
+  .foreword-translation-text em {
+    font-style: italic;
+    color: var(--text-heading);
   }
 
   /* Player */
@@ -811,33 +885,100 @@ import portraitImg from '../../assets/florian-portrait.jpg';
 <section id="soundtrack" class="block soundtrack-block">
   <p class="section-label reveal">Listen in</p>
   <div class="soundtrack-inner">
-    <div class="soundtrack-meta reveal">
-      <span class="soundtrack-chapter">Chapter 1</span>
-      <span class="soundtrack-sep" aria-hidden="true">·</span>
-      <span class="soundtrack-chapter-title">Everything's Running</span>
-    </div>
-    <h2 class="soundtrack-song reveal">Still Functioning</h2>
 
-    <div class="player reveal" id="soundtrack-player" data-label-play="Play" data-label-pause="Pause">
-      <button class="player-btn" id="player-btn" aria-label="Play" type="button">
-        <svg class="player-icon player-icon--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-        <svg class="player-icon player-icon--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-      </button>
-      <div class="player-track">
-        <div class="player-progress" id="player-progress" role="slider" tabindex="0" aria-label="Position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-          <div class="player-progress-fill" id="player-progress-fill"></div>
-        </div>
-        <div class="player-time">
-          <span id="player-time-current">0:00</span>
-          <span id="player-time-total">--:--</span>
-        </div>
+    <!-- Foreword -->
+    <div class="audio-block reveal">
+      <div class="soundtrack-meta">
+        <span class="soundtrack-chapter">From the book</span>
       </div>
-      <audio id="soundtrack-audio" preload="metadata" src="/Flogge-Still%20Functioning.mp3"></audio>
+      <h2 class="soundtrack-song">The Foreword</h2>
+
+      <div class="player" data-track-type="foreword" data-track-name="Vorwort" data-label-play="Play" data-label-pause="Pause">
+        <button class="player-btn" aria-label="Play" type="button">
+          <svg class="player-icon player-icon--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="player-icon player-icon--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+        </button>
+        <div class="player-track">
+          <div class="player-progress" role="slider" tabindex="0" aria-label="Position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="player-progress-fill"></div>
+          </div>
+          <div class="player-time">
+            <span class="player-time-current">0:00</span>
+            <span class="player-time-total">5:52</span>
+          </div>
+        </div>
+        <audio preload="metadata" src="/vorwort.m4a"></audio>
+      </div>
+
+      <p class="soundtrack-note">Read by the author · audio in German</p>
+
+      <details class="foreword-translation" open>
+        <summary><span class="ft-summary-label">English translation</span></summary>
+        <div class="foreword-translation-text">
+          <p>I almost didn't write this book.</p>
+          <p>For a long time I didn't know whether my story was "enough". Whether what had happened to me was big enough, relevant enough — or whether in the end it was just my own personal chaos, with no real meaning for anyone else.</p>
+          <p>Because if I'm honest: I was never the type you would have pegged as someone who'd eventually fall apart.</p>
+          <p>I had my life under control. Or so I thought. Job, (too) many side projects, responsibility, (too) many appointments. I was the one who gets things done, who organises, who pushes things forward. One of those people you call when something has to happen.</p>
+          <p>And then came the moment when, suddenly, nothing worked anymore.</p>
+          <p>From one day to the next: signed off sick. Three months.<br>With the instruction to, for now, <em>"do nothing"</em>.</p>
+          <p>What sounds almost absurdly simple at first pushed me to my limits pretty quickly. Because I realised that was exactly what I couldn't do anymore. Not work, of course — but also not switch off. Not come to rest. Not simply be, without the feeling that I really should be doing something.</p>
+          <p>My head kept going as before. Only my body, at some point, decided that enough was enough.</p>
+          <p>And that is exactly where this book begins.</p>
+          <p>It is definitely not a self-help guide. It won't explain how to get your life under control, it certainly won't tell you who you are or how you ought to function. I would never presume to do that.</p>
+          <p>What it tries to do is something else:<br>To make visible what often stays invisible.<br>Thoughts, states, and that elusive feeling that something is not right, without being able to put a name to it.</p>
+          <p>But the real reason this book exists goes beyond that.</p>
+          <p>I want it to contribute to us speaking more openly about mental health. More honestly. Without that automatic <em>"all good"</em> just because it's the easiest answer — even though so often it isn't. Because the reality is that many people are struggling — quietly, invisibly, alone. And far too often they believe they're the only ones.</p>
+          <p>If this book can achieve anything, perhaps it's to make it a little easier to say exactly that. That you dare to say: <em>"I'm not doing well right now"</em> without being ashamed of it. And that you might also become more attuned to the moments when someone else is not doing well — and then be there, when you have the strength for it.</p>
+          <p>Because we all need this.<br>To swap roles now and then.<br>To carry. To be carried.</p>
+          <p>I don't believe you always have to be strong. But I do believe you shouldn't stay alone with it. And I'm convinced that asking for help is often one of the strongest steps you can take.</p>
+          <p>In my own ideal world, every person would have someone they speak with regularly about themselves. Not only when everything falls apart, but as a matter of course. A therapist, a sparring partner, a space where you can be honest without having to explain or justify yourself. Something just as normal as a conversation with a good friend — only with more structure, and a different kind of depth.</p>
+          <p>Another part of this book is something that matters to me personally, and that probably doesn't often exist in this form:<br>A soundtrack.</p>
+          <p>Music has always been the more direct path for me. I was a DJ for years, but when it came to what really moved me, it was never the blunt beat. It was the mood music creates — often a guitar, a lyric, a voice. At some point music became the place where things have room that can't be grasped any other way. Most people probably know the feeling. That moment when a song hits something you don't have words for yourself.</p>
+          <p>There is a song for every chapter. Not as a gimmick, but as an extension of what is hard to convey through words alone. Some things can be explained — others have to be felt. And that's where music begins.</p>
+          <p>Most of them are sparse, quiet, narrative, sometimes with more weight underneath than you would expect on first listen.</p>
+          <p>The lyrics are all mine, and some of them are very direct. The only problem: I can't sing. So I looked for a way to make these texts audible anyway.</p>
+          <p>With the help of "Suno", I produced the songs. They are AI-generated, that's true. But everything in them comes from me: the thoughts, the emotions, the stories. Perhaps that's exactly why they are more honest than I could have sung them myself.</p>
+          <p>Inside the chapters you'll find direct entry points to the songs — via links or QR codes. Beyond that, there's a playlist with further pieces that didn't get a fixed place in the book, but still belong. You can read this book, you can listen to it — or weave both together.</p>
+          <p>In the end this book is not a finished picture, and not a closed story. It is more of a space where things are said that often stay unspoken.</p>
+          <p>And maybe that is its real purpose:<br>Not to explain to you what's wrong with you.<br>But, here and there, to give you the feeling that you are not alone in it.</p>
+          <p>And if exactly that happens — even for just a brief moment — then this book has fulfilled its purpose.</p>
+        </div>
+      </details>
     </div>
 
-    <p class="soundtrack-note reveal">
-      One song of sixteen. The full album arrives on 30 May 2026, together with the book. Composed with Suno.
-    </p>
+    <div class="audio-divider reveal" aria-hidden="true"></div>
+
+    <!-- Chapter 1 — Soundtrack -->
+    <div class="audio-block reveal">
+      <div class="soundtrack-meta">
+        <span class="soundtrack-chapter">Chapter 1</span>
+        <span class="soundtrack-sep" aria-hidden="true">·</span>
+        <span class="soundtrack-chapter-title">Everything's Running</span>
+      </div>
+      <h2 class="soundtrack-song">Still Functioning</h2>
+
+      <div class="player" data-track-type="soundtrack" data-track-name="Still Functioning" data-track-chapter="1" data-label-play="Play" data-label-pause="Pause">
+        <button class="player-btn" aria-label="Play" type="button">
+          <svg class="player-icon player-icon--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="player-icon player-icon--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+        </button>
+        <div class="player-track">
+          <div class="player-progress" role="slider" tabindex="0" aria-label="Position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="player-progress-fill"></div>
+          </div>
+          <div class="player-time">
+            <span class="player-time-current">0:00</span>
+            <span class="player-time-total">--:--</span>
+          </div>
+        </div>
+        <audio preload="metadata" src="/Flogge-Still%20Functioning.mp3"></audio>
+      </div>
+
+      <p class="soundtrack-note">
+        One song of sixteen. The full album arrives on 30 May 2026, together with the book. Composed with Suno.
+      </p>
+    </div>
+
   </div>
 </section>
 
@@ -961,27 +1102,10 @@ import portraitImg from '../../assets/florian-portrait.jpg';
     tick();
   })();
 
-  // Soundtrack pre-listen player
+  // Audio players (foreword + soundtrack) — generic, supports multiple players
   (function() {
-    var audio = document.getElementById('soundtrack-audio');
-    var player = document.getElementById('soundtrack-player');
-    var btn = document.getElementById('player-btn');
-    var progress = document.getElementById('player-progress');
-    var fill = document.getElementById('player-progress-fill');
-    var timeCurrent = document.getElementById('player-time-current');
-    var timeTotal = document.getElementById('player-time-total');
-    if (!audio || !player || !btn || !progress) return;
-
-    var labelPlay = player.getAttribute('data-label-play') || 'Play';
-    var labelPause = player.getAttribute('data-label-pause') || 'Pause';
-    var trackData = { song: 'Still Functioning', chapter: 1 };
-    var playTracked = false;
-
-    function vaTrack(name) {
-      if (typeof window.va === 'function') {
-        try { window.va('event', { name: name, data: trackData }); } catch (e) {}
-      }
-    }
+    var players = document.querySelectorAll('.player');
+    if (!players.length) return;
 
     function fmt(sec) {
       if (!isFinite(sec)) return '--:--';
@@ -989,56 +1113,88 @@ import portraitImg from '../../assets/florian-portrait.jpg';
       var s = Math.floor(sec % 60);
       return m + ':' + (s < 10 ? '0' + s : s);
     }
-    function seekFromEvent(e) {
-      if (!audio.duration) return;
-      var rect = progress.getBoundingClientRect();
-      var pct = (e.clientX - rect.left) / rect.width;
-      pct = pct < 0 ? 0 : pct > 1 ? 1 : pct;
-      audio.currentTime = pct * audio.duration;
-    }
 
-    btn.addEventListener('click', function() {
-      if (audio.paused) { audio.play(); } else { audio.pause(); }
-    });
-    audio.addEventListener('play', function() {
-      player.classList.add('is-playing');
-      btn.setAttribute('aria-label', labelPause);
-      if (!playTracked) {
-        playTracked = true;
-        vaTrack('soundtrack_play');
+    players.forEach(function(player) {
+      var audio = player.querySelector('audio');
+      var btn = player.querySelector('.player-btn');
+      var progress = player.querySelector('.player-progress');
+      var fill = player.querySelector('.player-progress-fill');
+      var timeCurrent = player.querySelector('.player-time-current');
+      var timeTotal = player.querySelector('.player-time-total');
+      if (!audio || !btn || !progress) return;
+
+      var labelPlay = player.getAttribute('data-label-play') || 'Play';
+      var labelPause = player.getAttribute('data-label-pause') || 'Pause';
+      var trackType = player.getAttribute('data-track-type') || 'audio';
+      var trackName = player.getAttribute('data-track-name') || '';
+      var trackChapter = player.getAttribute('data-track-chapter');
+      var trackData = { name: trackName };
+      if (trackChapter) trackData.chapter = parseInt(trackChapter, 10);
+      var playTracked = false;
+
+      function vaTrack(suffix) {
+        if (typeof window.va === 'function') {
+          try { window.va('event', { name: trackType + '_' + suffix, data: trackData }); } catch (e) {}
+        }
       }
-    });
-    audio.addEventListener('pause', function() {
-      player.classList.remove('is-playing');
-      btn.setAttribute('aria-label', labelPlay);
-    });
-    audio.addEventListener('ended', function() {
-      player.classList.remove('is-playing');
-      btn.setAttribute('aria-label', labelPlay);
-      fill.style.width = '0%';
-      timeCurrent.textContent = '0:00';
-      progress.setAttribute('aria-valuenow', '0');
-      vaTrack('soundtrack_complete');
-    });
-    audio.addEventListener('loadedmetadata', function() {
-      timeTotal.textContent = fmt(audio.duration);
-    });
-    audio.addEventListener('timeupdate', function() {
-      if (!audio.duration) return;
-      var pct = audio.currentTime / audio.duration * 100;
-      fill.style.width = pct + '%';
-      timeCurrent.textContent = fmt(audio.currentTime);
-      progress.setAttribute('aria-valuenow', String(Math.round(pct)));
-    });
-    progress.addEventListener('click', seekFromEvent);
-    progress.addEventListener('keydown', function(e) {
-      if (!audio.duration) return;
-      if (e.key === 'ArrowRight') { audio.currentTime = Math.min(audio.duration, audio.currentTime + 5); e.preventDefault(); }
-      if (e.key === 'ArrowLeft')  { audio.currentTime = Math.max(0, audio.currentTime - 5); e.preventDefault(); }
-      if (e.key === ' ' || e.key === 'Enter') {
+      function seekFromEvent(e) {
+        if (!audio.duration) return;
+        var rect = progress.getBoundingClientRect();
+        var pct = (e.clientX - rect.left) / rect.width;
+        pct = pct < 0 ? 0 : pct > 1 ? 1 : pct;
+        audio.currentTime = pct * audio.duration;
+      }
+
+      btn.addEventListener('click', function() {
         if (audio.paused) { audio.play(); } else { audio.pause(); }
-        e.preventDefault();
-      }
+      });
+      audio.addEventListener('play', function() {
+        // Pause any other player that's currently playing
+        players.forEach(function(other) {
+          if (other !== player) {
+            var otherAudio = other.querySelector('audio');
+            if (otherAudio && !otherAudio.paused) otherAudio.pause();
+          }
+        });
+        player.classList.add('is-playing');
+        btn.setAttribute('aria-label', labelPause);
+        if (!playTracked) {
+          playTracked = true;
+          vaTrack('play');
+        }
+      });
+      audio.addEventListener('pause', function() {
+        player.classList.remove('is-playing');
+        btn.setAttribute('aria-label', labelPlay);
+      });
+      audio.addEventListener('ended', function() {
+        player.classList.remove('is-playing');
+        btn.setAttribute('aria-label', labelPlay);
+        if (fill) fill.style.width = '0%';
+        if (timeCurrent) timeCurrent.textContent = '0:00';
+        progress.setAttribute('aria-valuenow', '0');
+        vaTrack('complete');
+      });
+      audio.addEventListener('loadedmetadata', function() {
+        if (timeTotal) timeTotal.textContent = fmt(audio.duration);
+      });
+      audio.addEventListener('timeupdate', function() {
+        if (!audio.duration) return;
+        var pct = audio.currentTime / audio.duration * 100;
+        if (fill) fill.style.width = pct + '%';
+        if (timeCurrent) timeCurrent.textContent = fmt(audio.currentTime);
+        progress.setAttribute('aria-valuenow', String(Math.round(pct)));
+      });
+      progress.addEventListener('click', seekFromEvent);
+      progress.addEventListener('keydown', function(e) {
+        if (!audio.duration) return;
+        if (e.key === 'ArrowRight') { audio.currentTime = Math.min(audio.duration, audio.currentTime + 5); e.preventDefault(); }
+        if (e.key === 'ArrowLeft')  { audio.currentTime = Math.max(0, audio.currentTime - 5); e.preventDefault(); }
+        if (e.key === ' ' || e.key === 'Enter') {
+          if (audio.paused) { audio.play(); } else { audio.pause(); }
+          e.preventDefault();
+        }
+      });
     });
   })();
 </script>

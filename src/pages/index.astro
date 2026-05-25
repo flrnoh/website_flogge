@@ -831,6 +831,28 @@ import portraitImg from '../assets/florian-portrait.jpg';
     text-align: center;
     position: relative;
   }
+  .audio-block {
+    /* container for one player + its meta + note */
+  }
+  .audio-divider {
+    width: 80px;
+    height: 1px;
+    background: var(--line-strong);
+    margin: 3.5rem auto;
+    position: relative;
+  }
+  .audio-divider::after {
+    content: '· · ·';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg);
+    padding: 0 0.9rem;
+    color: var(--text-dim);
+    letter-spacing: 0.5em;
+    font-size: 0.85rem;
+  }
   .soundtrack-meta {
     font-size: 0.72rem;
     text-transform: uppercase;
@@ -853,7 +875,7 @@ import portraitImg from '../assets/florian-portrait.jpg';
     line-height: 1.1;
     letter-spacing: -0.01em;
     color: var(--text-heading);
-    margin-bottom: 2.75rem;
+    margin-bottom: 2.25rem;
   }
 
   /* Player */
@@ -1157,33 +1179,67 @@ import portraitImg from '../assets/florian-portrait.jpg';
 <section id="soundtrack" class="block soundtrack-block">
   <p class="section-label reveal">Hör schon mal rein</p>
   <div class="soundtrack-inner">
-    <div class="soundtrack-meta reveal">
-      <span class="soundtrack-chapter">Kapitel 1</span>
-      <span class="soundtrack-sep" aria-hidden="true">·</span>
-      <span class="soundtrack-chapter-title">Alles läuft</span>
-    </div>
-    <h2 class="soundtrack-song reveal">Still Functioning</h2>
 
-    <div class="player reveal" id="soundtrack-player" data-label-play="Abspielen" data-label-pause="Pause">
-      <button class="player-btn" id="player-btn" aria-label="Abspielen" type="button">
-        <svg class="player-icon player-icon--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-        <svg class="player-icon player-icon--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-      </button>
-      <div class="player-track">
-        <div class="player-progress" id="player-progress" role="slider" tabindex="0" aria-label="Position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-          <div class="player-progress-fill" id="player-progress-fill"></div>
-        </div>
-        <div class="player-time">
-          <span id="player-time-current">0:00</span>
-          <span id="player-time-total">--:--</span>
-        </div>
+    <!-- Vorwort -->
+    <div class="audio-block reveal">
+      <div class="soundtrack-meta">
+        <span class="soundtrack-chapter">Aus dem Buch</span>
       </div>
-      <audio id="soundtrack-audio" preload="metadata" src="/Flogge-Still%20Functioning.mp3"></audio>
+      <h2 class="soundtrack-song">Das Vorwort</h2>
+
+      <div class="player" data-track-type="foreword" data-track-name="Vorwort" data-label-play="Abspielen" data-label-pause="Pause">
+        <button class="player-btn" aria-label="Abspielen" type="button">
+          <svg class="player-icon player-icon--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="player-icon player-icon--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+        </button>
+        <div class="player-track">
+          <div class="player-progress" role="slider" tabindex="0" aria-label="Position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="player-progress-fill"></div>
+          </div>
+          <div class="player-time">
+            <span class="player-time-current">0:00</span>
+            <span class="player-time-total">5:52</span>
+          </div>
+        </div>
+        <audio preload="metadata" src="/vorwort.m4a"></audio>
+      </div>
+
+      <p class="soundtrack-note">Gelesen vom Autor.</p>
     </div>
 
-    <p class="soundtrack-note reveal">
-      Ein Song aus sechzehn. Das vollständige Album erscheint am 30. Mai 2026, gemeinsam mit dem Buch. Komponiert mit Suno.
-    </p>
+    <div class="audio-divider reveal" aria-hidden="true"></div>
+
+    <!-- Kapitel 1 — Soundtrack -->
+    <div class="audio-block reveal">
+      <div class="soundtrack-meta">
+        <span class="soundtrack-chapter">Kapitel 1</span>
+        <span class="soundtrack-sep" aria-hidden="true">·</span>
+        <span class="soundtrack-chapter-title">Alles läuft</span>
+      </div>
+      <h2 class="soundtrack-song">Still Functioning</h2>
+
+      <div class="player" data-track-type="soundtrack" data-track-name="Still Functioning" data-track-chapter="1" data-label-play="Abspielen" data-label-pause="Pause">
+        <button class="player-btn" aria-label="Abspielen" type="button">
+          <svg class="player-icon player-icon--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="player-icon player-icon--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+        </button>
+        <div class="player-track">
+          <div class="player-progress" role="slider" tabindex="0" aria-label="Position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="player-progress-fill"></div>
+          </div>
+          <div class="player-time">
+            <span class="player-time-current">0:00</span>
+            <span class="player-time-total">--:--</span>
+          </div>
+        </div>
+        <audio preload="metadata" src="/Flogge-Still%20Functioning.mp3"></audio>
+      </div>
+
+      <p class="soundtrack-note">
+        Ein Song aus sechzehn. Das vollständige Album erscheint am 30. Mai 2026, gemeinsam mit dem Buch. Komponiert mit Suno.
+      </p>
+    </div>
+
   </div>
 </section>
 
@@ -1307,27 +1363,10 @@ import portraitImg from '../assets/florian-portrait.jpg';
     tick();
   })();
 
-  // Soundtrack pre-listen player
+  // Audio players (foreword + soundtrack) — generic, supports multiple players
   (function() {
-    var audio = document.getElementById('soundtrack-audio');
-    var player = document.getElementById('soundtrack-player');
-    var btn = document.getElementById('player-btn');
-    var progress = document.getElementById('player-progress');
-    var fill = document.getElementById('player-progress-fill');
-    var timeCurrent = document.getElementById('player-time-current');
-    var timeTotal = document.getElementById('player-time-total');
-    if (!audio || !player || !btn || !progress) return;
-
-    var labelPlay = player.getAttribute('data-label-play') || 'Play';
-    var labelPause = player.getAttribute('data-label-pause') || 'Pause';
-    var trackData = { song: 'Still Functioning', chapter: 1 };
-    var playTracked = false;
-
-    function vaTrack(name) {
-      if (typeof window.va === 'function') {
-        try { window.va('event', { name: name, data: trackData }); } catch (e) {}
-      }
-    }
+    var players = document.querySelectorAll('.player');
+    if (!players.length) return;
 
     function fmt(sec) {
       if (!isFinite(sec)) return '--:--';
@@ -1335,56 +1374,88 @@ import portraitImg from '../assets/florian-portrait.jpg';
       var s = Math.floor(sec % 60);
       return m + ':' + (s < 10 ? '0' + s : s);
     }
-    function seekFromEvent(e) {
-      if (!audio.duration) return;
-      var rect = progress.getBoundingClientRect();
-      var pct = (e.clientX - rect.left) / rect.width;
-      pct = pct < 0 ? 0 : pct > 1 ? 1 : pct;
-      audio.currentTime = pct * audio.duration;
-    }
 
-    btn.addEventListener('click', function() {
-      if (audio.paused) { audio.play(); } else { audio.pause(); }
-    });
-    audio.addEventListener('play', function() {
-      player.classList.add('is-playing');
-      btn.setAttribute('aria-label', labelPause);
-      if (!playTracked) {
-        playTracked = true;
-        vaTrack('soundtrack_play');
+    players.forEach(function(player) {
+      var audio = player.querySelector('audio');
+      var btn = player.querySelector('.player-btn');
+      var progress = player.querySelector('.player-progress');
+      var fill = player.querySelector('.player-progress-fill');
+      var timeCurrent = player.querySelector('.player-time-current');
+      var timeTotal = player.querySelector('.player-time-total');
+      if (!audio || !btn || !progress) return;
+
+      var labelPlay = player.getAttribute('data-label-play') || 'Play';
+      var labelPause = player.getAttribute('data-label-pause') || 'Pause';
+      var trackType = player.getAttribute('data-track-type') || 'audio';
+      var trackName = player.getAttribute('data-track-name') || '';
+      var trackChapter = player.getAttribute('data-track-chapter');
+      var trackData = { name: trackName };
+      if (trackChapter) trackData.chapter = parseInt(trackChapter, 10);
+      var playTracked = false;
+
+      function vaTrack(suffix) {
+        if (typeof window.va === 'function') {
+          try { window.va('event', { name: trackType + '_' + suffix, data: trackData }); } catch (e) {}
+        }
       }
-    });
-    audio.addEventListener('pause', function() {
-      player.classList.remove('is-playing');
-      btn.setAttribute('aria-label', labelPlay);
-    });
-    audio.addEventListener('ended', function() {
-      player.classList.remove('is-playing');
-      btn.setAttribute('aria-label', labelPlay);
-      fill.style.width = '0%';
-      timeCurrent.textContent = '0:00';
-      progress.setAttribute('aria-valuenow', '0');
-      vaTrack('soundtrack_complete');
-    });
-    audio.addEventListener('loadedmetadata', function() {
-      timeTotal.textContent = fmt(audio.duration);
-    });
-    audio.addEventListener('timeupdate', function() {
-      if (!audio.duration) return;
-      var pct = audio.currentTime / audio.duration * 100;
-      fill.style.width = pct + '%';
-      timeCurrent.textContent = fmt(audio.currentTime);
-      progress.setAttribute('aria-valuenow', String(Math.round(pct)));
-    });
-    progress.addEventListener('click', seekFromEvent);
-    progress.addEventListener('keydown', function(e) {
-      if (!audio.duration) return;
-      if (e.key === 'ArrowRight') { audio.currentTime = Math.min(audio.duration, audio.currentTime + 5); e.preventDefault(); }
-      if (e.key === 'ArrowLeft')  { audio.currentTime = Math.max(0, audio.currentTime - 5); e.preventDefault(); }
-      if (e.key === ' ' || e.key === 'Enter') {
+      function seekFromEvent(e) {
+        if (!audio.duration) return;
+        var rect = progress.getBoundingClientRect();
+        var pct = (e.clientX - rect.left) / rect.width;
+        pct = pct < 0 ? 0 : pct > 1 ? 1 : pct;
+        audio.currentTime = pct * audio.duration;
+      }
+
+      btn.addEventListener('click', function() {
         if (audio.paused) { audio.play(); } else { audio.pause(); }
-        e.preventDefault();
-      }
+      });
+      audio.addEventListener('play', function() {
+        // Pause any other player that's currently playing
+        players.forEach(function(other) {
+          if (other !== player) {
+            var otherAudio = other.querySelector('audio');
+            if (otherAudio && !otherAudio.paused) otherAudio.pause();
+          }
+        });
+        player.classList.add('is-playing');
+        btn.setAttribute('aria-label', labelPause);
+        if (!playTracked) {
+          playTracked = true;
+          vaTrack('play');
+        }
+      });
+      audio.addEventListener('pause', function() {
+        player.classList.remove('is-playing');
+        btn.setAttribute('aria-label', labelPlay);
+      });
+      audio.addEventListener('ended', function() {
+        player.classList.remove('is-playing');
+        btn.setAttribute('aria-label', labelPlay);
+        if (fill) fill.style.width = '0%';
+        if (timeCurrent) timeCurrent.textContent = '0:00';
+        progress.setAttribute('aria-valuenow', '0');
+        vaTrack('complete');
+      });
+      audio.addEventListener('loadedmetadata', function() {
+        if (timeTotal) timeTotal.textContent = fmt(audio.duration);
+      });
+      audio.addEventListener('timeupdate', function() {
+        if (!audio.duration) return;
+        var pct = audio.currentTime / audio.duration * 100;
+        if (fill) fill.style.width = pct + '%';
+        if (timeCurrent) timeCurrent.textContent = fmt(audio.currentTime);
+        progress.setAttribute('aria-valuenow', String(Math.round(pct)));
+      });
+      progress.addEventListener('click', seekFromEvent);
+      progress.addEventListener('keydown', function(e) {
+        if (!audio.duration) return;
+        if (e.key === 'ArrowRight') { audio.currentTime = Math.min(audio.duration, audio.currentTime + 5); e.preventDefault(); }
+        if (e.key === 'ArrowLeft')  { audio.currentTime = Math.max(0, audio.currentTime - 5); e.preventDefault(); }
+        if (e.key === ' ' || e.key === 'Enter') {
+          if (audio.paused) { audio.play(); } else { audio.pause(); }
+          e.preventDefault();
+        }
+      });
     });
   })();
 </script>

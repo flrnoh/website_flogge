@@ -116,7 +116,11 @@ const navPrefix = pageType === 'home' ? '' : homeUrl;
     }
 
     html {
-      scroll-behavior: smooth;
+      /* scroll-behavior: smooth is enabled via JS after page load.
+         Reason: deep-links like /#soundtrack would otherwise smooth-scroll
+         through the 340vh book-flip animation, firing its scroll handler
+         many times mid-flight and visibly juddering. Initial hash-scroll
+         stays instant; subsequent in-page nav clicks become smooth. */
       scroll-padding-top: 96px; /* keep anchor targets clear of fixed nav */
       background: var(--bg);
     }
@@ -441,6 +445,16 @@ const navPrefix = pageType === 'home' ? '' : homeUrl;
       }
     } catch (e) { /* invalid selector — ignore */ }
   }
+
+  // Enable smooth scroll only after initial load + first paint. This way
+  // the browser's automatic hash-scroll on load is instant (no judder
+  // through scroll-driven animations), but subsequent in-page nav clicks
+  // (#buecher, #ueber, #kontakt) animate smoothly.
+  window.addEventListener('load', () => {
+    requestAnimationFrame(() => {
+      document.documentElement.style.scrollBehavior = 'smooth';
+    });
+  });
 
   // Reveal observer
   const io = new IntersectionObserver(entries => {

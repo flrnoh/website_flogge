@@ -579,23 +579,15 @@ import portraitImg from '../../assets/florian-portrait.jpg';
     /* container for one player + its meta + note + (optional translation) */
   }
   .audio-divider {
-    width: 80px;
-    height: 1px;
-    background: var(--line-strong);
-    margin: 3.5rem auto;
-    position: relative;
+    margin: 3rem auto;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    line-height: 1;
+    letter-spacing: 0.6em;
   }
   .audio-divider::after {
     content: '· · ·';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--bg);
-    padding: 0 0.9rem;
-    color: var(--text-dim);
-    letter-spacing: 0.5em;
-    font-size: 0.85rem;
   }
   .soundtrack-meta {
     font-size: 0.72rem;

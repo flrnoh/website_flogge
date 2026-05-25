@@ -1,0 +1,48 @@
+---
+// Vanity URL for sharing on Insta stories, in bio, in DMs etc.
+// Redirects to the soundtrack section on the homepage.
+// Has its own OG metadata so share previews (WhatsApp, iMessage, etc.)
+// show a soundtrack-specific title and description rather than the default.
+
+const dest = '/#soundtrack';
+const title = 'Hör schon mal rein — Vorwort & Soundtrack';
+const description = 'Das Vorwort und der erste Song aus „Du hörst es erst, wenn es still wird" — gelesen vom Autor, komponiert mit Suno.';
+const site = Astro.site ?? 'https://florian-obermeier.com';
+const canonical = new URL(dest, site).toString();
+const shareUrl = new URL('/hoeren', site).toString();
+const ogImage = new URL('/og-image.png', site).toString();
+---
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} — Florian Obermeier</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content="noindex,follow" />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={shareUrl} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:locale" content="de_DE" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <meta http-equiv="refresh" content="0;url=/#soundtrack" />
+  <script is:inline>location.replace('/#soundtrack');</script>
+
+  <style>
+    body { background:#0a0a0b; color:#d4d4d8; font-family: system-ui, -apple-system, sans-serif; padding: 4rem 1.5rem; text-align:center; line-height:1.7; }
+    a { color:#e8a948; }
+  </style>
+</head>
+<body>
+  <p>Wenn du nicht automatisch weitergeleitet wirst, geht's <a href={dest}>hier zum Player</a>.</p>
+</body>
+</html>

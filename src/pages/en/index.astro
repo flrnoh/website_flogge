@@ -974,6 +974,14 @@ import portraitImg from '../../assets/florian-portrait.jpg';
 
     var labelPlay = player.getAttribute('data-label-play') || 'Play';
     var labelPause = player.getAttribute('data-label-pause') || 'Pause';
+    var trackData = { song: 'Still Functioning', chapter: 1 };
+    var playTracked = false;
+
+    function vaTrack(name) {
+      if (typeof window.va === 'function') {
+        try { window.va('event', { name: name, data: trackData }); } catch (e) {}
+      }
+    }
 
     function fmt(sec) {
       if (!isFinite(sec)) return '--:--';
@@ -995,6 +1003,10 @@ import portraitImg from '../../assets/florian-portrait.jpg';
     audio.addEventListener('play', function() {
       player.classList.add('is-playing');
       btn.setAttribute('aria-label', labelPause);
+      if (!playTracked) {
+        playTracked = true;
+        vaTrack('soundtrack_play');
+      }
     });
     audio.addEventListener('pause', function() {
       player.classList.remove('is-playing');
@@ -1006,6 +1018,7 @@ import portraitImg from '../../assets/florian-portrait.jpg';
       fill.style.width = '0%';
       timeCurrent.textContent = '0:00';
       progress.setAttribute('aria-valuenow', '0');
+      vaTrack('soundtrack_complete');
     });
     audio.addEventListener('loadedmetadata', function() {
       timeTotal.textContent = fmt(audio.duration);

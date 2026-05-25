@@ -556,6 +556,156 @@ import portraitImg from '../../assets/florian-portrait.jpg';
     justify-content: center;
     margin-top: 2.5rem;
   }
+
+  /* SOUNDTRACK PRE-LISTEN */
+  .soundtrack-block {
+    position: relative;
+    overflow: hidden;
+  }
+  .soundtrack-block::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(55% 60% at 50% 50%, var(--gold-glow), transparent 70%);
+  }
+  .soundtrack-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+  }
+  .soundtrack-meta {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    color: var(--text-muted);
+    margin-bottom: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+  }
+  .soundtrack-chapter { color: var(--gold); }
+  .soundtrack-sep { color: var(--text-dim); }
+  .soundtrack-song {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--text-heading);
+    margin-bottom: 2.75rem;
+  }
+
+  /* Player */
+  .player {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1rem 1.25rem 1rem 1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    max-width: 540px;
+    margin: 0 auto 2.5rem;
+    transition: border-color 0.4s, background 0.4s;
+  }
+  .player.is-playing {
+    border-color: rgba(232, 169, 72, 0.42);
+    background: rgba(232, 169, 72, 0.04);
+  }
+  .player-btn {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, box-shadow 0.4s;
+    box-shadow: 0 0 0 0 var(--gold-soft);
+    padding: 0;
+  }
+  .player-btn:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 10px var(--gold-soft);
+  }
+  .player-btn:active { transform: scale(0.98); }
+  .player-btn:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 4px;
+  }
+  .player-icon {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+  }
+  .player-icon--play { margin-left: 3px; }
+  .player-icon--pause { display: none; }
+  .player.is-playing .player-icon--play { display: none; }
+  .player.is-playing .player-icon--pause { display: block; margin-left: 0; }
+  .player-track {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+  .player-progress {
+    height: 4px;
+    border-radius: 999px;
+    background: var(--line-strong);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .player-progress:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+  .player-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold), #f5d28e);
+    border-radius: 999px;
+    transition: width 0.1s linear;
+  }
+  .player-time {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+  }
+  .soundtrack-note {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+  .soundtrack-note em { font-style: italic; color: var(--text); }
+
+  @media (max-width: 540px) {
+    .player {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1.25rem;
+      border-radius: 1.5rem;
+    }
+    .player-btn { width: 64px; height: 64px; }
+    .player-track { width: 100%; }
+  }
 </style>
 
 <!-- HERO -->
@@ -657,12 +807,46 @@ import portraitImg from '../../assets/florian-portrait.jpg';
   </div>
 </section>
 
+<!-- SOUNDTRACK PRE-LISTEN -->
+<section id="soundtrack" class="block soundtrack-block">
+  <p class="section-label reveal">Listen in</p>
+  <div class="soundtrack-inner">
+    <div class="soundtrack-meta reveal">
+      <span class="soundtrack-chapter">Chapter 1</span>
+      <span class="soundtrack-sep" aria-hidden="true">·</span>
+      <span class="soundtrack-chapter-title">Everything's Running</span>
+    </div>
+    <h2 class="soundtrack-song reveal">Still Functioning</h2>
+
+    <div class="player reveal" id="soundtrack-player" data-label-play="Play" data-label-pause="Pause">
+      <button class="player-btn" id="player-btn" aria-label="Play" type="button">
+        <svg class="player-icon player-icon--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="player-icon player-icon--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+      </button>
+      <div class="player-track">
+        <div class="player-progress" id="player-progress" role="slider" tabindex="0" aria-label="Position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="player-progress-fill" id="player-progress-fill"></div>
+        </div>
+        <div class="player-time">
+          <span id="player-time-current">0:00</span>
+          <span id="player-time-total">--:--</span>
+        </div>
+      </div>
+      <audio id="soundtrack-audio" preload="metadata" src="/Flogge-Still%20Functioning.mp3"></audio>
+    </div>
+
+    <p class="soundtrack-note reveal">
+      One song of sixteen. The full album arrives on 30 May 2026, together with the book. Composed with Suno.
+    </p>
+  </div>
+</section>
+
 <!-- RELEASE REMINDER -->
 <section id="erinnerung" class="block">
   <p class="section-label reveal">Coming Soon</p>
   <div class="newsletter-inner">
     <h2 class="newsletter-headline reveal">Be there when it <em>falls silent</em>.</h2>
-    <p class="newsletter-sub reveal">My second book, <em>You Only Hear It When It Falls Silent</em>, is out on 30 May 2026. Leave your email and I'll remind you the moment it's here. No newsletter, never shared.</p>
+    <p class="newsletter-sub reveal">My second book, <em>You Only Hear It When It Falls Silent</em>, is out on 30 May 2026 — and with it the other 15 songs of the soundtrack. Leave your email and I'll remind you the moment it's here. No newsletter, never shared.</p>
     <form class="reveal" id="nl-form" method="POST" action="https://186cb071.sibforms.com/serve/MUIFAG1iot05r7jorLeQ74gO8n2RWTFVeVL9P4N01beUzrgXFBtS02Jma-lXEk5Qg_Bv9mQyQJoAKR_fXIXr0YwtkCML6bYYxX6Lhyi-iSONLriTEdk8gpHvbMXzHd74q4FCWJQYvFGapcwSDGgyLgD-QhMMdf3nyiusG0Rk-Z3OGUszo3xMRjaxt_Oi3UcuDKUI64gok8QdYT7y9A==">
       <div class="nl-field">
         <input class="nl-input" type="email" id="nl-email" name="EMAIL" placeholder="your@email.com" autocomplete="email" required />
@@ -775,6 +959,87 @@ import portraitImg from '../../assets/florian-portrait.jpg';
       setTimeout(tick, 1000);
     }
     tick();
+  })();
+
+  // Soundtrack pre-listen player
+  (function() {
+    var audio = document.getElementById('soundtrack-audio');
+    var player = document.getElementById('soundtrack-player');
+    var btn = document.getElementById('player-btn');
+    var progress = document.getElementById('player-progress');
+    var fill = document.getElementById('player-progress-fill');
+    var timeCurrent = document.getElementById('player-time-current');
+    var timeTotal = document.getElementById('player-time-total');
+    if (!audio || !player || !btn || !progress) return;
+
+    var labelPlay = player.getAttribute('data-label-play') || 'Play';
+    var labelPause = player.getAttribute('data-label-pause') || 'Pause';
+    var trackData = { song: 'Still Functioning', chapter: 1 };
+    var playTracked = false;
+
+    function vaTrack(name) {
+      if (typeof window.va === 'function') {
+        try { window.va('event', { name: name, data: trackData }); } catch (e) {}
+      }
+    }
+
+    function fmt(sec) {
+      if (!isFinite(sec)) return '--:--';
+      var m = Math.floor(sec / 60);
+      var s = Math.floor(sec % 60);
+      return m + ':' + (s < 10 ? '0' + s : s);
+    }
+    function seekFromEvent(e) {
+      if (!audio.duration) return;
+      var rect = progress.getBoundingClientRect();
+      var pct = (e.clientX - rect.left) / rect.width;
+      pct = pct < 0 ? 0 : pct > 1 ? 1 : pct;
+      audio.currentTime = pct * audio.duration;
+    }
+
+    btn.addEventListener('click', function() {
+      if (audio.paused) { audio.play(); } else { audio.pause(); }
+    });
+    audio.addEventListener('play', function() {
+      player.classList.add('is-playing');
+      btn.setAttribute('aria-label', labelPause);
+      if (!playTracked) {
+        playTracked = true;
+        vaTrack('soundtrack_play');
+      }
+    });
+    audio.addEventListener('pause', function() {
+      player.classList.remove('is-playing');
+      btn.setAttribute('aria-label', labelPlay);
+    });
+    audio.addEventListener('ended', function() {
+      player.classList.remove('is-playing');
+      btn.setAttribute('aria-label', labelPlay);
+      fill.style.width = '0%';
+      timeCurrent.textContent = '0:00';
+      progress.setAttribute('aria-valuenow', '0');
+      vaTrack('soundtrack_complete');
+    });
+    audio.addEventListener('loadedmetadata', function() {
+      timeTotal.textContent = fmt(audio.duration);
+    });
+    audio.addEventListener('timeupdate', function() {
+      if (!audio.duration) return;
+      var pct = audio.currentTime / audio.duration * 100;
+      fill.style.width = pct + '%';
+      timeCurrent.textContent = fmt(audio.currentTime);
+      progress.setAttribute('aria-valuenow', String(Math.round(pct)));
+    });
+    progress.addEventListener('click', seekFromEvent);
+    progress.addEventListener('keydown', function(e) {
+      if (!audio.duration) return;
+      if (e.key === 'ArrowRight') { audio.currentTime = Math.min(audio.duration, audio.currentTime + 5); e.preventDefault(); }
+      if (e.key === 'ArrowLeft')  { audio.currentTime = Math.max(0, audio.currentTime - 5); e.preventDefault(); }
+      if (e.key === ' ' || e.key === 'Enter') {
+        if (audio.paused) { audio.play(); } else { audio.pause(); }
+        e.preventDefault();
+      }
+    });
   })();
 </script>
 

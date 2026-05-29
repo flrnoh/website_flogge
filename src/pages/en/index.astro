@@ -846,24 +846,6 @@ import portraitImg from '../../assets/florian-portrait.jpg';
           Everything was running. The job, the calendar, the role nobody would think to question. Until the body starts doing things that can no longer be explained. A record of the journey through silence. Plus 16 songs: one for each of the 13 chapters, three more that belong to the story. All written by him and produced with Suno, because some things can't be written, only heard.
         </p>
         <p class="book-meta">Out 30 May 2026 · 13 Chapters · 16 Songs · BoD · Available in German</p>
-        <div class="countdown" id="countdown-stille" aria-live="polite">
-          <div class="countdown-unit">
-            <span class="countdown-num" id="cd-days">--</span>
-            <span class="countdown-label">Days</span>
-          </div>
-          <div class="countdown-unit">
-            <span class="countdown-num" id="cd-hours">--</span>
-            <span class="countdown-label">Hrs</span>
-          </div>
-          <div class="countdown-unit">
-            <span class="countdown-num" id="cd-mins">--</span>
-            <span class="countdown-label">Min</span>
-          </div>
-          <div class="countdown-unit">
-            <span class="countdown-num" id="cd-secs">--</span>
-            <span class="countdown-label">Sec</span>
-          </div>
-        </div>
         <div class="book-actions">
           <a href="mailto:kontakt@florian-obermeier.com?subject=You%20Only%20Hear%20It%20When%20It%20Falls%20Silent" class="btn">Enquire <span class="arrow">→</span></a>
         </div>
@@ -1072,27 +1054,6 @@ import portraitImg from '../../assets/florian-portrait.jpg';
     });
   })();
 
-  // Countdown to release of "Du hörst es erst, wenn es still wird"
-  (function() {
-    var release = new Date('2026-05-30T00:00:00+02:00');
-    var el = document.getElementById('countdown-stille');
-    if (!el) return;
-    function pad(n) { return String(n).padStart(2, '0'); }
-    function tick() {
-      var diff = release - Date.now();
-      if (diff <= 0) {
-        el.className = 'countdown-done';
-        el.innerHTML = 'Available now';
-        return;
-      }
-      document.getElementById('cd-days').textContent  = pad(Math.floor(diff / 86400000));
-      document.getElementById('cd-hours').textContent = pad(Math.floor(diff % 86400000 / 3600000));
-      document.getElementById('cd-mins').textContent  = pad(Math.floor(diff % 3600000 / 60000));
-      document.getElementById('cd-secs').textContent  = pad(Math.floor(diff % 60000 / 1000));
-      setTimeout(tick, 1000);
-    }
-    tick();
-  })();
 
   // Audio players (foreword + soundtrack) — generic, supports multiple players
   (function() {

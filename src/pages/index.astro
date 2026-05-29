@@ -1140,24 +1140,6 @@ import portraitImg from '../assets/florian-portrait.jpg';
           Alles lief. Der Job, der Kalender, die Rolle, in der niemand auf die Idee käme zu fragen. Bis der Körper anfängt, Dinge zu tun, die sich nicht mehr erklären lassen. Ein Protokoll des Wegs durch die Stille. Dazu 16 Songs: einer für jedes der 13 Kapitel, drei weitere, die dazugehören. Selbst geschrieben und mit Suno produziert, weil manche Dinge sich nicht schreiben, sondern nur hören lassen.
         </p>
         <p class="book-meta">Erscheint 30. Mai 2026 · 13 Kapitel · 16 Songs · BoD</p>
-        <div class="countdown" id="countdown-stille" aria-live="polite">
-          <div class="countdown-unit">
-            <span class="countdown-num" id="cd-days">--</span>
-            <span class="countdown-label">Tage</span>
-          </div>
-          <div class="countdown-unit">
-            <span class="countdown-num" id="cd-hours">--</span>
-            <span class="countdown-label">Std</span>
-          </div>
-          <div class="countdown-unit">
-            <span class="countdown-num" id="cd-mins">--</span>
-            <span class="countdown-label">Min</span>
-          </div>
-          <div class="countdown-unit">
-            <span class="countdown-num" id="cd-secs">--</span>
-            <span class="countdown-label">Sek</span>
-          </div>
-        </div>
         <div class="book-actions">
           <a href="mailto:kontakt@florian-obermeier.com?subject=Du%20h%C3%B6rst%20es%20erst%2C%20wenn%20es%20still%20wird" class="btn">Anfragen <span class="arrow">→</span></a>
         </div>
@@ -1331,28 +1313,6 @@ import portraitImg from '../assets/florian-portrait.jpg';
         status.className = 'nl-status nl-status--ok';
       });
     });
-  })();
-
-  // Countdown zum Release von "Du hörst es erst, wenn es still wird"
-  (function() {
-    var release = new Date('2026-05-30T00:00:00+02:00');
-    var el = document.getElementById('countdown-stille');
-    if (!el) return;
-    function pad(n) { return String(n).padStart(2, '0'); }
-    function tick() {
-      var diff = release - Date.now();
-      if (diff <= 0) {
-        el.className = 'countdown-done';
-        el.innerHTML = 'Jetzt erhältlich';
-        return;
-      }
-      document.getElementById('cd-days').textContent  = pad(Math.floor(diff / 86400000));
-      document.getElementById('cd-hours').textContent = pad(Math.floor(diff % 86400000 / 3600000));
-      document.getElementById('cd-mins').textContent  = pad(Math.floor(diff % 3600000 / 60000));
-      document.getElementById('cd-secs').textContent  = pad(Math.floor(diff % 60000 / 1000));
-      setTimeout(tick, 1000);
-    }
-    tick();
   })();
 
   // Audio players (foreword + soundtrack) — generic, supports multiple players

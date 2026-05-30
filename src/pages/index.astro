@@ -1085,7 +1085,7 @@ import portraitImg from '../assets/florian-portrait.jpg';
 
     <!-- Meta / CTA -->
     <div class="bss-meta" id="bssMeta">
-      <p class="bss-release-tag">Erscheint 30. Mai 2026</p>
+      <p class="bss-release-tag">Jetzt erhältlich</p>
       <h2 class="bss-book-title">Du hörst es erst, wenn es still wird</h2>
       <a href="#buecher" class="btn btn--gold">Zum Buch <span class="arrow">↓</span></a>
     </div>
@@ -1127,10 +1127,6 @@ import portraitImg from '../assets/florian-portrait.jpg';
     <article class="book-card book-card--stille reveal" data-tilt>
       <div class="cover">
         <img src="/cover-stille.jpg" alt="Cover: Du hörst es erst, wenn es still wird" width="1071" height="1700" loading="lazy" />
-        <div class="release-badge" aria-label="Erscheint 30. Mai">
-          <span class="badge-pre">AB</span>
-          <span class="badge-date">30. MAI</span>
-        </div>
       </div>
       <div class="book-info">
         <p class="book-tag book-tag--stille">Stille — Memoir mit Soundtrack</p>
@@ -1139,9 +1135,10 @@ import portraitImg from '../assets/florian-portrait.jpg';
         <p class="book-desc">
           Alles lief. Der Job, der Kalender, die Rolle, in der niemand auf die Idee käme zu fragen. Bis der Körper anfängt, Dinge zu tun, die sich nicht mehr erklären lassen. Ein Protokoll des Wegs durch die Stille. Dazu 16 Songs: einer für jedes der 13 Kapitel, drei weitere, die dazugehören. Selbst geschrieben und mit Suno produziert, weil manche Dinge sich nicht schreiben, sondern nur hören lassen.
         </p>
-        <p class="book-meta">Erscheint 30. Mai 2026 · 13 Kapitel · 16 Songs · BoD</p>
+        <p class="book-meta">2026 · 13 Kapitel · 16 Songs · BoD · ISBN 978-3-6963-7621-5</p>
         <div class="book-actions">
-          <a href="mailto:kontakt@florian-obermeier.com?subject=Du%20h%C3%B6rst%20es%20erst%2C%20wenn%20es%20still%20wird" class="btn">Anfragen <span class="arrow">→</span></a>
+          <a href="https://amzn.eu/d/03jpl294" class="btn btn--gold" target="_blank" rel="noopener">Bei Amazon <span class="arrow">↗</span></a>
+          <a href="https://buchshop.bod.de/du-hoerst-es-erst-wenn-es-still-wird-florian-obermeier-9783696376215" class="btn btn--ghost" target="_blank" rel="noopener">BoD ↗</a>
         </div>
       </div>
     </article>
@@ -1210,32 +1207,23 @@ import portraitImg from '../assets/florian-portrait.jpg';
       </div>
 
       <p class="soundtrack-note">
-        Ein Song aus sechzehn. Das vollständige Album erscheint am 30. Mai 2026, gemeinsam mit dem Buch. Komponiert mit Suno.
+        Ein Song aus sechzehn. Das vollständige Album ist jetzt erhältlich — gemeinsam mit dem Buch. Komponiert mit Suno.
       </p>
     </div>
 
   </div>
 </section>
 
-<!-- RELEASE REMINDER -->
+<!-- NOW AVAILABLE -->
 <section id="erinnerung" class="block">
-  <p class="section-label reveal">Erscheint bald</p>
+  <p class="section-label reveal">Jetzt erhältlich</p>
   <div class="newsletter-inner">
-    <h2 class="newsletter-headline reveal">Sei dabei, wenn es <em>still</em> wird.</h2>
-    <p class="newsletter-sub reveal">Am 30. Mai 2026 erscheint mein zweites Buch, <em>Du hörst es erst, wenn es still wird</em> — und mit ihm die anderen 15 Songs des Soundtracks. Trag deine E-Mail ein, ich erinnere dich, sobald es da ist. Kein Newsletter, keine Weitergabe.</p>
-    <form class="reveal" id="nl-form" method="POST" action="https://186cb071.sibforms.com/serve/MUIFAG1iot05r7jorLeQ74gO8n2RWTFVeVL9P4N01beUzrgXFBtS02Jma-lXEk5Qg_Bv9mQyQJoAKR_fXIXr0YwtkCML6bYYxX6Lhyi-iSONLriTEdk8gpHvbMXzHd74q4FCWJQYvFGapcwSDGgyLgD-QhMMdf3nyiusG0Rk-Z3OGUszo3xMRjaxt_Oi3UcuDKUI64gok8QdYT7y9A==">
-      <div class="nl-field">
-        <input class="nl-input" type="email" id="nl-email" name="EMAIL" placeholder="deine@email.com" autocomplete="email" required />
-        <button class="btn" type="submit">
-          <span id="nl-btn-label">Erinner mich</span>
-          <span class="arrow">→</span>
-        </button>
-      </div>
-      <input class="nl-hp" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true" />
-      <input type="hidden" name="locale" value="de" />
-      <input type="hidden" name="html_type" value="simple" />
-      <p class="nl-status" id="nl-status" aria-live="polite"></p>
-    </form>
+    <h2 class="newsletter-headline reveal">Das Buch ist <em>da</em>.</h2>
+    <p class="newsletter-sub reveal"><em>Du hörst es erst, wenn es still wird</em> — 13 Kapitel, 16 Songs. Jetzt erhältlich bei Amazon und im BoD-Buchshop.</p>
+    <div class="book-actions reveal">
+      <a href="https://amzn.eu/d/03jpl294" class="btn btn--gold" target="_blank" rel="noopener">Bei Amazon <span class="arrow">↗</span></a>
+      <a href="https://buchshop.bod.de/du-hoerst-es-erst-wenn-es-still-wird-florian-obermeier-9783696376215" class="btn btn--ghost" target="_blank" rel="noopener">BoD ↗</a>
+    </div>
   </div>
 </section>
 
@@ -1290,30 +1278,6 @@ import portraitImg from '../assets/florian-portrait.jpg';
       card.style.transform = '';
     });
   });
-
-  // Anmeldung — Submit direkt an Brevo (no-cors), Inline-Bestätigung.
-  // Ohne JS greift der normale Form-POST auf die Brevo-Bestätigungsseite.
-  (function() {
-    var form = document.getElementById('nl-form');
-    if (!form) return;
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      var status = document.getElementById('nl-status');
-      var btnLabel = document.getElementById('nl-btn-label');
-      var btn = form.querySelector('button[type="submit"]');
-      btn.disabled = true;
-      btnLabel.textContent = '…';
-      fetch(form.action, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: new URLSearchParams(new FormData(form))
-      }).finally(function() {
-        form.querySelector('.nl-field').style.display = 'none';
-        status.textContent = 'Danke — ich melde mich, sobald das Buch erschienen ist.';
-        status.className = 'nl-status nl-status--ok';
-      });
-    });
-  })();
 
   // Audio players (foreword + soundtrack) — generic, supports multiple players
   (function() {

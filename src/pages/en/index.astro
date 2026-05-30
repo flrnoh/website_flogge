@@ -833,10 +833,6 @@ import portraitImg from '../../assets/florian-portrait.jpg';
     <article class="book-card book-card--stille reveal" data-tilt>
       <div class="cover">
         <img src="/cover-stille.jpg" alt="Cover: You Only Hear It When It Falls Silent" width="1071" height="1700" loading="lazy" />
-        <div class="release-badge" aria-label="Out 30 May">
-          <span class="badge-pre">OUT</span>
-          <span class="badge-date">30 MAY</span>
-        </div>
       </div>
       <div class="book-info">
         <p class="book-tag book-tag--stille">Stille — Memoir with Soundtrack</p>
@@ -845,9 +841,10 @@ import portraitImg from '../../assets/florian-portrait.jpg';
         <p class="book-desc">
           Everything was running. The job, the calendar, the role nobody would think to question. Until the body starts doing things that can no longer be explained. A record of the journey through silence. Plus 16 songs: one for each of the 13 chapters, three more that belong to the story. All written by him and produced with Suno, because some things can't be written, only heard.
         </p>
-        <p class="book-meta">Out 30 May 2026 · 13 Chapters · 16 Songs · BoD · Available in German</p>
+        <p class="book-meta">2026 · 13 Chapters · 16 Songs · BoD · Available in German · ISBN 978-3-6963-7621-5</p>
         <div class="book-actions">
-          <a href="mailto:kontakt@florian-obermeier.com?subject=You%20Only%20Hear%20It%20When%20It%20Falls%20Silent" class="btn">Enquire <span class="arrow">→</span></a>
+          <a href="https://amzn.eu/d/03jpl294" class="btn btn--gold" target="_blank" rel="noopener">On Amazon <span class="arrow">↗</span></a>
+          <a href="https://buchshop.bod.de/du-hoerst-es-erst-wenn-es-still-wird-florian-obermeier-9783696376215" class="btn btn--ghost" target="_blank" rel="noopener">BoD ↗</a>
         </div>
       </div>
     </article>
@@ -949,32 +946,23 @@ import portraitImg from '../../assets/florian-portrait.jpg';
       </div>
 
       <p class="soundtrack-note">
-        One song of sixteen. The full album arrives on 30 May 2026, together with the book. Composed with Suno.
+        One song of sixteen. The full album is now available — together with the book. Composed with Suno.
       </p>
     </div>
 
   </div>
 </section>
 
-<!-- RELEASE REMINDER -->
+<!-- NOW AVAILABLE -->
 <section id="erinnerung" class="block">
-  <p class="section-label reveal">Coming Soon</p>
+  <p class="section-label reveal">Now Available</p>
   <div class="newsletter-inner">
-    <h2 class="newsletter-headline reveal">Be there when it <em>falls silent</em>.</h2>
-    <p class="newsletter-sub reveal">My second book, <em>You Only Hear It When It Falls Silent</em>, is out on 30 May 2026 — and with it the other 15 songs of the soundtrack. Leave your email and I'll remind you the moment it's here. No newsletter, never shared.</p>
-    <form class="reveal" id="nl-form" method="POST" action="https://186cb071.sibforms.com/serve/MUIFAG1iot05r7jorLeQ74gO8n2RWTFVeVL9P4N01beUzrgXFBtS02Jma-lXEk5Qg_Bv9mQyQJoAKR_fXIXr0YwtkCML6bYYxX6Lhyi-iSONLriTEdk8gpHvbMXzHd74q4FCWJQYvFGapcwSDGgyLgD-QhMMdf3nyiusG0Rk-Z3OGUszo3xMRjaxt_Oi3UcuDKUI64gok8QdYT7y9A==">
-      <div class="nl-field">
-        <input class="nl-input" type="email" id="nl-email" name="EMAIL" placeholder="your@email.com" autocomplete="email" required />
-        <button class="btn" type="submit">
-          <span id="nl-btn-label">Remind me</span>
-          <span class="arrow">→</span>
-        </button>
-      </div>
-      <input class="nl-hp" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true" />
-      <input type="hidden" name="locale" value="de" />
-      <input type="hidden" name="html_type" value="simple" />
-      <p class="nl-status" id="nl-status" aria-live="polite"></p>
-    </form>
+    <h2 class="newsletter-headline reveal">The book is <em>here</em>.</h2>
+    <p class="newsletter-sub reveal"><em>You Only Hear It When It Falls Silent</em> — 13 chapters, 16 songs. Now available on Amazon and at the BoD bookshop.</p>
+    <div class="book-actions reveal">
+      <a href="https://amzn.eu/d/03jpl294" class="btn btn--gold" target="_blank" rel="noopener">On Amazon <span class="arrow">↗</span></a>
+      <a href="https://buchshop.bod.de/du-hoerst-es-erst-wenn-es-still-wird-florian-obermeier-9783696376215" class="btn btn--ghost" target="_blank" rel="noopener">BoD ↗</a>
+    </div>
   </div>
 </section>
 
@@ -1029,31 +1017,6 @@ import portraitImg from '../../assets/florian-portrait.jpg';
       card.style.transform = '';
     });
   });
-
-  // Signup — submit straight to Brevo (no-cors), inline confirmation.
-  // Without JS the plain form POST falls back to Brevo's confirmation page.
-  (function() {
-    var form = document.getElementById('nl-form');
-    if (!form) return;
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      var status = document.getElementById('nl-status');
-      var btnLabel = document.getElementById('nl-btn-label');
-      var btn = form.querySelector('button[type="submit"]');
-      btn.disabled = true;
-      btnLabel.textContent = '…';
-      fetch(form.action, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: new URLSearchParams(new FormData(form))
-      }).finally(function() {
-        form.querySelector('.nl-field').style.display = 'none';
-        status.textContent = 'Thanks — I\'ll let you know the moment the book is out.';
-        status.className = 'nl-status nl-status--ok';
-      });
-    });
-  })();
-
 
   // Audio players (foreword + soundtrack) — generic, supports multiple players
   (function() {

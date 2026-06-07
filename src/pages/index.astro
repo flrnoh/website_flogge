@@ -462,6 +462,34 @@ import portraitImg from '../assets/florian-portrait.jpg';
     border-color: var(--gold);
     background: rgba(232,169,72,0.08);
   }
+  .btn--gold-primary {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #0d0d0f;
+    font-weight: 700;
+    padding: 1rem 2.2rem;
+    font-size: 1rem;
+  }
+  .btn--gold-primary:hover {
+    background: #f0bc5b;
+    border-color: #f0bc5b;
+    color: #0d0d0f;
+    box-shadow: 0 8px 28px rgba(232,169,72,0.3);
+  }
+  .bod-hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+  }
+  .bod-hint a {
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+  }
+  .bod-hint a:hover {
+    color: var(--gold);
+  }
 
   /* scroll hint */
   .bss-hint {
@@ -1142,9 +1170,9 @@ import portraitImg from '../assets/florian-portrait.jpg';
         </p>
         <p class="book-meta">2026 · 13 Kapitel · 16 Songs · BoD · ISBN 978-3-6963-7621-5</p>
         <div class="book-actions">
-          <a href="https://amzn.eu/d/03jpl294" class="btn btn--gold" target="_blank" rel="noopener">Bei Amazon <span class="arrow">↗</span></a>
-          <a href="https://buchshop.bod.de/du-hoerst-es-erst-wenn-es-still-wird-florian-obermeier-9783696376215" class="btn btn--ghost" target="_blank" rel="noopener">BoD ↗</a>
+          <a href="https://amzn.eu/d/03jpl294" class="btn btn--gold-primary" target="_blank" rel="noopener">Jetzt bei Amazon <span class="arrow">↗</span></a>
         </div>
+        <p class="bod-hint">Lieber direkt beim Verlag? <a href="https://buchshop.bod.de/du-hoerst-es-erst-wenn-es-still-wird-florian-obermeier-9783696376215" target="_blank" rel="noopener">BoD-Buchshop ↗</a></p>
       </div>
     </article>
 
@@ -1220,15 +1248,16 @@ import portraitImg from '../assets/florian-portrait.jpg';
 </section>
 
 <!-- NOW AVAILABLE -->
+<div id="stille-kaufen"></div>
 <section id="erinnerung" class="block">
   <p class="section-label reveal">Jetzt erhältlich</p>
   <div class="newsletter-inner">
     <h2 class="newsletter-headline reveal">Das Buch ist <em>da</em>.</h2>
-    <p class="newsletter-sub reveal"><em>Du hörst es erst, wenn es still wird</em> — 13 Kapitel, 16 Songs. Jetzt erhältlich bei Amazon und im BoD-Buchshop.</p>
+    <p class="newsletter-sub reveal"><em>Du hörst es erst, wenn es still wird</em> — 13 Kapitel, 16 Songs.</p>
     <div class="book-actions reveal">
-      <a href="https://amzn.eu/d/03jpl294" class="btn btn--gold" target="_blank" rel="noopener">Bei Amazon <span class="arrow">↗</span></a>
-      <a href="https://buchshop.bod.de/du-hoerst-es-erst-wenn-es-still-wird-florian-obermeier-9783696376215" class="btn btn--ghost" target="_blank" rel="noopener">BoD ↗</a>
+      <a href="https://amzn.eu/d/03jpl294" class="btn btn--gold-primary" target="_blank" rel="noopener">Jetzt bei Amazon kaufen <span class="arrow">↗</span></a>
     </div>
+    <p class="bod-hint reveal">Lieber direkt beim Verlag? <a href="https://buchshop.bod.de/du-hoerst-es-erst-wenn-es-still-wird-florian-obermeier-9783696376215" target="_blank" rel="noopener">BoD-Buchshop ↗</a></p>
   </div>
 </section>
 

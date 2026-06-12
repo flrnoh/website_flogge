@@ -9,7 +9,7 @@
     "preview": "astro preview"
   },
   "engines": {
-    "node": "22.x"
+    "node": "24.x"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",

@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    { "source": "/buecher", "destination": "/#buecher", "permanent": false },
+    { "source": "/buecher/", "destination": "/#buecher", "permanent": false },
+    { "source": "/en/buecher", "destination": "/en/#buecher", "permanent": false },
+    { "source": "/en/buecher/", "destination": "/en/#buecher", "permanent": false },
+    { "source": "/books", "destination": "/en/#buecher", "permanent": false },
+    { "source": "/books/", "destination": "/en/#buecher", "permanent": false }
+  ]
+}

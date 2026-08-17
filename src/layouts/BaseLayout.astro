@@ -282,6 +282,18 @@ const enUrl = lang === 'en' ? Astro.url.pathname : (alternateUrl ?? '/en/');
       .lang-switch { padding-left: 1rem; }
     }
 
+    /* On narrow phones the row ran past the viewport: the name wrapped to two
+       lines and the EN button was clipped off the right edge. Name + three
+       section links + language switch simply do not fit at 375px, so the
+       section links step aside — this is a one-pager, they scroll into view
+       anyway and the footer still lists them. Name and language stay. */
+    @media (max-width: 460px) {
+      nav { padding: 0.85rem 1rem; gap: 0.75rem; }
+      .nav-name { font-size: 0.95rem; white-space: nowrap; }
+      .nav-links { display: none; }
+      .lang-switch { border-left: 0; padding-left: 0; }
+    }
+
 
     /* Footer */
     footer {

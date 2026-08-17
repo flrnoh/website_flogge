@@ -14,9 +14,11 @@ import '@fontsource/playfair-display/700.css';
 interface Props {
   title: string;
   description?: string;
-  pageType?: 'home' | 'legal';
+  pageType?: 'home' | 'legal' | 'page';
   lang?: 'de' | 'en';
   alternateUrl?: string;
+  /** Keep the page out of search results while leaving it reachable by URL. */
+  noindex?: boolean;
 }
 
 const {
@@ -25,6 +27,7 @@ const {
   pageType = 'home',
   lang = 'de',
   alternateUrl,
+  noindex = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://florian-obermeier.com').toString();
@@ -52,6 +55,11 @@ const t = lang === 'en'
 
 const homeUrl = lang === 'en' ? '/en/' : '/';
 const navPrefix = pageType === 'home' ? '' : homeUrl;
+
+// Language switch: stay on the current page's translation when the page has
+// one (alternateUrl), instead of always bouncing back to the homepage.
+const deUrl = lang === 'de' ? Astro.url.pathname : (alternateUrl ?? '/');
+const enUrl = lang === 'en' ? Astro.url.pathname : (alternateUrl ?? '/en/');
 ---
 
 <!doctype html>
@@ -61,6 +69,7 @@ const navPrefix = pageType === 'home' ? '' : homeUrl;
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex,follow" />}
   <link rel="canonical" href={canonical} />
   <link rel="sitemap" href="/sitemap.xml" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -273,6 +282,19 @@ const navPrefix = pageType === 'home' ? '' : homeUrl;
       .lang-switch { padding-left: 1rem; }
     }
 
+    /* On narrow phones the row ran past the viewport: the name wrapped to two
+       lines and the EN button was clipped off the right edge. Name + three
+       section links + language switch simply do not fit at 375px, so the
+       section links step aside — this is a one-pager, they scroll into view
+       anyway and the footer still lists them. Name and language stay. */
+    @media (max-width: 460px) {
+      nav { padding: 0.85rem 1rem; gap: 0.75rem; }
+      .nav-name { font-size: 0.95rem; white-space: nowrap; }
+      .nav-links { display: none; }
+      .lang-switch { border-left: 0; padding-left: 0; }
+    }
+
+
     /* Footer */
     footer {
       padding: 5rem 2.5rem 3rem;
@@ -385,9 +407,9 @@ const navPrefix = pageType === 'home' ? '' : homeUrl;
       )}
     </ul>
     <div class="lang-switch" aria-label="Language">
-      <a href="/" class:list={['lang-btn', { 'lang-btn--active': lang === 'de' }]}>DE</a>
+      <a href={deUrl} class:list={['lang-btn', { 'lang-btn--active': lang === 'de' }]}>DE</a>
       <span class="lang-sep" aria-hidden="true">/</span>
-      <a href="/en/" class:list={['lang-btn', { 'lang-btn--active': lang === 'en' }]}>EN</a>
+      <a href={enUrl} class:list={['lang-btn', { 'lang-btn--active': lang === 'en' }]}>EN</a>
     </div>
   </div>
 </nav>

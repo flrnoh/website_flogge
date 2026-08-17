@@ -1,0 +1,20 @@
+---
+// Band-backend offer page (German). English twin: /offer.
+// Deliberately not linked from the main nav — this is a page to hand out
+// directly (Fiverr portfolio link, outreach mails), not part of the author
+// site's story. noindex keeps it out of the author-site search footprint
+// while staying fully reachable by URL.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AngebotContent from '../components/AngebotContent.astro';
+---
+
+<BaseLayout
+  title="Band-Backend zum Festpreis — Florian Obermeier"
+  description="Gig-Pipeline, Kalender, Setlists, Kasse und Kontakte für eure Band — in einem Wochenende eingerichtet, 500 € Festpreis, kein Abo."
+  pageType="page"
+  lang="de"
+  alternateUrl="/offer"
+  noindex={true}
+>
+  <AngebotContent lang="de" />
+</BaseLayout>

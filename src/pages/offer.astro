@@ -1,0 +1,17 @@
+---
+// Band-backend offer page (English). German twin: /angebot.
+// See angebot.astro for why this is unlinked and noindexed.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AngebotContent from '../components/AngebotContent.astro';
+---
+
+<BaseLayout
+  title="Band Backend, Fixed Price — Florian Obermeier"
+  description="Booking pipeline, calendar, setlists, cash book and contacts for your band — set up in one weekend, €500 fixed price, no subscription."
+  pageType="page"
+  lang="en"
+  alternateUrl="/angebot"
+  noindex={true}
+>
+  <AngebotContent lang="en" />
+</BaseLayout>

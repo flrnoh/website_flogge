@@ -1,0 +1,675 @@
+---
+// Shared markup + styles for the band-backend offer page.
+// Copy lives here keyed by language (same pattern as BaseLayout's `t`),
+// so /angebot and /offer can never drift apart structurally — only the
+// strings differ. See CLAUDE.md: German and English always ship together.
+
+interface Props {
+  lang?: 'de' | 'en';
+}
+
+const { lang = 'de' } = Astro.props;
+
+const mail = 'kontakt@florian-obermeier.com';
+
+const de = {
+  strip: ['Angebot · Band-Backend', 'Festpreis 500 €', 'Bayerischer Wald'],
+  eyebrow: 'Für Bands, die aus der Tabelle rauswollen — oder aus dem halbfertigen KI-Prototyp',
+  h1: 'Eure Band verwaltet sich in <em>WhatsApp</em> und einer Google-Tabelle.',
+  deck: 'Ich richte euch in einem Wochenende ein eigenes Crew-Backend ein. Gig-Pipeline, Kalender, Setlists, Kasse, Kontakte — alles an einem Ort, alle sehen dasselbe. <strong>500 € Festpreis, kein Abo.</strong>',
+  meta: [
+    { label: 'Leistung', value: 'Crew-Backend, eingerichtet' },
+    { label: 'Festpreis', value: '500 €' },
+    { label: 'Fertig in', value: '1 Wochenende' },
+    { label: 'Läuft bereits bei', value: 'Swallow’s Rose' },
+  ],
+  s1: {
+    label: 'Problem',
+    h2: 'Fragen, die bei jeder Band einmal pro Woche gestellt werden',
+    asks: [
+      'Wer hat jetzt eigentlich die Zusage vom Veranstalter?',
+      'In welchem Chat stand nochmal die Gage?',
+      'Wer kann am 12. Oktober?',
+      'Was haben wir in Regensburg gespielt?',
+      'Wie viel ist in der Kasse — und was kriegt jeder?',
+    ],
+    note: 'Bei den meisten Bands liegen die Antworten in fünf WhatsApp-Gruppen und einer Tabelle, die genau eine Person pflegt. Wenn die Person im Urlaub ist, steht die Band.',
+  },
+  s2: {
+    label: 'Sonderfall',
+    h2: 'Ihr habt schon was mit KI gebaut und kommt nicht weiter',
+    lead: 'Das höre ich immer öfter: Einer aus der Band hat sich an einem Abend mit Lovable, Replit oder ChatGPT etwas zusammengeklickt. Es sieht gut aus, es läuft zu siebzig Prozent — und dann hört es auf.',
+    body: 'Der Prototyp ist der leichte Teil. Was danach kommt, liefert keine KI auf Knopfdruck: eine Datenbank, die eure Daten auch nächstes Jahr noch hat. Ein Login, das nicht jeder umgeht. Mails, die im Posteingang landen statt im Spam. Datenschutz, der einer Nachfrage standhält. Und jemand, der das Ding in zwei Jahren noch reparieren kann.',
+    note: 'Wenn ihr an diesem Punkt steht: schickt mir den Link. Ich schaue rein und sage euch ehrlich, ob man darauf aufbauen kann oder ob neu bauen schneller geht. Kostet nichts und dauert zwanzig Minuten.',
+  },
+  s3: {
+    label: 'Umfang',
+    h2: 'Was drin ist',
+    lead: 'Kein Feature-Wunschzettel — das läuft alles schon in echt, seit Monaten, bei einer Band im Betrieb.',
+    rows: [
+      ['Gig-Pipeline', 'Anfrage → Angebot → Bestätigt → Gespielt. Mit Gage, Ansprechpartner und Absage-Grund. Anfragen verstopfen den Kalender nicht.'],
+      ['Kalender & iCal', 'Gigs, Proben, Sonstiges. Jedes Mitglied abonniert den Bandkalender im eigenen Handy — aktualisiert sich von selbst.'],
+      ['Verfügbarkeit', 'Ampel je Termin: ja, vielleicht, nein. Ein Klick, alle sehen sofort, wer fehlt.'],
+      ['Setlists', 'Songbibliothek mit Länge und Notizen, Setlists per Drag-and-drop, laufende Gesamtspielzeit. Verknüpfbar mit dem Gig.'],
+      ['Kasse', 'Einnahmen und Ausgaben, Kassenstand, Gagen-Split pro Kopf. Zahlungsart mitgeführt, damit der SumUp-Report aufgeht.'],
+      ['Kontakte', 'Veranstalter, Venues, Festivals, Agenturen, Technik. Gefiltert, durchsuchbar, mit dem jeweiligen Gig verknüpft.'],
+      ['Gig-Sheet', 'Das Blatt für den Showtag: Load-in, Soundcheck, Stagetime, Anfahrt, Backline, Catering — plus Hotel-Links für die Stadt.'],
+      ['Tourplaner', 'Baut aus euren Kontakten eine fahrbare Route im Umkreis, rechnet die kürzeste Strecke und schreibt die Sammelmail an die Booker.'],
+      ['Login', 'Magic-Link auf die eigene Mailadresse, nur auf Einladung. Keine Passwörter, kein fremder Zugriff.'],
+    ],
+  },
+  s4: {
+    label: 'Abgrenzung',
+    h2: 'Was es nicht ist',
+    items: [
+      'Kein Baukasten und kein fremdes Portal — es läuft auf eurer Adresse, mit eurer eigenen Datenbank.',
+      'Keine Bandwebsite. Die kann dazukommen, steckt aber nicht in den 500 €.',
+      'Kein Abo und keine monatliche Gebühr an mich — ihr zahlt einmal. Für Hosting und Datenbank rechnet mit ein paar Euro im Monat, direkt beim Anbieter.',
+      'Kein Ticketing, kein Shop, keine Merch-Lagerhaltung.',
+      'Keine Rufbereitschaft. Wenn später was dazu soll, reden wir neu.',
+    ],
+  },
+  s5: {
+    label: 'Ablauf',
+    h2: 'Vier Schritte, dann läuft es',
+    steps: [
+      ['Ihr schreibt mir, was ihr braucht', 'Ein paar Zeilen reichen: was ihr macht, wie viele ihr seid, was am meisten nervt. Ich antworte schriftlich und sage euch, ob ich euch helfen kann — und sage es auch, wenn nicht.'],
+      ['Ich richte ein', 'Ihr bekommt eine Einladung per Mail und loggt euch ein. Eure Termine und Kontakte sind schon drin, damit ihr nicht vor einem leeren System sitzt.'],
+      ['Eine Woche im Alltag testen', 'Ihr benutzt es für echte Gigs. Was hakt, sagt ihr mir, ich schraube nach. Das ist im Preis drin.'],
+      ['Übergabe', 'Zugänge, kurze Einweisung für die Band, Rechnung. Danach gehört das System euch.'],
+    ],
+  },
+  s6: {
+    label: 'Referenz',
+    h2: 'Das gibt es nicht nur auf dem Papier',
+    refs: [
+      {
+        name: 'swallowsrose.com',
+        href: 'https://swallowsrose.com',
+        text: 'Genau dieses Backend, seit Monaten im echten Bandbetrieb: Gig-Pipeline, Kasse, Setlists, Tourplaner. Die öffentlichen Tourdaten auf der Seite kommen direkt aus dem Kalender im Backend — einmal eintragen, überall aktuell.',
+      },
+      {
+        name: 'Kultur am Regen e. V.',
+        text: 'Vereinsverwaltung für einen eingetragenen Kulturverein: Mitglieder, Beiträge, Rundmails mit Zustellüberwachung, Veranstaltungskalender. Deutlich größer als das Bandpaket — zeigt, dass ich sowas auch im Dauerbetrieb halte.',
+      },
+      {
+        name: 'Diese Seite',
+        href: '/',
+        text: 'Meine eigene. Ich bin Autor und baue Software — deswegen sitze ich bei Kulturprojekten auf beiden Seiten des Tischs und muss mir nicht erklären lassen, wie eine Band tickt.',
+      },
+    ],
+  },
+  s7: {
+    label: 'Preis',
+    h2: '500 Euro, festgeschrieben',
+    figure: '500 €',
+    note1: 'Festpreis für Einrichtung, Datenbank, Zugänge, die Testwoche und die Übergabe. Keine Stundenabrechnung, keine Nachforderung.',
+    note2: 'Das ist bewusst unter dem, was eine Agentur dafür nimmt. Nicht weil es weniger wert ist, sondern weil das Fundament schon steht und ich es nicht für euch neu erfinden muss.',
+  },
+  s8: {
+    label: 'Kontakt',
+    h2: 'Schreibt mir, bevor ihr die nächste Tabelle anlegt',
+    lead: 'Eine kurze Mail reicht: in welcher Band ihr spielt und was gerade am meisten nervt. Ich antworte schriftlich, meistens noch am selben Tag — telefonieren müssen wir dafür nicht.',
+    cta: 'Mail schreiben',
+    subject: 'Band-Backend für unsere Band',
+  },
+};
+
+const en = {
+  strip: ['Offer · Band Backend', 'Fixed price €500', 'Bavarian Forest, Germany'],
+  eyebrow: 'For bands ready to leave the spreadsheet behind — or the half-finished AI prototype',
+  h1: 'Your band is run out of <em>WhatsApp</em> and a Google Sheet.',
+  deck: 'In one weekend I set you up with your own crew backend. Booking pipeline, calendar, setlists, cash book, contacts — all in one place, everyone sees the same thing. <strong>€500 fixed price, no subscription.</strong>',
+  meta: [
+    { label: 'Service', value: 'Crew backend, set up' },
+    { label: 'Fixed price', value: '€500' },
+    { label: 'Ready in', value: '1 weekend' },
+    { label: 'Already running at', value: 'Swallow’s Rose' },
+  ],
+  s1: {
+    label: 'Problem',
+    h2: 'Questions every band asks once a week',
+    asks: [
+      'Who actually has the promoter’s confirmation?',
+      'Which chat had the fee in it?',
+      'Who can make October 12th?',
+      'What did we play in Regensburg?',
+      'How much is in the account — and what does each of us get?',
+    ],
+    note: 'In most bands the answers live in five WhatsApp groups and a spreadsheet exactly one person maintains. When that person is on holiday, the band stalls.',
+  },
+  s2: {
+    label: 'Special case',
+    h2: 'You already built something with AI and got stuck',
+    lead: 'I hear this more and more: someone in the band spent an evening with Lovable, Replit or ChatGPT and put something together. It looks good, it works seventy percent of the way — and then it stops.',
+    body: 'The prototype is the easy part. What comes after it, no AI hands you at the push of a button: a database that still holds your data next year. A login not everyone can walk around. Mail that lands in the inbox instead of spam. Data protection that survives being questioned. And someone who can still repair the thing in two years.',
+    note: 'If that’s where you are, send me the link. I’ll look at it and tell you honestly whether it can be built on or whether starting over is faster. Costs nothing and takes twenty minutes.',
+  },
+  s3: {
+    label: 'Scope',
+    h2: 'What you get',
+    lead: 'Not a feature wishlist — all of it has been running for months, in daily use by a working band.',
+    rows: [
+      ['Booking pipeline', 'Enquiry → Offer → Confirmed → Played. With fee, contact person and reason for a cancellation. Enquiries never clog up the calendar.'],
+      ['Calendar & iCal', 'Gigs, rehearsals, everything else. Every member subscribes to the band calendar on their own phone — it updates itself.'],
+      ['Availability', 'A traffic light per date: yes, maybe, no. One click, everyone sees at once who is missing.'],
+      ['Setlists', 'Song library with length and notes, setlists by drag and drop, running total playing time. Can be tied to a gig.'],
+      ['Cash book', 'Income and expenses, current balance, fee split per head. Payment method tracked so the SumUp report reconciles.'],
+      ['Contacts', 'Promoters, venues, festivals, agencies, crew. Filtered, searchable, linked to the relevant gig.'],
+      ['Gig sheet', 'The show-day page: load-in, soundcheck, stage time, directions, backline, catering — plus hotel links for the city.'],
+      ['Tour planner', 'Builds a drivable route from your contacts within a radius, works out the shortest run and drafts the round-robin mail to bookers.'],
+      ['Login', 'Magic link to your own mail address, invitation only. No passwords, no outside access.'],
+    ],
+  },
+  s4: {
+    label: 'Boundaries',
+    h2: 'What it is not',
+    items: [
+      'Not a website builder and not somebody else’s portal — it runs on your address, with your own database.',
+      'Not a band website. That can be added, but it is not part of the €500.',
+      'No subscription and no monthly fee to me — you pay once. Budget a few euros a month for hosting and database, paid directly to the provider.',
+      'No ticketing, no shop, no merch inventory.',
+      'No on-call support. If something should be added later, we talk again.',
+    ],
+  },
+  s5: {
+    label: 'Process',
+    h2: 'Four steps and it runs',
+    steps: [
+      ['You write and tell me what you need', 'A few lines are enough: what you do, how many of you there are, what annoys you most. I answer in writing and tell you whether I can help — and I say so if I can’t.'],
+      ['I set it up', 'You get an invitation by mail and log in. Your dates and contacts are already in there, so you are not staring at an empty system.'],
+      ['One week of real use', 'You use it for actual gigs. Whatever grates, you tell me and I adjust. That is included in the price.'],
+      ['Handover', 'Access, a short walkthrough for the band, invoice. After that the system is yours.'],
+    ],
+  },
+  s6: {
+    label: 'Proof',
+    h2: 'This exists outside the pitch',
+    refs: [
+      {
+        name: 'swallowsrose.com',
+        href: 'https://swallowsrose.com',
+        text: 'This exact backend, in real band use for months: booking pipeline, cash book, setlists, tour planner. The public tour dates on the site come straight from the calendar in the backend — enter once, current everywhere.',
+      },
+      {
+        name: 'Kultur am Regen e. V.',
+        text: 'Membership administration for a registered cultural association: members, dues, bulk mail with delivery tracking, event calendar. Considerably bigger than the band package — proof that I keep this kind of thing running long term.',
+      },
+      {
+        name: 'This site',
+        href: '/en/',
+        text: 'My own. I am an author and I build software — which is why I sit on both sides of the table on cultural projects and nobody has to explain to me how a band works.',
+      },
+    ],
+  },
+  s7: {
+    label: 'Price',
+    h2: '500 euros, fixed',
+    figure: '€500',
+    note1: 'Fixed price for setup, database, access, the test week and the handover. No hourly billing, no follow-up invoice.',
+    note2: 'That is deliberately below what an agency charges. Not because it is worth less, but because the foundation already exists and I do not have to invent it again for you.',
+  },
+  s8: {
+    label: 'Contact',
+    h2: 'Write before you start the next spreadsheet',
+    lead: 'A short mail is enough: which band you play in and what is grating most right now. I reply in writing, usually the same day — no phone call needed.',
+    cta: 'Write me',
+    subject: 'Band backend for our band',
+  },
+};
+
+const c = lang === 'en' ? en : de;
+
+// Section numbers are assigned here rather than written into the copy, so
+// inserting a section later can never leave the two languages out of step.
+const sections = [c.s1, c.s2, c.s3, c.s4, c.s5, c.s6, c.s7, c.s8];
+const numberOf = (s: (typeof sections)[number]) =>
+  String(sections.indexOf(s) + 1).padStart(2, '0');
+
+const mailHref = `mailto:${mail}?subject=${encodeURIComponent(c.s8.subject)}`;
+---
+
+<div class="offer">
+
+  <p class="strip">
+    {c.strip.map((item, i) => (
+      <><span class:list={{ 'strip-lead': i === 0 }}>{item}</span>{i < c.strip.length - 1 && <span class="strip-sep" aria-hidden="true">·</span>}</>
+    ))}
+  </p>
+
+  <header class="masthead">
+    <p class="eyebrow">{c.eyebrow}</p>
+    <h1 set:html={c.h1} />
+    <p class="deck" set:html={c.deck} />
+
+    <dl class="meta">
+      {c.meta.map(m => (
+        <div>
+          <dt>{m.label}</dt>
+          <dd>{m.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </header>
+
+  <!-- 01 — Problem -->
+  <section class="reveal">
+    <p class="num"><span class="n">{numberOf(c.s1)}</span><span class="l">{c.s1.label}</span></p>
+    <div class="body">
+      <h2>{c.s1.h2}</h2>
+      <ul class="asks">
+        {c.s1.asks.map(a => <li>{a}</li>)}
+      </ul>
+      <p class="dim">{c.s1.note}</p>
+    </div>
+  </section>
+
+  <!-- 02 — AI prototype -->
+  <section class="reveal">
+    <p class="num"><span class="n">{numberOf(c.s2)}</span><span class="l">{c.s2.label}</span></p>
+    <div class="body">
+      <h2>{c.s2.h2}</h2>
+      <p class="lead">{c.s2.lead}</p>
+      <p>{c.s2.body}</p>
+      <p class="dim">{c.s2.note}</p>
+    </div>
+  </section>
+
+  <!-- 03 — Scope -->
+  <section class="reveal">
+    <p class="num"><span class="n">{numberOf(c.s3)}</span><span class="l">{c.s3.label}</span></p>
+    <div class="body">
+      <h2>{c.s3.h2}</h2>
+      <p class="lead">{c.s3.lead}</p>
+      <dl class="ledger">
+        {c.s3.rows.map(([dt, dd]) => (
+          <div class="row">
+            <dt>{dt}</dt>
+            <dd>{dd}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- 04 — Boundaries -->
+  <section class="reveal">
+    <p class="num"><span class="n">{numberOf(c.s4)}</span><span class="l">{c.s4.label}</span></p>
+    <div class="body">
+      <h2>{c.s4.h2}</h2>
+      <ul class="nots">
+        {c.s4.items.map(i => <li>{i}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 05 — Process -->
+  <section class="reveal">
+    <p class="num"><span class="n">{numberOf(c.s5)}</span><span class="l">{c.s5.label}</span></p>
+    <div class="body">
+      <h2>{c.s5.h2}</h2>
+      <ol class="steps">
+        {c.s5.steps.map(([head, text]) => (
+          <li>
+            <b>{head}</b>
+            <span>{text}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 06 — Proof -->
+  <section class="reveal">
+    <p class="num"><span class="n">{numberOf(c.s6)}</span><span class="l">{c.s6.label}</span></p>
+    <div class="body">
+      <h2>{c.s6.h2}</h2>
+      <dl class="refs">
+        {c.s6.refs.map(r => (
+          <div class="ref">
+            <dt class="ref-name">
+              {r.href ? <a href={r.href}>{r.name}</a> : r.name}
+            </dt>
+            <dd><p>{r.text}</p></dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- 07 — Price -->
+  <section class="reveal">
+    <p class="num"><span class="n">{numberOf(c.s7)}</span><span class="l">{c.s7.label}</span></p>
+    <div class="body">
+      <h2>{c.s7.h2}</h2>
+      <div class="price-wrap">
+        <p class="figure">{c.s7.figure}</p>
+        <div class="figure-note">
+          <p>{c.s7.note1}</p>
+          <p class="dim">{c.s7.note2}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 — Contact -->
+  <section class="reveal">
+    <p class="num"><span class="n">{numberOf(c.s8)}</span><span class="l">{c.s8.label}</span></p>
+    <div class="body">
+      <h2>{c.s8.h2}</h2>
+      <p class="lead">{c.s8.lead}</p>
+      <a class="cta" href={mailHref}>
+        {c.s8.cta}
+        <span>{mail}</span>
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<style>
+  .offer {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 7.5rem 2.5rem 2rem;
+  }
+
+  /* ── document strip ─────────────────────────────────── */
+  .strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .strip-lead { color: var(--text-muted); }
+  .strip-sep { color: var(--text-dim); opacity: 0.5; }
+
+  /* ── masthead ───────────────────────────────────────── */
+  .masthead { padding: clamp(3.5rem, 9vw, 6rem) 0 clamp(2.5rem, 6vw, 4rem); }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    max-width: 60ch;
+    line-height: 1.9;
+  }
+  .eyebrow::before {
+    content: '';
+    flex: none;
+    width: 28px;
+    height: 1px;
+    background: var(--gold);
+    transform: translateY(-0.3em);
+  }
+
+  .offer h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2.4rem, 6.5vw, 4.5rem);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    color: var(--text-heading);
+    max-width: 18ch;
+    text-wrap: balance;
+  }
+  .offer h1 :global(em) {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .deck {
+    margin-top: clamp(1.75rem, 4vw, 2.25rem);
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    line-height: 1.65;
+    max-width: 46ch;
+    color: var(--text);
+    text-wrap: pretty;
+  }
+  .deck :global(strong) { color: var(--text-heading); font-weight: 500; }
+
+  /* ── meta grid ──────────────────────────────────────── */
+  .meta {
+    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+    border-top: 1px solid var(--line-strong);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  }
+  .meta div {
+    padding: 1.1rem 1.25rem 1.25rem 0;
+    border-top: 1px solid var(--line);
+    margin-top: -1px;
+  }
+  .meta dt {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.45rem;
+  }
+  .meta dd {
+    font-size: 1.02rem;
+    color: var(--text-heading);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.35;
+  }
+
+  /* ── numbered sections ──────────────────────────────── */
+  .offer section {
+    border-top: 1px solid var(--line);
+    padding: clamp(2.75rem, 6vw, 4.25rem) 0;
+    display: grid;
+    gap: 1.5rem 2.75rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 56rem) {
+    .offer section { grid-template-columns: 6rem minmax(0, 1fr); }
+    .num { flex-direction: column; gap: 0.3rem; }
+  }
+
+  .num {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding-top: 0.55rem;
+    display: flex;
+    gap: 0.55rem;
+  }
+  .num .n { color: var(--gold); flex: none; }
+  .num .l { color: var(--text-dim); }
+
+  .body {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+  }
+  .offer h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--text-heading);
+    text-wrap: balance;
+  }
+  .body p { max-width: 62ch; text-wrap: pretty; }
+  .lead { font-size: 1.05rem; color: var(--text); }
+  .dim { color: var(--text-muted); }
+
+  /* ── question stack ─────────────────────────────────── */
+  .asks {
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+  .asks li {
+    border-bottom: 1px solid var(--line);
+    padding: 0.8rem 0;
+    font-size: 1.02rem;
+    display: flex;
+    gap: 0.9rem;
+    align-items: baseline;
+  }
+  .asks li::before {
+    content: '?';
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--gold);
+    flex: none;
+  }
+
+  /* ── feature ledger ─────────────────────────────────── */
+  .ledger { border-top: 1px solid var(--line-strong); }
+  .row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.3rem 0.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (min-width: 40rem) {
+    .row { grid-template-columns: 12rem minmax(0, 1fr); gap: 0 2.25rem; align-items: baseline; }
+  }
+  .row dt {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--text-heading);
+    line-height: 1.3;
+  }
+  .row dd { color: var(--text-muted); text-wrap: pretty; }
+
+  /* ── exclusions ─────────────────────────────────────── */
+  .nots { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
+  .nots li {
+    display: flex;
+    gap: 0.9rem;
+    align-items: baseline;
+    max-width: 62ch;
+    text-wrap: pretty;
+  }
+  .nots li::before {
+    content: '\2014';
+    font-family: var(--mono);
+    color: var(--text-dim);
+    flex: none;
+  }
+
+  /* ── steps ──────────────────────────────────────────── */
+  .steps {
+    list-style: none;
+    counter-reset: s;
+    border-top: 1px solid var(--line-strong);
+  }
+  .steps li {
+    counter-increment: s;
+    border-bottom: 1px solid var(--line);
+    padding: 1.05rem 0 1.05rem 3rem;
+    position: relative;
+    max-width: 62ch;
+  }
+  .steps li::before {
+    content: counter(s, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 1.3rem;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    color: var(--gold);
+  }
+  .steps b { display: block; font-weight: 500; color: var(--text-heading); }
+  .steps span { color: var(--text-muted); }
+
+  /* ── references ─────────────────────────────────────── */
+  .refs { border-top: 1px solid var(--line-strong); }
+  .ref {
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    gap: 0.3rem 0.5rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 40rem) {
+    .ref { grid-template-columns: 12rem minmax(0, 1fr); gap: 0 2.25rem; align-items: baseline; }
+  }
+  .ref-name {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--text-heading);
+    line-height: 1.3;
+  }
+  .ref-name a {
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .ref-name a:hover { color: var(--text-heading); }
+  .ref p { color: var(--text-muted); text-wrap: pretty; }
+
+  /* ── price ──────────────────────────────────────────── */
+  .price-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--line-strong);
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 3rem;
+    align-items: flex-start;
+  }
+  .figure {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 9vw, 4.5rem);
+    line-height: 0.95;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+  .figure-note { flex: 1 1 18rem; min-width: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+
+  /* ── cta ────────────────────────────────────────────── */
+  .cta {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.85rem;
+    background: var(--gold);
+    color: var(--bg);
+    font-weight: 500;
+    font-size: 1.02rem;
+    padding: 0.85rem 1.6rem;
+    text-decoration: none;
+    transition: filter 0.25s, transform 0.25s;
+  }
+  .cta span {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    opacity: 0.72;
+  }
+  .cta:hover { filter: brightness(1.12); transform: translateY(-1px); }
+  .cta:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta { transition: none; }
+    .cta:hover { transform: none; }
+  }
+
+  @media (max-width: 720px) {
+    .offer { padding: 6.5rem 1.25rem 1rem; }
+  }
+</style>

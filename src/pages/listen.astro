@@ -3,8 +3,9 @@
 // Redirects to the soundtrack section on the English homepage.
 
 const dest = '/en/#soundtrack';
-const title = 'Listen in — Foreword & Soundtrack';
-const description = "The foreword and first song from 'You Only Hear It When It Falls Silent' — read by the author, composed with Suno.";
+const title = 'Listen in: Foreword & Soundtrack';
+const fullTitle = `${title}, Florian Obermeier`;
+const description = "The foreword and first song from 'You Only Hear It When It Falls Silent', read by the author, composed with Suno.";
 const site = Astro.site ?? 'https://florian-obermeier.com';
 const canonical = new URL(dest, site).toString();
 const shareUrl = new URL('/listen', site).toString();
@@ -15,7 +16,7 @@ const ogImage = new URL('/og-image.png', site).toString();
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{title} — Florian Obermeier</title>
+  <title>{fullTitle}</title>
   <meta name="description" content={description} />
   <meta name="robots" content="noindex,follow" />
   <link rel="canonical" href={canonical} />

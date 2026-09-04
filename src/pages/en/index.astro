@@ -742,10 +742,13 @@ import portraitImg from '../../assets/florian-portrait.jpg';
   }
   .player-progress-fill {
     height: 100%;
-    width: 0%;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
     background: linear-gradient(90deg, var(--gold), #f5d28e);
     border-radius: 999px;
-    transition: width 0.1s linear;
+    transition: transform 0.1s linear;
+    will-change: transform;
   }
   .player-time {
     display: flex;
@@ -1091,7 +1094,7 @@ import portraitImg from '../../assets/florian-portrait.jpg';
       audio.addEventListener('ended', function() {
         player.classList.remove('is-playing');
         btn.setAttribute('aria-label', labelPlay);
-        if (fill) fill.style.width = '0%';
+        if (fill) fill.style.transform = 'scaleX(0)';
         if (timeCurrent) timeCurrent.textContent = '0:00';
         progress.setAttribute('aria-valuenow', '0');
         vaTrack('complete');
@@ -1102,7 +1105,7 @@ import portraitImg from '../../assets/florian-portrait.jpg';
       audio.addEventListener('timeupdate', function() {
         if (!audio.duration) return;
         var pct = audio.currentTime / audio.duration * 100;
-        if (fill) fill.style.width = pct + '%';
+        if (fill) fill.style.transform = 'scaleX(' + (pct / 100) + ')';
         if (timeCurrent) timeCurrent.textContent = fmt(audio.currentTime);
         progress.setAttribute('aria-valuenow', String(Math.round(pct)));
       });

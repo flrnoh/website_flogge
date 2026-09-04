@@ -186,9 +186,12 @@ const enUrl = lang === 'en' ? Astro.url.pathname : (alternateUrl ?? '/en/');
     }
     .progress-fill {
       height: 100%;
-      width: 0%;
+      width: 100%;
+      transform: scaleX(0);
+      transform-origin: left center;
       background: linear-gradient(90deg, var(--teal), var(--gold));
-      transition: width 80ms linear;
+      transition: transform 80ms linear;
+      will-change: transform;
     }
 
     /* Navigation */
@@ -204,7 +207,7 @@ const enUrl = lang === 'en' ? Astro.url.pathname : (alternateUrl ?? '/en/');
       backdrop-filter: saturate(180%) blur(20px);
       -webkit-backdrop-filter: saturate(180%) blur(20px);
       border-bottom: 1px solid transparent;
-      transition: border-color 0.3s, padding 0.3s;
+      transition: border-color 0.3s;
     }
     nav.is-scrolled {
       border-bottom-color: var(--line);
@@ -447,7 +450,7 @@ const enUrl = lang === 'en' ? Astro.url.pathname : (alternateUrl ?? '/en/');
     const doc = document.documentElement;
     const total = doc.scrollHeight - window.innerHeight;
     const pct = total > 0 ? (window.scrollY / total) * 100 : 0;
-    if (fill) fill.style.width = pct + '%';
+    if (fill) fill.style.transform = 'scaleX(' + (pct / 100) + ')';
     if (nav) nav.classList.toggle('is-scrolled', window.scrollY > 16);
   }
   document.addEventListener('scroll', updateProgress, { passive: true });

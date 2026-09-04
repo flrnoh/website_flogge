@@ -5,8 +5,9 @@
 // show a soundtrack-specific title and description rather than the default.
 
 const dest = '/#soundtrack';
-const title = 'Hör schon mal rein — Vorwort & Soundtrack';
-const description = 'Das Vorwort und der erste Song aus „Du hörst es erst, wenn es still wird" — gelesen vom Autor, komponiert mit Suno.';
+const title = 'Hör schon mal rein: Vorwort & Soundtrack';
+const fullTitle = `${title}, Florian Obermeier`;
+const description = 'Das Vorwort und der erste Song aus „Du hörst es erst, wenn es still wird", gelesen vom Autor, komponiert mit Suno.';
 const site = Astro.site ?? 'https://florian-obermeier.com';
 const canonical = new URL(dest, site).toString();
 const shareUrl = new URL('/hoeren', site).toString();
@@ -17,7 +18,7 @@ const ogImage = new URL('/og-image.png', site).toString();
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{title} — Florian Obermeier</title>
+  <title>{fullTitle}</title>
   <meta name="description" content={description} />
   <meta name="robots" content="noindex,follow" />
   <link rel="canonical" href={canonical} />
